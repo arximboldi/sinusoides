@@ -1,0 +1,32 @@
+(ns sinusoides.routes
+  (:require [sinusoides.util :as util]
+            [cljs.core.match]
+            [goog.events :as events]
+            [secretary.core :as secretary :refer-macros [defroute]]
+            [om.core :as om :include-macros true]
+            [om.dom :as dom :include-macros true])
+  (:import goog.History))
+
+(defn make-routes! [app]
+  (do
+    (defroute root "/" [] (om/update! app :view [:main]))))
+
+(defn init-history! []
+  (do
+    (secretary/set-config! :prefix "#")
+    (doto (History.)
+      (goog.events/listen "navigate" #(secretary/dispatch! (.-token %)))
+      (.setEnabled true))))
+
+(defn router [app owner]
+  (reify
+    om/IWillMount
+    (will-mount [_] (make-routes! app))
+    om/IRender
+    (render [_] (dom/div nil))))
+
+(defn init-router! [state]
+  (do
+    (om/root router state
+      {:target (.getElementById js/document "router")})
+    (init-history!)))
