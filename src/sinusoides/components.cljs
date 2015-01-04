@@ -13,13 +13,23 @@
 (defn render-not-found []
   (dom/div "Not found"))
 
+(defn render-main []
+  (dom/div {:id "backlink-nohover"}
+    (dom/div {:id "main-block" :class "links"}
+      (dom/div {:id "main-pre-text"}
+        "What " (dom/a {:href (routes/do)} "do") " you ")
+      (dom/div {:id "main-post-text"}
+        (dom/a {:href (routes/think)} "think")
+        " I " (dom/a {:href (routes/am)} "am"))
+      (dom/a {:href (routes/todo)} (dom/div {:id "barcode"})))))
+
 (defn root-view [app _]
   (reify om/IRender
     (render [_]
       (dom/div {:class "sinusoides"}
-        (dom/h1 nil (dom/a {:href (routes/root)} nil "sinusoid.es"))
         (match [(om/value (:view app))]
           [[:init]] (render-init)
+          [[:main]] (render-main)
           :else (render-not-found))))))
 
 (defn init-components! [state]
