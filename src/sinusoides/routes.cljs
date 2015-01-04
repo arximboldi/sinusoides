@@ -8,15 +8,13 @@
   (:import goog.History))
 
 (defn make-routes! [app]
-  (do
-    (defroute root "/" [] (om/update! app :view [:main]))))
+  (defroute root "/" [] (om/update! app :view [:main])))
 
 (defn init-history! []
-  (do
-    (secretary/set-config! :prefix "#")
-    (doto (History.)
-      (goog.events/listen "navigate" #(secretary/dispatch! (.-token %)))
-      (.setEnabled true))))
+  (secretary/set-config! :prefix "#")
+  (doto (History.)
+    (goog.events/listen "navigate" #(secretary/dispatch! (.-token %)))
+    (.setEnabled true)))
 
 (defn router [app owner]
   (reify
@@ -26,7 +24,6 @@
     (render [_] (dom/div nil))))
 
 (defn init-router! [state]
-  (do
-    (om/root router state
-      {:target (.getElementById js/document "router")})
-    (init-history!)))
+  (om/root router state
+    {:target (.getElementById js/document "router")})
+  (init-history!))
