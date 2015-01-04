@@ -8,6 +8,10 @@
   (:import goog.History))
 
 (defn make-routes! [app]
+  (defroute am "/am" [] (om/update! app :view [:am]))
+  (defroute do "/do" [] (om/update! app :view [:do]))
+  (defroute think "/think" [] (om/update! app :view [:think]))
+  (defroute todo "/todo" [] (om/update! app :view [:todo]))
   (defroute root "/" [] (om/update! app :view [:main])))
 
 (defn init-history! []
