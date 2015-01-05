@@ -13,6 +13,13 @@
 (defn render-not-found []
   (html [:div "Not found"]))
 
+(defn render-todo []
+  (html
+    [:div :id "todo"
+     [:a {:href (routes/main)} [:div {:id "backlink-vert"}]]
+     [:div {:id "todo-block" :class "links"}
+      "TO" [:a {:href (routes/do)} "DO."]]]))
+
 (defn render-main []
   (html
     [:div {:id "backlink-nohover"}
@@ -31,6 +38,7 @@
         [:div {:class "sinusoides"}
          (match [(om/value (:view app))]
            [[:init]] (render-init)
+           [[:todo]] (render-todo)
            [[:main]] (render-main)
            :else (render-not-found))]))))
 
