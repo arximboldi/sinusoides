@@ -29,8 +29,8 @@
       (dom/div {:class "sinusoides"}
         (match [(om/value (:view app))]
           [[:init]] (render-init)
-          [[:main]] (render-main)
           :else (render-not-found))))))
+           [[:main]] (render-main)
 
 (defn init-components! [state]
   (om/root root-view state
