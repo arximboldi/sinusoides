@@ -10,7 +10,8 @@
                  [prismatic/om-tools "0.3.10"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                  [cljs-http "0.1.24"]
-                 [com.andrewmcveigh/cljs-time "0.3.0"]]
+                 [com.andrewmcveigh/cljs-time "0.3.0"]
+                 [sablono "0.2.22"]]
 
   :plugins [[lein-cljsbuild "1.0.4"]]
   :source-paths ["src"]
@@ -27,5 +28,5 @@
        :source-paths ["src"]
        :compiler {:output-to "build/release/sinusoides.js"
                   :optimizations :advanced
-                  :pretty-print false
+                  :pretty-print true
                   :preamble ["react/react.min.js"]}}]})

@@ -4,33 +4,35 @@
             [sinusoides.routes :as routes]
             [cljs.core.match :refer-macros [match]]
             [om.core :as om :include-macros true]
-            [om-tools.dom :as dom :include-macros true]
+            [sablono.core :as html :refer-macros [html]]
             [cljs.core.match]))
 
 (defn render-init []
-  (dom/div "Initializing..."))
+  (html [:div "Initializing..."]))
 
 (defn render-not-found []
-  (dom/div "Not found"))
+  (html [:div "Not found"]))
 
 (defn render-main []
-  (dom/div {:id "backlink-nohover"}
-    (dom/div {:id "main-block" :class "links"}
-      (dom/div {:id "main-pre-text"}
-        "What " (dom/a {:href (routes/do)} "do") " you ")
-      (dom/div {:id "main-post-text"}
-        (dom/a {:href (routes/think)} "think")
-        " I " (dom/a {:href (routes/am)} "am"))
-      (dom/a {:href (routes/todo)} (dom/div {:id "barcode"})))))
+  (html
+    [:div {:id "backlink-nohover"}
+     [:div {:id "main-block" :class "links"}
+      [:div {:id "main-pre-text"}
+       "What " [:a {:href (routes/do)} "do"] " you "]
+      [:div {:id "main-post-text"}
+       [:a {:href (routes/think)} "think"]
+       " I " [:a {:href (routes/am)} "am"] "?"]
+      [:a {:href (routes/todo)} [:div {:id "barcode"}]]]]))
 
 (defn root-view [app _]
   (reify om/IRender
     (render [_]
-      (dom/div {:class "sinusoides"}
-        (match [(om/value (:view app))]
-          [[:init]] (render-init)
-          :else (render-not-found))))))
+      (html
+        [:div {:class "sinusoides"}
+         (match [(om/value (:view app))]
+           [[:init]] (render-init)
            [[:main]] (render-main)
+           :else (render-not-found))]))))
 
 (defn init-components! [state]
   (om/root root-view state
