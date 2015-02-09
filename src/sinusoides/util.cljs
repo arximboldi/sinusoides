@@ -4,9 +4,16 @@
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]))
 
-(defn trace [obj]
-  (do (prn obj)
-      obj))
+(defn trace [obj & more]
+  (apply prn (if more (conj more obj) ["TRACE:" obj]))
+    obj)
+
+(defn to-slug [str]
+  (-> str
+    (.toLowerCase)
+    (.replace "-+" "")
+    (.replace "\\s+" "-")
+    (.replace "[^a-z0-9-]" "")))
 
 (defn chan-to-cursor-updates [cursor owner [input-channel korks]]
   (reify

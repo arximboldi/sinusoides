@@ -3,7 +3,8 @@
             [sinusoides.routes :as routes]))
 
 (defn init-app! []
-  (let [state (atom {:view [:init]})]
+  (let [state (atom {:view [:init]
+                     :do []})]
     (enable-console-print!)
     (routes/init-router! state)
     (components/init-components! state)))
