@@ -3,10 +3,10 @@
   :url "http://sinusoidesapp.appspot.com"
 
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [org.clojure/clojurescript "0.0-2657"]
+                 [org.clojure/clojurescript "0.0-2760"]
                  [org.clojure/core.match "0.3.0-alpha4"]
                  [secretary "1.2.1"]
-                 [om "0.8.0-rc1"]
+                 [org.omcljs/om "0.8.8"]
                  [prismatic/om-tools "0.3.10"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                  [cljs-http "0.1.24"]
@@ -28,5 +28,4 @@
        :source-paths ["src"]
        :compiler {:output-to "build/release/sinusoides.js"
                   :optimizations :advanced
-                  :pretty-print true
-                  :preamble ["react/react.min.js"]}}]})
+                  :pretty-print false}}]})
