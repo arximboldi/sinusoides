@@ -5,8 +5,15 @@
             [om.dom :as dom :include-macros true]))
 
 (defn trace [obj & more]
-  (apply prn (if more (conj more obj) ["TRACE:" obj]))
-    obj)
+  (apply prn (if more more ["TRACE:"]))
+  (.dir js/console obj)
+  obj)
+
+(defn trace-debug [obj & more]
+  (apply prn (if more more ["TRACE:"]))
+  (.dir js/console obj)
+  (js/eval "debugger")
+  obj)
 
 (defn to-slug [str]
   (-> str
