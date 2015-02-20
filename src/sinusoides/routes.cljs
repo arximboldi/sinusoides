@@ -1,10 +1,11 @@
 (ns sinusoides.routes
   (:require [sinusoides.util :as util]
             [cljs.core.match]
-            [goog.events :as events]
+            [clojure.string :as string]
             [secretary.core :as secretary :refer-macros [defroute]]
             [om.core :as om :include-macros true]
-            [om.dom :as dom :include-macros true])
+            [om.dom :as dom :include-macros true]
+            [pushy.core :as pushy])
   (:import goog.History))
 
 (defn make-routes! [app]
@@ -14,11 +15,15 @@
   (defroute todo "/todo" [] (om/update! app :view [:todo]))
   (defroute main "/" [] (om/update! app :view [:main])))
 
+(defn- uri-without-prefix [uri]
+  (let [prefix (secretary/get-config :prefix)]
+    (string/replace uri (re-pattern (str "^" prefix)) "")))
+
 (defn init-history! []
-  (secretary/set-config! :prefix "#")
-  (doto (History.)
-    (goog.events/listen "navigate" #(secretary/dispatch! (.-token %)))
-    (.setEnabled true)))
+  (when (aget js/window "SINUSOIDES_DEBUG_MODE")
+    (secretary/set-config! :prefix "/debug"))
+  (pushy/push-state! secretary/dispatch!
+      (fn [x] (when (secretary/locate-route (uri-without-prefix x)) x))))
 
 (defn router [app owner]
   (reify

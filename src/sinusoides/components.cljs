@@ -36,7 +36,7 @@
   (reify
     om/IWillMount
     (will-mount [this]
-      (go (let [response (<! (http/get "data/do.json"))]
+      (go (let [response (<! (http/get "/data/do.json"))]
             (om/update! do (group-by :lang (:body response))))))
 
     om/IRender
@@ -64,7 +64,7 @@
             (fn [[lang _]]
               [:a {:href (str "#" (util/to-slug lang))} lang])
             do)
-          [:a {:class "cv" :href "files/cv-en.pdf"} "Curriculum Vitae"]]
+          [:a {:class "cv" :href "/old/files/cv-en.pdf"} "Curriculum Vitae"]]
 
          [:div {:id "main-content"}
           (map
@@ -76,8 +76,8 @@
                   (fn [p]
                     [:tr [:td [:div
                                (when-let [imgs (:imgs p)]
-                                 [:a {:href (str "old/" (imgs 1))}
-                                  [:img {:src (str "old/" (imgs 0))}]])
+                                 [:a {:href (str "/old/" (imgs 1))}
+                                  [:img {:src (str "/old/" (imgs 0))}]])
                                [:h1 [:a {:href (:link p)} (:name p)]]
                                [:p (:desc p)]]]])
                   programs)]])
