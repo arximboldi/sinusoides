@@ -3,7 +3,7 @@
   :url "http://sinusoidesapp.appspot.com"
 
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [org.clojure/clojurescript "0.0-2760"]
+                 [org.clojure/clojurescript "0.0-2850"]
                  [org.clojure/core.match "0.3.0-alpha4"]
                  [secretary "1.2.1"]
                  [org.omcljs/om "0.8.8"]
