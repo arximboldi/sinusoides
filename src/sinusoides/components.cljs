@@ -88,7 +88,10 @@
                                [:p {:dangerouslySetInnerHTML
                                     {:__html (md->html (:desc p))}}]]]])
                   programs)]])
-            do)]]))))
+            do)]
+
+         [:a {:id "totop" :href "#"
+              :dangerouslySetInnerHTML {:__html "&#9650;"}}]]))))
 
 (defn root-view [app _]
   (reify om/IRender
@@ -100,7 +103,7 @@
            [[:todo]] (render-todo)
            [[:main]] (render-main)
            [[:do]]   (om/build do-view (:do app))
-           :else (render-not-found))]))))
+           :else     (render-not-found))]))))
 
 (defn init-components! [state]
   (om/root root-view state

@@ -15,15 +15,24 @@
   (defroute todo "/todo" [] (om/update! app :view [:todo]))
   (defroute main "/" [] (om/update! app :view [:main])))
 
-(defn- uri-without-prefix [uri]
+(defn- no-prefix [uri]
   (let [prefix (secretary/get-config :prefix)]
     (string/replace uri (re-pattern (str "^" prefix)) "")))
 
 (defn init-history! []
   (when (aget js/window "SINUSOIDES_DEBUG_MODE")
     (secretary/set-config! :prefix "/debug"))
-  (pushy/push-state! secretary/dispatch!
-      (fn [x] (when (secretary/locate-route (uri-without-prefix x)) x))))
+  (let [last-dispatched (atom) ;; We avoid dispatching the same URI
+                               ;; twice.  This allows using fragments
+                               ;; in an old-school way.
+        dispatch (fn [uri]
+                   (reset! last-dispatched uri)
+                   (secretary/dispatch! uri))
+        match-uri (fn [uri]
+                    (when (and (not= @last-dispatched uri)
+                            (secretary/locate-route (no-prefix uri)))
+                      uri))]
+    (pushy/push-state! dispatch match-uri)))
 
 (defn router [app owner]
   (reify
