@@ -5,6 +5,7 @@
             [cljs-http.client :as http]
             [cljs.core.match :refer-macros [match]]
             [om.core :as om :include-macros true]
+            [om.dom :as dom :include-macros true]
             [sablono.core :as html :refer-macros [html]]
             [cljs.core.match]))
 
@@ -31,6 +32,11 @@
        [:a {:href (routes/think)} "think"]
        " I " [:a {:href (routes/am)} "am"] "?"]
       [:a {:href (routes/todo)} [:div {:id "barcode"}]]]]))
+
+(defn md->html [str]
+  (let [Converter (.-converter js/Showdown)
+        converter (Converter.)]
+    (.makeHtml converter str)))
 
 (defn do-view [do _]
   (reify
@@ -79,7 +85,8 @@
                                  [:a {:href (str "/old/" (imgs 1))}
                                   [:img {:src (str "/old/" (imgs 0))}]])
                                [:h1 [:a {:href (:link p)} (:name p)]]
-                               [:p (:desc p)]]]])
+                               [:p {:dangerouslySetInnerHTML
+                                    {:__html (md->html (:desc p))}}]]]])
                   programs)]])
             do)]]))))
 

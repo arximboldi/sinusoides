@@ -31,4 +31,5 @@
        :compiler {:output-to "build/release/sinusoides.js"
                   :main sinusoides.core
                   :optimizations :advanced
-                  :pretty-print false}}]})
+                  :pretty-print false
+                  :externs ["ext/Showdown.js"]}}]})
