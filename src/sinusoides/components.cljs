@@ -38,6 +38,26 @@
         converter (Converter.)]
     (.makeHtml converter str)))
 
+(defn am-view [am _]
+  (reify
+    om/IWillMount
+    (will-mount [this]
+      (go (let [response (<! (http/get "/data/am.json"))]
+            (om/update! am (:body response)))))
+
+    om/IRender
+    (render [_]
+      (html
+        [:div
+         [:a {:href (routes/main)}  [:div {:id "backlink2"}]]
+         [:div {:id "am" :class "links"}
+          [:p {:dangerouslySetInnerHTML
+               {:__html "&nbsp;I&nbsp;<br/>&nbsp;am&nbsp;<br/>&nbsp;not&nbsp;<br/>"}}]]
+         [:div {:id "profiles" :class "links"}
+          (map (fn [{name :name url :url}]
+                 [:div {:id name} [:a {:href url} "not this"]])
+               am)]]))))
+
 (defn do-view [do _]
   (reify
     om/IWillMount
@@ -99,11 +119,13 @@
       (html
         [:div {:class "sinusoides"}
          (match [(om/value (:view app))]
-           [[:init]] (render-init)
-           [[:todo]] (render-todo)
-           [[:main]] (render-main)
-           [[:do]]   (om/build do-view (:do app))
-           :else     (render-not-found))]))))
+           [[:am]]    (om/build am-view (:am app))
+           [[:do]]    (om/build do-view (:do app))
+           [[:init]]  (render-init)
+           [[:main]]  (render-main)
+           [[:think]] (render-todo)
+           [[:todo]]  (render-todo)
+           :else      (render-not-found))]))))
 
 (defn init-components! [state]
   (om/root root-view state

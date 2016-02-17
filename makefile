@@ -1,5 +1,6 @@
 
-DATA = data/do.json
+DATA = data/do.json \
+	data/am.json
 
 %.json: %.yaml
 	python -c 'import sys, yaml, json; \
