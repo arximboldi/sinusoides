@@ -1,0 +1,12 @@
+{
+    "name": "sinusoides",
+    "version": "0.0.1",
+    "dependencies": {
+        "express": "*",
+        "html": "*",
+        "underscore": "*",
+        "less": "*",
+        "coffee-script": "*",
+        "ejs": "*"},
+    "engines": {
+        "node":"*" }}
