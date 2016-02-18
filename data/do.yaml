@@ -1,3 +1,126 @@
+# Recent
+# ------
+
+- name: ZBeats
+  lang: JavaScript
+  link: http://kostspielig.github.io/zbeats
+  imgs: [ screens/zbeats-small.png, screens/zbeats.png ]
+  desc: |
+    This an Ableton Live inspired web app to make music by playing
+    multiple clips.  Tempo can be adjusted and everything is kept in
+    sync.  The app was done mostly by [Maria
+    Carrasco](http://www.carrasco.in) but I helped with some of the
+    WebAudio, synchronization and React.js stuff.
+
+- name: Atria
+  lang: C++
+  link: http://www.github.com/ableton/atria
+  desc: |
+    Developed at Ableton from 2014, this is a collection of core C++
+    libraries with an emphasis on functional programming and
+    interactive immutable data models. It's *transducers* module was
+    [presented in CppCon
+    2015](https://www.youtube.com/watch?v=vohGJjGxtJQ).
+
+- name: Aqt.Cassowary
+  lang: C++
+  link: http://www.github.com/ableton/aqt-cassowary
+  desc: |
+    Developed at Ableton in 2015, this is plugin brings the power of
+    the [Cassowary constraint solver](http://overconstrained.io/) to
+    QML, the Qt based JavaScript superset for declarative user
+    interfaces.
+
+- name: Cooper
+  lang: Python
+  imgs: [ screens/cooper-small.png, screens/cooper.jpg ]
+  link: https://github.com/arximboldi/cooper
+  desc: |
+    Decorator library for safer cooperative methods in Python.  It
+    allows to leverage the power of Python's multiple inheritance
+    without so much of its drawbacks.  It was presented in a lightning
+    talk in [EuroPython 2015](https://ep2015.europython.eu/en/).
+
+- name: Mixco
+  lang: CoffeeScript
+  link: http://sinusoid.es/mixco/
+  desc: |
+    This is a framework for doing advanced controller mappings for
+    [Mixxx](http://www.mixxx.org). It promotes a more *literate* and
+    *declarative* way of building the scripts, and auto-generates a
+    lot of the boilerplate through a compilation step.  It also uses
+    all the fancy technologies of the time (Gulp, NodeJS, etc.).
+
+- name: Heterarchy
+  lang: CoffeeScript
+  link: http://sinusoid.es/heterarchy
+  desc: |
+    This library adds cooperative Python-style multiple inheritance to
+    CoffeeScript.  The implementation is based on the famous [C3
+    linearization Dylan paper](linearization).
+
+- name: sinusoides
+  lang: ClojureScript
+  link: https://github.com/arximboldi/sinusoides
+  desc: |
+    At some point I decided to rewrite this site in ClojureScript to
+    play a bit with it.  The site is in an ethernal Work In Progress
+    state, but this might motivate me to put more work on it.
+
+- name: dotfiles
+  lang: Bash
+  link: https://github.com/arximboldi/dotfiles
+  desc: |
+    Since I discovered [GNU Stow](https://www.gnu.org/software/stow/)
+    I realized that there where no more excuses for not using a VCS
+    for my dotfiles.  Here are my settings for XMonad, Emacs, Bash and
+    and friends.
+
+- name: EatOutBerlin
+  lang: CoffeeScript
+  link: http://www.eatoutberlin.com
+  imgs: [ screens/eatout-small.png, screens/eatout.png ]
+  desc: |
+    [Maria Carrasco](http://carrasco.in) and I are hungry people
+    so we made this site to collect the food places we like best in
+    Berlin, and play with AngularJS along the way.  The content is an
+    ethernal work in progress, with most descriptions being just mocks
+    for now.  Pics are nice though.
+
+- name: Black Hole
+  lang: CoffeeScript
+  link: http://www.arthackday.net/projects/juan-pedro-bolivar-puente-jerome-morin-drouin-black-hole
+  imgs: [ screens/incredible-art-small.png, screens/incredible-art.png ]
+  desc: |
+    In 2013, [Jérôme
+    Morin-Drouin](http://www.theincrediblecompany.com/) and I
+    participated in the [ArtHackDay: Goin
+    Dark](http://www.arthackday.net/events/going-dark) in Berlin.  We
+    made this little piece about hidden things that can only be seen
+    through movement -- movement of the self, and movement of the
+    stars.
+
+  code: https://github.com/jmdrouin/incredible-art
+
+- name: jpblib
+  lang: Python
+  link: http://www.sinusoid.es/jpblib
+  desc: |
+    The Jolly Python Basic Library is a collection of basic utilities
+    that I used in most projects, like metaprogramming tools,
+    observers, etc.  The library is now in a process of being split
+    into more meaningful components, like
+    [Cooper](https://github.com/arximboldi/cooper).
+
+- name: Ableton
+  lang: C++
+  link: http://www.ableton.com
+  imgs: [ screens/ableton-small.png, screens/ableton.png ]
+  desc: |
+    I worked for Ableton between 2011 and 2016, where I was one of the
+    core developers of Push, a hardware instrument, and Live, a
+    leading digital audio workstation.
+
 #  C++
 # -----
 
@@ -163,12 +286,16 @@
 
 - name: Yet Another Auction System
   lang: Python
+  imgs: [ screens/yaas-small.png, screens/yaas.png ]
   link: soft/yaas-28.08.2010.tar.gz
   desc: |
     An online auction system written in Django for a course on web
     system development in the University of Turku in 2010. It lacks a
     proper payment system but features a multi-format REST
     interface among some other cool features.
+  deps: |
+    django==1.2
+    PIL (Python Imaging Library)
 
 - name: Member Manager
   lang: Python
@@ -223,6 +350,7 @@
 - name: ¡Mete tu palabra en el diccionario!
   lang: PHP
   link: rae
+  imgs: [ screens/dicc-small.png, screens/dicc.jpg ]
   desc: |
     Automated XSS exploit of the official Spanish dictionary to
     simulate user given definitions of non existant words. I notified
@@ -279,6 +407,7 @@
 - name: Artificial vision toolkit
   lang: Matlab
   link: soft/mia-18.02.2011.tar.gz
+  imgs: [ screens/mia-small.png, screens/mia.png ]
   desc: |
     An image processing and artificial vision toolkit with an user
     interface. It includes several algorithms, including border and
