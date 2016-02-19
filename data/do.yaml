@@ -96,7 +96,7 @@
 - name: Black Hole
   lang: CoffeeScript
   link: http://www.arthackday.net/projects/juan-pedro-bolivar-puente-jerome-morin-drouin-black-hole
-  imgs: [ screens/incredible-art-small.png, screens/incredible-art.png ]
+  imgs: [ screens/incredible-art-small.png, screens/incredible-art.jpg ]
   desc: |
     In 2013, [Jérôme
     Morin-Drouin](http://www.theincrediblecompany.com/) and I
@@ -217,7 +217,7 @@
 - name: GNU PDF
   lang: C
   link: http://www.gnupdf.org
-  imgs: [ screens/gnupdf.png ]
+  imgs: [ screens/gnupdf-small.png, screens/gnupdf.png ]
   desc: |
     Since 2006 I occasionally contribute to the GNU PDF project. My
     greater contributions are in the filters subsystem. It is a *FSF
