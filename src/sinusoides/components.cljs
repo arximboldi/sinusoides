@@ -17,14 +17,14 @@
 
 (defn render-todo []
   (html
-    [:div :id "todo"
-     [:a {:href (routes/main)} [:div {:id "backlink-vert"}]]
+    [:div {:id "todo-page"}
+     [:a {:href (routes/main)} [:div {:id "sinusoid"}]]
      [:div {:id "todo-block" :class "links"}
       "TO" [:a {:href (routes/do)} "DO."]]]))
 
 (defn render-main []
   (html
-    [:div {:id "backlink-nohover"}
+    [:div {:id "main-page"}
      [:div {:id "main-block" :class "links"}
       [:div {:id "main-pre-text"}
        "What " [:a {:href (routes/do)} "do"] " you "]
@@ -48,9 +48,9 @@
     om/IRender
     (render [_]
       (html
-        [:div
-         [:a {:href (routes/main)}  [:div {:id "backlink2"}]]
-         [:div {:id "am" :class "links"}
+        [:div {:id "am-page"}
+         [:a {:href (routes/main)}  [:div {:id "sinusoid"}]]
+         [:div {:id "am-block" :class "links"}
           [:p {:dangerouslySetInnerHTML
                {:__html "&nbsp;I&nbsp;<br/>&nbsp;am&nbsp;<br/>&nbsp;not&nbsp;<br/>"}}]]
          [:div {:id "profiles" :class "links"}
@@ -63,13 +63,14 @@
     om/IWillMount
     (will-mount [this]
       (go (let [response (<! (http/get "/data/do.json"))]
-            (om/update! do (group-by :lang (:body response))))))
+            (om/update! do (:body response)))))
 
     om/IRender
     (render [_]
       (html
-        [:div
-         [:a {:href (routes/main)}  [:div {:id "backlink"}]]
+        [:div {:id "do-page"}
+         [:a {:href (routes/main)}  [:div {:id "sinusoid"}]]
+
          [:div {:id "presentation" :class "links"}
           [:div {:class "title"} "Do."]
           [:div {:class "intro"}
@@ -89,29 +90,16 @@
           (map
             (fn [[lang _]]
               [:a {:href (str "#" (util/to-slug lang))} lang])
-            do)
+            (group-by :lang @do))
           [:a {:class "cv" :href "/old/files/cv-en.pdf"} "Curriculum Vitae"]]
 
-         [:div {:id "main-content"}
+         [:div {:class "programs"}
           (map
-            (fn [[lang programs]]
-              [:div {:class "language" :id (util/to-slug lang)}
-               [:div {:class "title"} lang]
-               [:table {:class "programs"}
-                (map
-                  (fn [p]
-                    [:tr [:td [:div
-                               (when-let [imgs (:imgs p)]
-                                 [:a {:href (str "/old/" (imgs 1))}
-                                  [:img {:src (str "/old/" (imgs 0))}]])
-                               [:h1 [:a {:href (:link p)} (:name p)]]
-                               [:p {:dangerouslySetInnerHTML
-                                    {:__html (md->html (:desc p))}}]]]])
-                  programs)]])
-            do)]
-
-         [:a {:id "totop" :href "#"
-              :dangerouslySetInnerHTML {:__html "&#9650;"}}]]))))
+             (fn [p]
+               (when-let [imgs (:imgs p)]
+                 [:a {:href (str "/old/" (imgs 1))}
+                  [:img {:src (str "/old/" (imgs 0))}]]))
+             do)]]))))
 
 (defn root-view [app _]
   (reify om/IRender
