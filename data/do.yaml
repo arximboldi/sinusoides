@@ -15,6 +15,7 @@
 - name: Atria
   lang: C++
   link: http://www.github.com/ableton/atria
+  imgs: [ screens/atria-small.png, screens/atria.jpg ]
   desc: |
     Developed at Ableton from 2014, this is a collection of core C++
     libraries with an emphasis on functional programming and
@@ -25,6 +26,7 @@
 - name: Aqt.Cassowary
   lang: C++
   link: http://www.github.com/ableton/aqt-cassowary
+  imgs: [ screens/cassowary-small.png, screens/cassowary.png ]
   desc: |
     Developed at Ableton in 2015, this is plugin brings the power of
     the [Cassowary constraint solver](http://overconstrained.io/) to
@@ -44,6 +46,7 @@
 - name: Mixco
   lang: CoffeeScript
   link: http://sinusoid.es/mixco/
+  imgs: [ screens/mixco-small.png, screens/mixco.png ]
   desc: |
     This is a framework for doing advanced controller mappings for
     [Mixxx](http://www.mixxx.org). It promotes a more *literate* and
@@ -54,6 +57,7 @@
 - name: Heterarchy
   lang: CoffeeScript
   link: http://sinusoid.es/heterarchy
+  imgs: [ screens/heterarchy-small.png, screens/heterarchy.png ]
   desc: |
     This library adds cooperative Python-style multiple inheritance to
     CoffeeScript.  The implementation is based on the famous [C3
@@ -61,6 +65,7 @@
 
 - name: sinusoides
   lang: ClojureScript
+  imgs: [ screens/sinusoides-small.png, screens/sinusoides.png ]
   link: https://github.com/arximboldi/sinusoides
   desc: |
     At some point I decided to rewrite this site in ClojureScript to
@@ -70,6 +75,7 @@
 - name: dotfiles
   lang: Bash
   link: https://github.com/arximboldi/dotfiles
+  imgs: [ screens/dotfiles-small.png, screens/dotfiles.png ]
   desc: |
     Since I discovered [GNU Stow](https://www.gnu.org/software/stow/)
     I realized that there where no more excuses for not using a VCS
@@ -105,6 +111,7 @@
 - name: jpblib
   lang: Python
   link: http://www.sinusoid.es/jpblib
+  imgs: [ screens/jpblib-small.png, screens/jpblib.png ]
   desc: |
     The Jolly Python Basic Library is a collection of basic utilities
     that I used in most projects, like metaprogramming tools,
@@ -157,6 +164,7 @@
 - name: Noxim 3D
   lang: C++
   link: https://launchpad.net/noxim-utu
+  imgs: [ screens/noxim-small.png, screens/noxim.png ]
   desc: |
     Noxim 3D is a modification of the [Noxim Network-on-Chip
     simulator](http://noxim.sourceforge.net/) to support 3D
@@ -167,6 +175,7 @@
 - name: MPI algorithms
   lang: C++
   link: soft/pdp-27.01.2011.tar.gz
+  imgs: [ screens/mpi-small.png, screens/mpi.png ]
   desc: |
     Some algorithms implemented using MPI and C++. Some of them, like
     branch and bound-based, are implemented generically such that new
@@ -176,6 +185,7 @@
 
 - name: Yet Another Neural Network
   lang: C++
+  imgs: [ screens/yann-small.png, screens/yann.png ]
   link: soft/yann-0.0.1.tar.gz
   desc: |
     A program that executes layered neural networks. It uses a
@@ -185,6 +195,7 @@
 
 - name: PLIS compiler
   lang: C++
+  imgs: [ screens/plisc-small.png, screens/plisc.png ]
   link: soft/plisc-0.1.2.tar.gz
   desc: |
     Compiler of my own languge with C-like semantics but maybe
@@ -216,6 +227,7 @@
 - name: PC speaker player
   lang: C
   link: ec2-24.06.2008.tar.gz
+  imgs: [ screens/ec2-small.png, screens/ec2.png ]
   desc: |
     This includes two tools for playing music on the PC speaker: a
     MS-DOS raw audio file player with filters and FX, and a Linux 2.6
@@ -226,6 +238,7 @@
 - name: Mail Crawl
   lang: C
   link: soft/mailcrawl-0.2.0.tar.gz
+  imgs: [ screens/mailcrawl-small.png, screens/mailcrawl.png ]
   desc: |
     A multi-threaded web crawler that finds email addresses on the
     web. You may give it a list of root web pages and it will follow
@@ -300,6 +313,7 @@
 - name: Member Manager
   lang: Python
   link: soft/member-28.10.2008.tar.gz
+  imgs: [ screens/member-small.png, screens/member.png ]
   desc: |
     A program for the management of the members of an
     organisation. Features a GTK UI and multiple database systems
@@ -308,6 +322,7 @@
 - name: HCrypt
   lang: Haskell
   link: soft/hcryp-10.07.2011.tar.gz
+  imgs: [ screens/hcrypt-small.png, screens/hcrypt.png ]
   desc: |
     Collection of cryptographic and modular arithmetic programs
     written in 2011 for a course in cryptography in the University of
@@ -382,6 +397,7 @@
 - name: Harmonic
   lang: Java
   link: soft/harmonic-03.01.2008.tar.gz
+  imgs: [ screens/harmonic-small.png, screens/harmonic.png ]
   desc: |
     A clone of the <a href="http://www.last.fm">Last.fm</a>
     site. It uses servlets and its own dispatching and DOM

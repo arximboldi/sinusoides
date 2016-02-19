@@ -7,4 +7,7 @@ DATA = data/do.json \
 		   json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)' \
 		< $< > $@
 
-all: $(DATA)
+data: $(DATA)
+
+serve:
+	coffee server.coffee
