@@ -39,3 +39,8 @@
 
     om/IRender
     (render [_] (dom/div nil))))
+
+(defn togglej [set thing]
+  (if (contains? set thing)
+    (disj set thing)
+    (conj set thing)))

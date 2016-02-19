@@ -83,7 +83,7 @@ body
             display: block
         .intro
             font-size: 14px
-            text-align: justify
+            text-align: right
             color: #888
             line-height: 20px
     .programs
@@ -95,19 +95,31 @@ body
             border: 0px
             margin: 10px
     #language-links
-        margin: 40px 0 40px 40px
-        a
+        margin: 48px 0 40px 40px
+        a, .filter
+            cursor: pointer
             display: inline-block
             text-decoration: none
             color: #777
             padding: 10px
             margin-right: 0px
+            margin-top: 2px
             font-weight: bold
+            &.on
+                border-bottom: 2px solid red
+                margin-bottom: -2px
             &.cv
                 color: white
+                border-right: 1px solid #777
+            &.clearf
+                color: red
+                border-left: 1px solid red
             &:hover
                 background: red
                 color: white
+                &.on
+                    border-bottom: 2px solid white
+                    margin-bottom: -2px
 
 #am-page
     #am-block

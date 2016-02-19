@@ -4,7 +4,9 @@
 
 (defn init-app! []
   (let [state (atom {:view [:init]
-                     :do []
+                     :do {:entries []
+                          :languages []
+                          :filter {:languages #{}}}
                      :am []})]
     (enable-console-print!)
     (routes/init-router! state)

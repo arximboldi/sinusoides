@@ -62,8 +62,10 @@
   (reify
     om/IWillMount
     (will-mount [this]
-      (go (let [response (<! (http/get "/data/do.json"))]
-            (om/update! do (:body response)))))
+      (go (let [entries (:body  (<! (http/get "/data/do.json")))
+                languages (apply sorted-set (map :lang entries))]
+            (om/update! do [:entries] entries)
+            (om/update! do [:languages] languages))))
 
     om/IRender
     (render [_]
@@ -87,19 +89,37 @@
            here."]]
 
          [:div {:id "language-links"}
+          [:a {:class "cv" :href "/old/files/cv-en.pdf"} "Curriculum Vitae"]
+
           (map
-            (fn [[lang _]]
-              [:a {:href (str "#" (util/to-slug lang))} lang])
-            (group-by :lang @do))
-          [:a {:class "cv" :href "/old/files/cv-en.pdf"} "Curriculum Vitae"]]
+            (fn [lang]
+              [:div {:class
+                     (str "filter "
+                       (if (contains? (get-in do [:filter :languages]) lang)
+                         "on"
+                         "off"))
+                     :on-click
+                     (fn [] (om/transact! do [:filter :languages]
+                       #(util/togglej % lang)))}
+               lang])
+            (:languages do))
+
+          (when-not (empty? (get-in do [:filter :languages]))
+            [:div {:class "filter clearf"
+                   :on-click
+                   (fn [] (om/update! do [:filter :languages] #{}))}
+             "Clear"])]
 
          [:div {:class "programs"}
-          (map
-             (fn [p]
-               (when-let [imgs (:imgs p)]
-                 [:a {:href (str "/old/" (imgs 1))}
-                  [:img {:src (str "/old/" (imgs 0))}]]))
-             do)]]))))
+          (let [lang-filters (get-in do [:filter :languages])]
+            (map
+              (fn [p]
+                (when (or (empty? lang-filters)
+                        (contains? lang-filters (:lang p)))
+                  (when-let [imgs (:imgs p)]
+                    [:a {:href (str "/old/" (imgs 1))}
+                     [:img {:src (str "/old/" (imgs 0))}]])))
+              (:entries do)))]]))))
 
 (defn root-view [app _]
   (reify om/IRender
