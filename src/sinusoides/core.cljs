@@ -6,7 +6,8 @@
   (let [state (atom {:view [:init]
                      :do {:entries []
                           :languages []
-                          :filter {:languages #{}}}
+                          :filter {:languages #{}}
+                          :detail nil}
                      :am []})]
     (enable-console-print!)
     (routes/init-router! state)

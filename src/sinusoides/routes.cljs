@@ -10,7 +10,12 @@
 
 (defn make-routes! [app]
   (defroute am "/am" [] (om/update! app :view [:am]))
-  (defroute do "/do" [] (om/update! app :view [:do]))
+  (defroute do "/do" []
+    (om/update! app :view [:do])
+    (om/update! app [:do :detail] nil))
+  (defroute do- "/do/:id" [id]
+    (om/update! app :view [:do])
+    (om/update! app [:do :detail] id))
   (defroute think "/think" [] (om/update! app :view [:think]))
   (defroute todo "/todo" [] (om/update! app :view [:todo]))
   (defroute main "/" [] (om/update! app :view [:main])))

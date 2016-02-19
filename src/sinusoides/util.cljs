@@ -1,6 +1,7 @@
 (ns sinusoides.util
   (:require-macros [cljs.core.async.macros :refer [go-loop]])
   (:require [cljs.core.async :refer [close! chan pipe <!]]
+            [clojure.string :refer [lower-case replace]]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]))
 
@@ -17,10 +18,11 @@
 
 (defn to-slug [str]
   (-> str
-    (.toLowerCase)
-    (.replace "-+" "")
-    (.replace "\\s+" "-")
-    (.replace "[^a-z0-9-]" "")))
+    (lower-case)
+    (replace #"-+" "")
+    (replace #"\.+" "-")
+    (replace #"\s+" "-")
+    (replace #"[^a-z0-9-]" "")))
 
 (defn chan-to-cursor-updates [cursor owner [input-channel korks]]
   (reify

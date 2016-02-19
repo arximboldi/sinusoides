@@ -58,68 +58,95 @@
                  [:div {:id name} [:a {:href url} "not this"]])
                am)]]))))
 
+(defn render-do-detail [do [idx p] entries]
+  (html
+    [:div {:id "do-detail" :class "links"}
+     [:a {:id "img"
+          :href (str "/old/" ((:imgs p) 1))
+          :style {:background-image (str "url(\"/old/" ((:imgs p) 1) "\")")}}]
+     [:div {:id "body"}
+      [:div {:id "content"}
+       [:div {:id "header"} (:name p)]
+       [:div {:id "desc"
+              :dangerouslySetInnerHTML
+              {:__html (md->html (:desc p))}}]
+       [:a {:class "link" :href (:link p)} "Link"]]
+      [:div {:id "footer"}
+       (if-let [id (get-in entries [(- idx 1) :slug])]
+         [:a {:class "prev enabled" :href (routes/do- {:id id})}]
+         [:div {:class "prev disabled"}])
+       (if-let [id (get-in entries [(+ idx 1) :slug])]
+         [:a {:class "next enabled" :href (routes/do- {:id id})}]
+         [:div {:class "next disabled"}])
+       [:a {:class "close" :href (routes/do)}]]]]))
+
+(defn render-do [do entries]
+  (html
+    [:div {:id "do-page"}
+     [:a {:href (routes/main)}  [:div {:id "sinusoid"}]]
+     [:div {:id "presentation" :class "links"}
+      [:div {:class "title"} "Do."]
+      [:div {:class "intro"}
+       [:a {:href (routes/am)} "Being"]
+       " is doing. People often do something for a living. One thing
+         that I do a lot is developing software. Most of it is "
+       [:a {:href "http://www.gnu.org/philosophy/free-sw.html"}
+        "Free Software"]
+       ". Because programming is fun. Because Free Software is a
+       good "
+       [:a {:href "todo.html"} "thought"]
+       ". You can download some of the products of my doing here."]]
+
+     [:div {:id "language-links"}
+      [:a {:class "cv" :href "/old/files/cv-en.pdf"} "Curriculum Vitae"]
+      (map
+        (fn [lang]
+          [:div {:class
+                 (str "filter "
+                   (if (contains? (get-in do [:filter :languages]) lang)
+                     "on"
+                     "off"))
+                 :on-click
+                 (fn [] (om/transact! do [:filter :languages]
+                          #(util/togglej % lang)))}
+           lang])
+        (:languages do))
+
+      (when-not (empty? (get-in do [:filter :languages]))
+        [:div {:class "filter clearf"
+               :on-click
+               (fn [] (om/update! do [:filter :languages] #{}))}
+         "Clear"])]
+
+     [:div {:class "programs"}
+      (map (fn [p] [:a {:href (routes/do- {:id (:slug p)})}
+                    [:img {:src (str "/old/" ((:imgs p) 0))}]])
+        entries)]]))
+
 (defn do-view [do _]
   (reify
     om/IWillMount
     (will-mount [this]
-      (go (let [entries (:body  (<! (http/get "/data/do.json")))
+      (go (let [entries   (map #(assoc % :slug (util/to-slug (:name %)))
+                            (:body  (<! (http/get "/data/do.json"))))
                 languages (apply sorted-set (map :lang entries))]
             (om/update! do [:entries] entries)
             (om/update! do [:languages] languages))))
 
     om/IRender
     (render [_]
-      (html
-        [:div {:id "do-page"}
-         [:a {:href (routes/main)}  [:div {:id "sinusoid"}]]
-
-         [:div {:id "presentation" :class "links"}
-          [:div {:class "title"} "Do."]
-          [:div {:class "intro"}
-           [:a {:href (routes/am)} "Being"]
-           " is doing. People often do something for a living. One
-           thing that I do a lot is developing software. Most of it
-           is "
-           [:a {:href "http://www.gnu.org/philosophy/free-sw.html"}
-            "Free Software"] ".
-           Because programming is fun. Because Free Software is a
-           good "
-           [:a {:href "todo.html"} "thought"]
-           ". You can download some of the products of my doing
-           here."]]
-
-         [:div {:id "language-links"}
-          [:a {:class "cv" :href "/old/files/cv-en.pdf"} "Curriculum Vitae"]
-
-          (map
-            (fn [lang]
-              [:div {:class
-                     (str "filter "
-                       (if (contains? (get-in do [:filter :languages]) lang)
-                         "on"
-                         "off"))
-                     :on-click
-                     (fn [] (om/transact! do [:filter :languages]
-                       #(util/togglej % lang)))}
-               lang])
-            (:languages do))
-
-          (when-not (empty? (get-in do [:filter :languages]))
-            [:div {:class "filter clearf"
-                   :on-click
-                   (fn [] (om/update! do [:filter :languages] #{}))}
-             "Clear"])]
-
-         [:div {:class "programs"}
-          (let [lang-filters (get-in do [:filter :languages])]
-            (map
-              (fn [p]
-                (when (or (empty? lang-filters)
-                        (contains? lang-filters (:lang p)))
-                  (when-let [imgs (:imgs p)]
-                    [:a {:href (str "/old/" (imgs 1))}
-                     [:img {:src (str "/old/" (imgs 0))}]])))
-              (:entries do)))]]))))
+      (let [lang-filters (get-in do [:filter :languages])
+            entries (apply vector (filter
+                      #(or (empty? lang-filters)
+                         (contains? lang-filters (:lang %)))
+                      (:entries do)))]
+        (if-let [id (:detail do)]
+          (when-let [p (first
+                         (filter #(= id (:slug (% 1)))
+                           (map-indexed vector
+                             entries)))]
+            (render-do-detail do p entries))
+          (render-do do entries))))))
 
 (defn root-view [app _]
   (reify om/IRender

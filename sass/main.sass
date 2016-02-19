@@ -55,6 +55,96 @@ body
         top: 50%
         margin: -210px 0 0 -640px
 
+
+#do-detail
+    position: fixed
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    #img
+        display: block
+        float: left
+        width: 50%
+        height: 100%
+        background-size: cover
+        background-position: center center
+    #body
+        float: left
+        width: 50%
+        height: 100%
+    #content
+        width: 100%
+        padding: 16%
+        box-sizing: border-box
+    #header
+        background: white
+        margin: -2% -2% 0 0
+        padding: 10px
+        text-transform: uppercase
+        text-align: right
+        font-size: 2em
+        font-weight: bold
+        float: right
+    #desc
+        a
+            color: white
+            &:hover
+                color: red
+        color: #999
+        font-size: 1.5em
+        float: right
+        width: 100%
+        padding: 20px 0 0 0
+        box-sizing: border-box
+    a.link
+        color: white
+        border: 2px solid white
+        display: block
+        float: left
+        padding: 10px
+        font-weight: bold
+        &:hover
+            color: black
+            border: 2px solid red
+            background: red
+    #footer
+        position: absolute
+        bottom: 0
+        right: 0
+    .prev, .next
+        display: block
+        width: 72px
+        height: 72px
+    .prev
+        background: url(../old/pic/left.png)
+        &.enabled:hover
+            background: url(../old/pic/left-red.png)
+    .next
+        background: url(../old/pic/right.png)
+        &.enabled:hover
+            background: url(../old/pic/right-red.png)
+    .disabled
+        opacity: 0.25
+    .close
+        display: block
+        width: 30px
+        height: 30px
+        margin: 21px
+        background-image: url(../old/pic/close.png)
+        background-position: center center
+        &:hover
+            background-image: url(../old/pic/close-red.png)
+    #sinusoid
+        position: relative
+        width: 100%
+        height: 150px
+        background: url(../old/pic/sinusoid-m-c.png)
+        margin: 90px 0 0 0
+        &:hover
+            background: url(../old/pic/sinusoid-m-c-red.png)
+
+
 #do-page
     #sinusoid
         position: relative
@@ -62,7 +152,6 @@ body
         height: 150px
         background: url(../old/pic/sinusoid-m-c.png)
         margin: 90px 0 0 0
-        z-index: 0
         &:hover
             background: url(../old/pic/sinusoid-m-c-red.png)
     #presentation
