@@ -4,6 +4,7 @@
             [sinusoides.routes :as routes]
             [cljs-http.client :as http]
             [cljs.core.match :refer-macros [match]]
+            [goog.events :as events]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
             [sablono.core :as html :refer-macros [html]]
@@ -124,29 +125,53 @@
         entries)]]))
 
 (defn do-view [do _]
-  (reify
-    om/IWillMount
-    (will-mount [this]
-      (go (let [entries   (map #(assoc % :slug (util/to-slug (:name %)))
-                            (:body  (<! (http/get "/data/do.json"))))
-                languages (apply sorted-set (map :lang entries))]
-            (om/update! do [:entries] entries)
-            (om/update! do [:languages] languages))))
+  (letfn
+      [(filter-entries []
+         (let [lang-filters (get-in @do [:filter :languages])]
+           (apply vector (filter
+                           #(or (empty? lang-filters)
+                              (contains? lang-filters (:lang %)))
+                           (:entries @do)))))
 
-    om/IRender
-    (render [_]
-      (let [lang-filters (get-in do [:filter :languages])
-            entries (apply vector (filter
-                      #(or (empty? lang-filters)
-                         (contains? lang-filters (:lang %)))
-                      (:entries do)))]
-        (if-let [id (:detail do)]
-          (when-let [p (first
-                         (filter #(= id (:slug (% 1)))
-                           (map-indexed vector
-                             entries)))]
-            (render-do-detail do p entries))
-          (render-do do entries))))))
+       (find-entry [entries id]
+         (first (filter #(= id (:slug (% 1)))
+                  (map-indexed vector entries))))
+
+       (nav-arrow! [diff]
+         (when-let [id (:detail @do)]
+           (let [entries (filter-entries)]
+             (when-let [[idx _] (find-entry entries id)]
+               (when-let [next (get-in entries [(+ idx diff) :slug])]
+                 (routes/nav! (routes/do- {:id next})))))))
+
+       (key-listener [event]
+         (case (.-keyCode event)
+           37 (nav-arrow! -1)
+           39 (nav-arrow! +1)
+           27 (routes/nav! (routes/do))
+           nil))]
+
+    (reify
+      om/IWillMount
+      (will-mount [this]
+        (events/listen js/document "keydown" key-listener)
+        (go (let [entries   (map #(assoc % :slug (util/to-slug (:name %)))
+                              (:body  (<! (http/get "/data/do.json"))))
+                  languages (apply sorted-set (map :lang entries))]
+              (om/update! do [:entries] entries)
+              (om/update! do [:languages] languages))))
+
+      om/IWillUnmount
+      (will-unmount [this]
+        (events/unlisten js/document "keydown" key-listener))
+
+      om/IRender
+      (render [_]
+        (let [entries (filter-entries)]
+          (if-let [id (:detail do)]
+            (when-let [p (find-entry entries id)]
+              (render-do-detail do p entries))
+            (render-do do entries)))))))
 
 (defn root-view [app _]
   (reify om/IRender

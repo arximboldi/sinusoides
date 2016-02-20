@@ -8,6 +8,8 @@
             [pushy.core :as pushy])
   (:import goog.History))
 
+(def history (atom))
+
 (defn make-routes! [app]
   (defroute am "/am" [] (om/update! app :view [:am]))
   (defroute do "/do" []
@@ -37,7 +39,7 @@
                     (when (and (not= @last-dispatched uri)
                             (secretary/locate-route (no-prefix uri)))
                       uri))]
-    (pushy/push-state! dispatch match-uri)))
+    (swap! history #(pushy/push-state! dispatch match-uri))))
 
 (defn router [app owner]
   (reify
@@ -50,3 +52,6 @@
   (om/root router state
     {:target (.getElementById js/document "router")})
   (init-history!))
+
+(defn nav! [token]
+  (pushy/set-token! @history token))
