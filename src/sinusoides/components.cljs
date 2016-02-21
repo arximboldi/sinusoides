@@ -8,7 +8,8 @@
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
             [sablono.core :as html :refer-macros [html]]
-            [cljs.core.match]))
+            [cljs.core.match]
+            [cljsjs.showdown]))
 
 (defn render-init []
   (html [:div "Initializing..."]))

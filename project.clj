@@ -3,6 +3,7 @@
   :url "http://sinusoidesapp.appspot.com"
 
   :dependencies [[cljs-http "0.1.24"]
+                 [cljsjs/showdown "0.4.0-1"]
                  [com.andrewmcveigh/cljs-time "0.3.0"]
                  [kibu/pushy "0.3.6"]
                  [org.clojure/clojure "1.8.0"]
@@ -31,5 +32,4 @@
        :compiler {:output-to "build/release/sinusoides.js"
                   :main sinusoides.core
                   :optimizations :advanced
-                  :pretty-print false
-                  :externs ["ext/Showdown.js"]}}]})
+                  :pretty-print false}}]})
