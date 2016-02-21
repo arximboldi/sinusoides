@@ -4,7 +4,7 @@
 - name: ZBeats
   lang: JavaScript
   link: http://kostspielig.github.io/zbeats
-  imgs: [ screens/zbeats-small.png, screens/zbeats.png ]
+  imgs: [ zbeats-small.png, zbeats.png ]
   desc: |
     This an Ableton Live inspired web app to make music by playing
     multiple clips.  Tempo can be adjusted and everything is kept in
@@ -15,7 +15,7 @@
 - name: Atria
   lang: C++
   link: http://www.github.com/ableton/atria
-  imgs: [ screens/atria-small.png, screens/atria.jpg ]
+  imgs: [ atria-small.png, atria.jpg ]
   desc: |
     Developed at Ableton from 2014, this is a collection of core C++
     libraries with an emphasis on functional programming and
@@ -26,7 +26,7 @@
 - name: Aqt.Cassowary
   lang: C++
   link: http://www.github.com/ableton/aqt-cassowary
-  imgs: [ screens/cassowary-small.png, screens/cassowary.png ]
+  imgs: [ cassowary-small.png, cassowary.png ]
   desc: |
     Developed at Ableton in 2015, this is plugin brings the power of
     the [Cassowary constraint solver](http://overconstrained.io/) to
@@ -35,7 +35,7 @@
 
 - name: Cooper
   lang: Python
-  imgs: [ screens/cooper-small.png, screens/cooper.jpg ]
+  imgs: [ cooper-small.png, cooper.jpg ]
   link: https://github.com/arximboldi/cooper
   desc: |
     Decorator library for safer cooperative methods in Python.  It
@@ -46,7 +46,7 @@
 - name: Mixco
   lang: CoffeeScript
   link: http://sinusoid.es/mixco/
-  imgs: [ screens/mixco-small.png, screens/mixco.png ]
+  imgs: [ mixco-small.png, mixco.png ]
   desc: |
     This is a framework for doing advanced controller mappings for
     [Mixxx](http://www.mixxx.org). It promotes a more *literate* and
@@ -57,7 +57,7 @@
 - name: Heterarchy
   lang: CoffeeScript
   link: http://sinusoid.es/heterarchy
-  imgs: [ screens/heterarchy-small.png, screens/heterarchy.png ]
+  imgs: [ heterarchy-small.png, heterarchy.png ]
   desc: |
     This library adds cooperative Python-style multiple inheritance to
     CoffeeScript.  The implementation is based on the famous [C3
@@ -65,7 +65,7 @@
 
 - name: sinusoides
   lang: ClojureScript
-  imgs: [ screens/sinusoides-small.png, screens/sinusoides.png ]
+  imgs: [ sinusoides-small.png, sinusoides.png ]
   link: https://github.com/arximboldi/sinusoides
   desc: |
     At some point I decided to rewrite this site in ClojureScript to
@@ -75,7 +75,7 @@
 - name: dotfiles
   lang: Bash
   link: https://github.com/arximboldi/dotfiles
-  imgs: [ screens/dotfiles-small.png, screens/dotfiles.png ]
+  imgs: [ dotfiles-small.png, dotfiles.png ]
   desc: |
     Since I discovered [GNU Stow](https://www.gnu.org/software/stow/)
     I realized that there where no more excuses for not using a VCS
@@ -85,7 +85,7 @@
 - name: EatOutBerlin
   lang: CoffeeScript
   link: http://www.eatoutberlin.com
-  imgs: [ screens/eatout-small.png, screens/eatout.png ]
+  imgs: [ eatout-small.png, eatout.png ]
   desc: |
     [Maria Carrasco](http://carrasco.in) and I are hungry people
     so we made this site to collect the food places we like best in
@@ -96,7 +96,7 @@
 - name: Black Hole
   lang: CoffeeScript
   link: http://www.arthackday.net/projects/juan-pedro-bolivar-puente-jerome-morin-drouin-black-hole
-  imgs: [ screens/incredible-art-small.png, screens/incredible-art.jpg ]
+  imgs: [ incredible-art-small.png, incredible-art.jpg ]
   desc: |
     In 2013, [Jérôme
     Morin-Drouin](http://www.theincrediblecompany.com/) and I
@@ -111,7 +111,7 @@
 - name: jpblib
   lang: Python
   link: http://www.sinusoid.es/jpblib
-  imgs: [ screens/jpblib-small.png, screens/jpblib.png ]
+  imgs: [ jpblib-small.png, jpblib.png ]
   desc: |
     The Jolly Python Basic Library is a collection of basic utilities
     that I used in most projects, like metaprogramming tools,
@@ -122,7 +122,7 @@
 - name: Ableton
   lang: C++
   link: http://www.ableton.com
-  imgs: [ screens/ableton-small.png, screens/ableton.png ]
+  imgs: [ ableton-small.png, ableton.png ]
   desc: |
     I worked for Ableton between 2011 and 2016, where I was one of the
     core developers of Push, a hardware instrument, and Live, a
@@ -134,7 +134,7 @@
 - name: GNU Psychosynth
   lang: C++
   link: http://www.psychosynth.com
-  imgs: [ screens/psynth-small.png, screens/psynth.png ]
+  imgs: [ psynth-small.png, psynth.png ]
   desc: |
     A framework for the development of modular, interactive and
     collaborative synthesisers targeted at live music performance. It
@@ -143,8 +143,8 @@
 
 - name: Overdose
   lang: C++
-  link: soft/overdose-0.1.2.tar.gz
-  imgs: [ screens/overdose-small.png, screens/overdose.png ]
+  link: /static/soft/overdose-0.1.2.tar.gz
+  imgs: [ overdose-small.png, overdose.png ]
   desc: |
     A 3D game were you are a ruined trader who chooses to end his life
     by taking as much drug as he can &mdash; if the dealers and cops
@@ -154,7 +154,7 @@
 - name: Mixxx
   lang: C++
   link: http://www.mixxx.org
-  imgs: [ screens/mixxx-small.png, screens/mixxx.png ]
+  imgs: [ mixxx-small.png, mixxx.png ]
   desc: |
     Mixxx is a professional DJ software. I am mostly a user, but since
     2010 I have made a couple of patches and maintain the
@@ -164,7 +164,7 @@
 - name: Noxim 3D
   lang: C++
   link: https://launchpad.net/noxim-utu
-  imgs: [ screens/noxim-small.png, screens/noxim.png ]
+  imgs: [ noxim-small.png, noxim.png ]
   desc: |
     Noxim 3D is a modification of the [Noxim Network-on-Chip
     simulator](http://noxim.sourceforge.net/) to support 3D
@@ -174,8 +174,8 @@
 
 - name: MPI algorithms
   lang: C++
-  link: soft/pdp-27.01.2011.tar.gz
-  imgs: [ screens/mpi-small.png, screens/mpi.png ]
+  link: /static/soft/pdp-27.01.2011.tar.gz
+  imgs: [ mpi-small.png, mpi.png ]
   desc: |
     Some algorithms implemented using MPI and C++. Some of them, like
     branch and bound-based, are implemented generically such that new
@@ -185,8 +185,8 @@
 
 - name: Yet Another Neural Network
   lang: C++
-  imgs: [ screens/yann-small.png, screens/yann.png ]
-  link: soft/yann-0.0.1.tar.gz
+  imgs: [ yann-small.png, yann.png ]
+  link: /static/soft/yann-0.0.1.tar.gz
   desc: |
     A program that executes layered neural networks. It uses a
     pipelined multi-threaded evaluation algorithm that is described in
@@ -195,8 +195,8 @@
 
 - name: PLIS compiler
   lang: C++
-  imgs: [ screens/plisc-small.png, screens/plisc.png ]
-  link: soft/plisc-0.1.2.tar.gz
+  imgs: [ plisc-small.png, plisc.png ]
+  link: /static/soft/plisc-0.1.2.tar.gz
   desc: |
     Compiler of my own languge with C-like semantics but maybe
     shorter syntax. Written in 2007 as part of a course in
@@ -208,7 +208,7 @@
 - name: GNU Jump
   lang: C
   link: http://gnujump.es.gnu.org
-  imgs: [ screens/gnujump-small.png, screens/gnujump.png ]
+  imgs: [ gnujump-small.png, gnujump.png ]
   desc: |
     Since 2005, when I had too much free time at high school, I
     develop and maintain this simple yet addictive arcade game
@@ -217,7 +217,7 @@
 - name: GNU PDF
   lang: C
   link: http://www.gnupdf.org
-  imgs: [ screens/gnupdf-small.png, screens/gnupdf.png ]
+  imgs: [ gnupdf-small.png, gnupdf.png ]
   desc: |
     Since 2006 I occasionally contribute to the GNU PDF project. My
     greater contributions are in the filters subsystem. It is a *FSF
@@ -227,7 +227,7 @@
 - name: PC speaker player
   lang: C
   link: ec2-24.06.2008.tar.gz
-  imgs: [ screens/ec2-small.png, screens/ec2.png ]
+  imgs: [ ec2-small.png, ec2.png ]
   desc: |
     This includes two tools for playing music on the PC speaker: a
     MS-DOS raw audio file player with filters and FX, and a Linux 2.6
@@ -237,8 +237,8 @@
 
 - name: Mail Crawl
   lang: C
-  link: soft/mailcrawl-0.2.0.tar.gz
-  imgs: [ screens/mailcrawl-small.png, screens/mailcrawl.png ]
+  link: /static/soft/mailcrawl-0.2.0.tar.gz
+  imgs: [ mailcrawl-small.png, mailcrawl.png ]
   desc: |
     A multi-threaded web crawler that finds email addresses on the
     web. You may give it a list of root web pages and it will follow
@@ -247,8 +247,8 @@
 
 - name: GL Morph
   lang: C
-  link: soft/glmorph-12.05.2008.tar.gz
-  imgs: [ screens/glmesh-small.png, screens/glmesh.png ]
+  link: /static/soft/glmorph-12.05.2008.tar.gz
+  imgs: [ glmesh-small.png, glmesh.png ]
   desc: |
     A simple program for doing grid-based morphing transformation
     written in 2006. It includes a grid editor and an animation
@@ -257,7 +257,7 @@
 - name: Luciferino
   lang: C
   link: http://luciferino.sourceforge.net/
-  imgs: [ screens/luciferino-small.png, screens/luciferino.png ]
+  imgs: [ luciferino-small.png, luciferino.png ]
   desc: |
     In 2003-2006 I developed this aim-and-shoot sidescroller game
     engine. It was never fully completed, but its core was reused to
@@ -269,7 +269,7 @@
 - name: Advanced Python Course
   lang: Python
   link: python-avanzado
-  imgs: [ screens/gfits-small.png, screens/gfits.png ]
+  imgs: [ gfits-small.png, gfits.png ]
   desc: |
     A course in advanced Python targeted at astrophysics programmers
     that I held in 2011 [at the IAA](http://www.iaa.es/). It included
@@ -279,7 +279,7 @@
 - name: Pigeoncide
   lang: Python
   link: https://savannah.nongnu.org/projects/pigeoncide
-  imgs: [ screens/pigeoncide-small.png, screens/pigeoncide.png ]
+  imgs: [ pigeoncide-small.png, pigeoncide.png ]
   desc: |
     A game written in 2010 with [Alberto Villegas
     Erce](http://albertovillegaserce.blogspot.com/) and others in the
@@ -290,7 +290,7 @@
 - name: Code of Greed
   lang: Python
   link: https://savannah.nongnu.org/projects/jagsat/
-  imgs: [ screens/jagsat-small.png, screens/jagsat.png ]
+  imgs: [ jagsat-small.png, jagsat.png ]
   desc: |
     A computer based Risk implementation featuring a novel touchable
     interface. Written in 2010 under the supervision of the
@@ -299,8 +299,8 @@
 
 - name: Yet Another Auction System
   lang: Python
-  imgs: [ screens/yaas-small.png, screens/yaas.png ]
-  link: soft/yaas-28.08.2010.tar.gz
+  imgs: [ yaas-small.png, yaas.png ]
+  link: /static/soft/yaas-28.08.2010.tar.gz
   desc: |
     An online auction system written in Django for a course on web
     system development in the University of Turku in 2010. It lacks a
@@ -312,8 +312,8 @@
 
 - name: Member Manager
   lang: Python
-  link: soft/member-28.10.2008.tar.gz
-  imgs: [ screens/member-small.png, screens/member.png ]
+  link: /static/soft/member-28.10.2008.tar.gz
+  imgs: [ member-small.png, member.png ]
   desc: |
     A program for the management of the members of an
     organisation. Features a GTK UI and multiple database systems
@@ -321,8 +321,8 @@
 
 - name: HCrypt
   lang: Haskell
-  link: soft/hcryp-10.07.2011.tar.gz
-  imgs: [ screens/hcrypt-small.png, screens/hcrypt.png ]
+  link: /static/soft/hcryp-10.07.2011.tar.gz
+  imgs: [ hcrypt-small.png, hcrypt.png ]
   desc: |
     Collection of cryptographic and modular arithmetic programs
     written in 2011 for a course in cryptography in the University of
@@ -331,19 +331,19 @@
 
 - name: HMech
   lang: Haskell
-  link: soft/hmech-24.06.2010.tar.gz
-  imgs: [ screens/hmech-small.png, screens/hmech.png ]
+  link: /static/soft/hmech-24.06.2010.tar.gz
+  imgs: [ hmech-small.png, hmech.png ]
   desc: |
     Artificial intelligence for the Battletech board game, the virtual
     board where it runs can be [downloaded
-    here](soft/Entorno_BattleTech_09-06-03.zip). It includes a 60
+    here](/static/soft/Entorno_BattleTech_09-06-03.zip). It includes a 60
     pages document describing its inner algorithms. Written in 2009
     for a course in knowledge modelling in the University of Granada.
 
 - name: HForm
   lang: Haskell
-  link: soft/hform-0.1.tar.gz
-  imgs: [ screens/hform-small.png, screens/hform.png ]
+  link: /static/soft/hform-0.1.tar.gz
+  imgs: [ hform-small.png, hform.png ]
   desc: |
     A tool for evaluating and simplifying predicate logic
     expressions. Includes a GTK user interface. Written in 2009
@@ -355,7 +355,7 @@
 - name: CVG Moodle plug-ins
   lang: PHP
   link: http://www.nongnu.org/cvg-moodle/
-  imgs: [ screens/jsxaal-small.png, screens/jsxaal.png ]
+  imgs: [ jsxaal-small.png, jsxaal.png ]
   desc: |
     Collection of Moodle plug-ins that were developed as a couple of
     internships in the University of Granada between 2009 and 2011 to
@@ -365,7 +365,7 @@
 - name: ¡Mete tu palabra en el diccionario!
   lang: PHP
   link: rae
-  imgs: [ screens/dicc-small.png, screens/dicc.jpg ]
+  imgs: [ dicc-small.png, dicc.jpg ]
   desc: |
     Automated XSS exploit of the official Spanish dictionary to
     simulate user given definitions of non existant words. I notified
@@ -377,8 +377,8 @@
 
 - name: Concurrent traffic simulator
   lang: Java
-  link: soft/pc-27.05.2009.tar.gz
-  imgs: [ screens/pc-small.png, screens/pc.png ]
+  link: /static/soft/pc-27.05.2009.tar.gz
+  imgs: [ pc-small.png, pc.png ]
   desc: |
     A traffic jam simulator. Introduces non-determinism by running
     each car in a separate thread and the road topology is driven by
@@ -387,8 +387,8 @@
 
 - name: JPoker
   lang: Java
-  link: soft/jpoker-23.01.2009.tar.gz
-  imgs: [ screens/jpoker-small.png, screens/jpoker.png ]
+  link: /static/soft/jpoker-23.01.2009.tar.gz
+  imgs: [ jpoker-small.png, jpoker.png ]
   desc: |
     A poker program with a SWT UI and a simple aritificial
     intelligence. Written in 2008 for a course in object oriented
@@ -396,8 +396,8 @@
 
 - name: Harmonic
   lang: Java
-  link: soft/harmonic-03.01.2008.tar.gz
-  imgs: [ screens/harmonic-small.png, screens/harmonic.png ]
+  link: /static/soft/harmonic-03.01.2008.tar.gz
+  imgs: [ harmonic-small.png, harmonic.png ]
   desc: |
     A clone of the <a href="http://www.last.fm">Last.fm</a>
     site. It uses servlets and its own dispatching and DOM
@@ -409,8 +409,8 @@
 
 - name: ASM Paint
   lang: ASM
-  link: soft/asmpaint-09.01.2008.tar.gz
-  imgs: [ screens/asmpaint-small.png, screens/asmpaint.png ]
+  link: /static/soft/asmpaint-09.01.2008.tar.gz
+  imgs: [ asmpaint-small.png, asmpaint.png ]
   desc: |
     A command based drawing application with support for script based
     animations. Written in 2007 as part of a course on computer
@@ -422,8 +422,8 @@
 
 - name: Artificial vision toolkit
   lang: Matlab
-  link: soft/mia-18.02.2011.tar.gz
-  imgs: [ screens/mia-small.png, screens/mia.png ]
+  link: /static/soft/mia-18.02.2011.tar.gz
+  imgs: [ mia-small.png, mia.png ]
   desc: |
     An image processing and artificial vision toolkit with an user
     interface. It includes several algorithms, including border and

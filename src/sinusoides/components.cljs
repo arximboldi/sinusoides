@@ -63,8 +63,9 @@
   (html
     [:div {:id "do-detail" :class "links"}
      [:a {:id "img"
-          :href (str "/old/" ((:imgs p) 1))
-          :style {:background-image (str "url(\"/old/" ((:imgs p) 1) "\")")}}]
+          :href (str "/static/screens" ((:imgs p) 1))
+          :style {:background-image
+                  (str "url(/static/screens/" ((:imgs p) 1) ")")}}]
      [:div {:id "body"}
       [:div {:id "content"}
        [:div {:id "header"} (:name p)]
@@ -99,7 +100,7 @@
        ". You can download some of the products of my doing here."]]
 
      [:div {:id "language-links"}
-      [:a {:class "cv" :href "/old/files/cv-en.pdf"} "Curriculum Vitae"]
+      [:a {:class "cv" :href "/static/files/cv-en.pdf"} "Curriculum Vitae"]
       (map
         (fn [lang]
           [:div {:class
@@ -121,7 +122,7 @@
 
      [:div {:class "programs"}
       (map (fn [p] [:a {:href (routes/do- {:id (:slug p)})}
-                    [:img {:src (str "/old/" ((:imgs p) 0))}]])
+                    [:img {:src (str "/static/screens/" ((:imgs p) 0))}]])
         entries)]]))
 
 (defn do-view [do _]
