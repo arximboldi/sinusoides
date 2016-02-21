@@ -7,3 +7,4 @@ css/
 node_modules/
 .lein-repl-history
 .nrepl-port
+host.ncftpput
