@@ -128,8 +128,28 @@
     core developers of Push, a hardware instrument, and Live, a
     leading digital audio workstation.
 
-#  C++
-# -----
+# University
+# ----------
+
+- name: Advanced Python Course
+  lang: Python
+  link: python-avanzado
+  imgs: [ gfits-small.png, gfits.png ]
+  desc: |
+    A course in advanced Python targeted at astrophysics programmers
+    that I held in 2011 [at the IAA](http://www.iaa.es/). It included
+    OO and functional programming, metaprogramming, GTK, library
+    interfacing, TTD, Django and others.
+
+- name: CVG Moodle plug-ins
+  lang: PHP
+  link: http://www.nongnu.org/cvg-moodle/
+  imgs: [ jsxaal-small.png, jsxaal.png ]
+  desc: |
+    Collection of Moodle plug-ins that were developed as a couple of
+    internships in the University of Granada between 2009 and 2011 to
+    adapt it to our specific needs. They might be useful to some other
+    Computer Science departments.
 
 - name: GNU Psychosynth
   lang: C++
@@ -141,16 +161,6 @@
     won the Spanish Inter-University Free Software contest in
     2008. Written in 2007 onwards.
 
-- name: Overdose
-  lang: C++
-  link: /static/soft/overdose-0.1.2.tar.gz
-  imgs: [ overdose-small.png, overdose.png ]
-  desc: |
-    A 3D game were you are a ruined trader who chooses to end his life
-    by taking as much drug as he can &mdash; if the dealers and cops
-    let you! Written in 2008 for a university course in computer
-    graphics with its own engine on top of SDL.
-
 - name: Mixxx
   lang: C++
   link: http://www.mixxx.org
@@ -161,16 +171,25 @@
     **JavaScript** MIDI mapping for the [M-Audio Xponent
     controller](http://www.mixxx.org/wiki/doku.php/m-audio_xponent).
 
-- name: Noxim 3D
-  lang: C++
-  link: https://launchpad.net/noxim-utu
-  imgs: [ noxim-small.png, noxim.png ]
+- name: HCrypt
+  lang: Haskell
+  link: /static/soft/hcryp-10.07.2011.tar.gz
+  imgs: [ hcrypt-small.png, hcrypt.png ]
   desc: |
-    Noxim 3D is a modification of the [Noxim Network-on-Chip
-    simulator](http://noxim.sourceforge.net/) to support 3D
-    networks. It can simulate several routing algorithms and the TSV
-    disposition is fully configurable. I wrote it in 2010 in the
-    University of Turku under the supervision of Alexander Yin.
+    Collection of cryptographic and modular arithmetic programs
+    written in 2011 for a course in cryptography in the University of
+    Granada. It includes high performant symmetric and asymmetric
+    cryptographic programs, hashes, among other things.
+
+- name: Artificial vision toolkit
+  lang: Matlab
+  link: /static/soft/mia-18.02.2011.tar.gz
+  imgs: [ mia-small.png, mia.png ]
+  desc: |
+    An image processing and artificial vision toolkit with an user
+    interface. It includes several algorithms, including border and
+    corner detection and block matching. Written in 2011 in a course
+    in models of artificial intelligence.
 
 - name: MPI algorithms
   lang: C++
@@ -183,98 +202,18 @@
     hooks. Written in 2010 for a university course in parallel
     programming.
 
-- name: Yet Another Neural Network
+# -- Erasmus --
+
+- name: Noxim 3D
   lang: C++
-  imgs: [ yann-small.png, yann.png ]
-  link: /static/soft/yann-0.0.1.tar.gz
+  link: https://launchpad.net/noxim-utu
+  imgs: [ noxim-small.png, noxim.png ]
   desc: |
-    A program that executes layered neural networks. It uses a
-    pipelined multi-threaded evaluation algorithm that is described in
-    its documentation. Written in 2008 for a university course in
-    computation models.
-
-- name: PLIS compiler
-  lang: C++
-  imgs: [ plisc-small.png, plisc.png ]
-  link: /static/soft/plisc-0.1.2.tar.gz
-  desc: |
-    Compiler of my own languge with C-like semantics but maybe
-    shorter syntax. Written in 2007 as part of a course in
-    computer organisation in the University of Granada.
-
-#  C
-# ---
-
-- name: GNU Jump
-  lang: C
-  link: http://gnujump.es.gnu.org
-  imgs: [ gnujump-small.png, gnujump.png ]
-  desc: |
-    Since 2005, when I had too much free time at high school, I
-    develop and maintain this simple yet addictive arcade game
-    were one should jump ad-nauseum to survive.
-
-- name: GNU PDF
-  lang: C
-  link: http://www.gnupdf.org
-  imgs: [ gnupdf-small.png, gnupdf.png ]
-  desc: |
-    Since 2006 I occasionally contribute to the GNU PDF project. My
-    greater contributions are in the filters subsystem. It is a *FSF
-    high priority project* so you are very welcomed [to
-    join](http://planet.gnu.org/gnupdf/?p=9).
-
-- name: PC speaker player
-  lang: C
-  link: ec2-24.06.2008.tar.gz
-  imgs: [ ec2-small.png, ec2.png ]
-  desc: |
-    This includes two tools for playing music on the PC speaker: a
-    MS-DOS raw audio file player with filters and FX, and a Linux 2.6
-    OSS driver that exposes the PC speaker as an audio
-    interface. Developed in 2008 for a course in computer
-    organization.
-
-- name: Mail Crawl
-  lang: C
-  link: /static/soft/mailcrawl-0.2.0.tar.gz
-  imgs: [ mailcrawl-small.png, mailcrawl.png ]
-  desc: |
-    A multi-threaded web crawler that finds email addresses on the
-    web. You may give it a list of root web pages and it will follow
-    links dumping all unique email address it finds. Written in 2007
-    as part of a course in formal languages in University of Granada.
-
-- name: GL Morph
-  lang: C
-  link: /static/soft/glmorph-12.05.2008.tar.gz
-  imgs: [ glmesh-small.png, glmesh.png ]
-  desc: |
-    A simple program for doing grid-based morphing transformation
-    written in 2006. It includes a grid editor and an animation
-    player.
-
-- name: Luciferino
-  lang: C
-  link: http://luciferino.sourceforge.net/
-  imgs: [ luciferino-small.png, luciferino.png ]
-  desc: |
-    In 2003-2006 I developed this aim-and-shoot sidescroller game
-    engine. It was never fully completed, but its core was reused to
-    later write GNU Jump.
-
-#  Python
-# --------
-
-- name: Advanced Python Course
-  lang: Python
-  link: python-avanzado
-  imgs: [ gfits-small.png, gfits.png ]
-  desc: |
-    A course in advanced Python targeted at astrophysics programmers
-    that I held in 2011 [at the IAA](http://www.iaa.es/). It included
-    OO and functional programming, metaprogramming, GTK, library
-    interfacing, TTD, Django and others.
+    Noxim 3D is a modification of the [Noxim Network-on-Chip
+    simulator](http://noxim.sourceforge.net/) to support 3D
+    networks. It can simulate several routing algorithms and the TSV
+    disposition is fully configurable. I wrote it in 2010 in the
+    University of Turku under the supervision of Alexander Yin.
 
 - name: Pigeoncide
   lang: Python
@@ -286,16 +225,6 @@
     University of Turku were one is a crazy kill convinced to
     massively extermine pigeons. The game features cool flockin AI and
     is looking for a 3D designer.
-
-- name: Code of Greed
-  lang: Python
-  link: https://savannah.nongnu.org/projects/jagsat/
-  imgs: [ jagsat-small.png, jagsat.png ]
-  desc: |
-    A computer based Risk implementation featuring a novel touchable
-    interface. Written in 2010 under the supervision of the
-    [TribeFlame]( http://www.tribeflame.com/) game company in the
-    University of Turku.
 
 - name: Yet Another Auction System
   lang: Python
@@ -310,24 +239,27 @@
     django==1.2
     PIL (Python Imaging Library)
 
-- name: Member Manager
+- name: Code of Greed
   lang: Python
-  link: /static/soft/member-28.10.2008.tar.gz
-  imgs: [ member-small.png, member.png ]
+  link: https://savannah.nongnu.org/projects/jagsat/
+  imgs: [ jagsat-small.png, jagsat.png ]
   desc: |
-    A program for the management of the members of an
-    organisation. Features a GTK UI and multiple database systems
-    support. Written in 2008.
+    A computer based Risk implementation featuring a novel touchable
+    interface. Written in 2010 under the supervision of the
+    [TribeFlame]( http://www.tribeflame.com/) game company in the
+    University of Turku.
 
-- name: HCrypt
-  lang: Haskell
-  link: /static/soft/hcryp-10.07.2011.tar.gz
-  imgs: [ hcrypt-small.png, hcrypt.png ]
+# -- Primer ciclo --
+
+- name: Overdose
+  lang: C++
+  link: /static/soft/overdose-0.1.2.tar.gz
+  imgs: [ overdose-small.png, overdose.png ]
   desc: |
-    Collection of cryptographic and modular arithmetic programs
-    written in 2011 for a course in cryptography in the University of
-    Granada. It includes high performant symmetric and asymmetric
-    cryptographic programs, hashes, among other things.
+    A 3D game were you are a ruined trader who chooses to end his life
+    by taking as much drug as he can &mdash; if the dealers and cops
+    let you! Written in 2008 for a university course in computer
+    graphics with its own engine on top of SDL.
 
 - name: HMech
   lang: Haskell
@@ -349,32 +281,6 @@
     expressions. Includes a GTK user interface. Written in 2009
     for a course in lambda calculus held in the University of Granada.
 
-#  PHP
-# -----
-
-- name: CVG Moodle plug-ins
-  lang: PHP
-  link: http://www.nongnu.org/cvg-moodle/
-  imgs: [ jsxaal-small.png, jsxaal.png ]
-  desc: |
-    Collection of Moodle plug-ins that were developed as a couple of
-    internships in the University of Granada between 2009 and 2011 to
-    adapt it to our specific needs. They might be useful to some other
-    Computer Science departments.
-
-- name: ¡Mete tu palabra en el diccionario!
-  lang: PHP
-  link: rae
-  imgs: [ dicc-small.png, dicc.jpg ]
-  desc: |
-    Automated XSS exploit of the official Spanish dictionary to
-    simulate user given definitions of non existant words. I notified
-    the bug to the dictionary maintainers, and the attack does no
-    longer work.
-
-#  Java
-# ------
-
 - name: Concurrent traffic simulator
   lang: Java
   link: /static/soft/pc-27.05.2009.tar.gz
@@ -394,18 +300,15 @@
     intelligence. Written in 2008 for a course in object oriented
     programming.
 
-- name: Harmonic
-  lang: Java
-  link: /static/soft/harmonic-03.01.2008.tar.gz
-  imgs: [ harmonic-small.png, harmonic.png ]
+- name: ¡Mete tu palabra en el diccionario!
+  lang: PHP
+  link: rae
+  imgs: [ dicc-small.png, dicc.jpg ]
   desc: |
-    A clone of the <a href="http://www.last.fm">Last.fm</a>
-    site. It uses servlets and its own dispatching and DOM
-    manipulation framework. The application itself was never fully
-    finished.
-
-#  ASM
-# ------
+    Automated XSS exploit of the official Spanish dictionary to
+    simulate user given definitions of non existant words. I notified
+    the bug to the dictionary maintainers, and the attack does no
+    longer work.
 
 - name: ASM Paint
   lang: ASM
@@ -417,15 +320,101 @@
     organization. It uses its own thin wrapper over SDL to interface
     with the graphic hardware.
 
-#  Matlab
-# --------
-
-- name: Artificial vision toolkit
-  lang: Matlab
-  link: /static/soft/mia-18.02.2011.tar.gz
-  imgs: [ mia-small.png, mia.png ]
+- name: PC speaker player
+  lang: C
+  link: ec2-24.06.2008.tar.gz
+  imgs: [ ec2-small.png, ec2.png ]
   desc: |
-    An image processing and artificial vision toolkit with an user
-    interface. It includes several algorithms, including border and
-    corner detection and block matching. Written in 2011 in a course
-    in models of artificial intelligence.
+    This includes two tools for playing music on the PC speaker: a
+    MS-DOS raw audio file player with filters and FX, and a Linux 2.6
+    OSS driver that exposes the PC speaker as an audio
+    interface. Developed in 2008 for a course in computer
+    organization.
+
+- name: PLIS compiler
+  lang: C++
+  imgs: [ plisc-small.png, plisc.png ]
+  link: /static/soft/plisc-0.1.2.tar.gz
+  desc: |
+    Compiler of my own languge with C-like semantics but maybe
+    shorter syntax. Written in 2007 as part of a course in
+    computer organisation in the University of Granada.
+
+- name: Mail Crawl
+  lang: C
+  link: /static/soft/mailcrawl-0.2.0.tar.gz
+  imgs: [ mailcrawl-small.png, mailcrawl.png ]
+  desc: |
+    A multi-threaded web crawler that finds email addresses on the
+    web. You may give it a list of root web pages and it will follow
+    links dumping all unique email address it finds. Written in 2007
+    as part of a course in formal languages in University of Granada.
+
+- name: Yet Another Neural Network
+  lang: C++
+  imgs: [ yann-small.png, yann.png ]
+  link: /static/soft/yann-0.0.1.tar.gz
+  desc: |
+    A program that executes layered neural networks. It uses a
+    pipelined multi-threaded evaluation algorithm that is described in
+    its documentation. Written in 2008 for a university course in
+    computation models.
+
+- name: Harmonic
+  lang: Java
+  link: /static/soft/harmonic-03.01.2008.tar.gz
+  imgs: [ harmonic-small.png, harmonic.png ]
+  desc: |
+    A clone of the <a href="http://www.last.fm">Last.fm</a>
+    site. It uses servlets and its own dispatching and DOM
+    manipulation framework. The application itself was never fully
+    finished.
+
+- name: Member Manager
+  lang: Python
+  link: /static/soft/member-28.10.2008.tar.gz
+  imgs: [ member-small.png, member.png ]
+  desc: |
+    A program for the management of the members of an
+    organisation. Features a GTK UI and multiple database systems
+    support. Written in 2008.
+
+- name: GL Morph
+  lang: C
+  link: /static/soft/glmorph-12.05.2008.tar.gz
+  imgs: [ glmesh-small.png, glmesh.png ]
+  desc: |
+    A simple program for doing grid-based morphing transformation
+    written in 2006. It includes a grid editor and an animation
+    player.
+
+# High school
+# -----------
+
+- name: GNU PDF
+  lang: C
+  link: http://www.gnupdf.org
+  imgs: [ gnupdf-small.png, gnupdf.png ]
+  desc: |
+    Since 2006 I occasionally contribute to the GNU PDF project. My
+    greater contributions are in the filters subsystem. It is a *FSF
+    high priority project* so you are very welcomed [to
+    join](http://planet.gnu.org/gnupdf/?p=9).
+
+- name: GNU Jump
+  lang: C
+  link: http://gnujump.es.gnu.org
+  imgs: [ gnujump-small.png, gnujump.png ]
+  desc: |
+    Since 2005, when I had too much free time at high school, I
+    develop and maintain this simple yet addictive arcade game
+    were one should jump ad-nauseum to survive.
+
+- name: Luciferino
+  lang: C
+  link: http://luciferino.sourceforge.net/
+  imgs: [ luciferino-small.png, luciferino.png ]
+  desc: |
+    In 2003-2006 I developed this aim-and-shoot sidescroller game
+    engine. It was never fully completed, but its core was reused to
+    later write GNU Jump.
