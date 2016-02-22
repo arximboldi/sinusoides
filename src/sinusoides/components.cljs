@@ -100,14 +100,14 @@
       [:div {:class "title"} "Do."]
       [:div {:class "intro"}
        [:a {:href (routes/am)} "Being"]
-       " is doing. People often do something for a living. One thing
-         that I do a lot is developing software. Most of it is "
+       " is doing. One thing that I do a lot is building and talking
+         about software. Most of it is "
        [:a {:href "http://www.gnu.org/philosophy/free-sw.html"}
-        "Free Software"]
-       ". Because programming is fun. Because Free Software is a
-       good "
-       [:a {:href "todo.html"} "thought"]
-       ". You can download some of the products of my doing here."]]
+        "libre software"]
+       ". Libre software is a nice "
+       [:a {:href "todo.html"} "thought"],
+       " that blurs the boundaries between consumers and producers of software." [:em " Blah blah."] "You
+       can taste a selection of my doing here."]]
 
      [:div {:id "language-links"}
       [:a {:class "cv" :href "/static/files/resume-en.pdf"} "Résumé"]
