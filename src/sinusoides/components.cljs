@@ -101,7 +101,7 @@
        ". You can download some of the products of my doing here."]]
 
      [:div {:id "language-links"}
-      [:a {:class "cv" :href "/static/files/cv-en.pdf"} "Curriculum Vitae"]
+      [:a {:class "cv" :href "/static/files/resume-en.pdf"} "Résumé"]
       (map
         (fn [lang]
           [:div {:class
