@@ -26,8 +26,33 @@ body
     transition: color 0.2s ease-in-out
     &:hover
         color: red
-        img
-            background: red
+
+.imglink
+    position: relative
+    z-index: 0
+    img, div
+        width: 100%
+        height: 100%
+        padding: 0
+        margin: 0
+        border: 0
+        display: block
+        position: absolute
+        transition: opacity 0.5s ease-in-out
+        &:nth-child(1)
+            opacity: 1
+            z-index: 2
+        &:nth-child(2)
+            opacity: 0
+            z-index: 1
+    &:hover
+        img, div
+            &:nth-child(1)
+                opacity: 0
+                z-index: 1
+            &:nth-child(2)
+                opacity: 1
+                z-index: 2
 
 #main-page
     width: 100%
@@ -41,12 +66,6 @@ body
         width: 440px
         height: 206px
         margin: 0 auto
-        background: url(/static/pic/barcode-s-c.png)
-        &:hover
-            width: 440px
-            height: 206px
-            margin: 0 auto
-            background: url(/static/pic/barcode-s-c-red.png)
     #main-pre-text
         text-align: right
         font-size: 84px
@@ -111,6 +130,7 @@ body
         width: 100%
         padding: 20px 0 0 0
         box-sizing: border-box
+        line-height: 1.25em
     a.link
         color: white
         border: 2px solid white
@@ -119,6 +139,7 @@ body
         float: left
         padding: 10px
         font-weight: bold
+        transition: border 0.2s ease-in-out, background 0.2s ease-in-out, color 0.2s ease-in-out
         &:hover
             color: black
             border: 2px solid red
@@ -156,10 +177,12 @@ body
         position: relative
         width: 100%
         height: 150px
-        background: url(/static/pic/sinusoid-m-c.png)
         margin: 90px 0 0 0
-        &:hover
-            background: url(/static/pic/sinusoid-m-c-red.png)
+        div
+            &:nth-child(1)
+                background: url(/static/pic/sinusoid-m-c.png)
+            &:nth-child(2)
+                background: url(/static/pic/sinusoid-m-c-red.png)
     #presentation
         position: relative
         background: #fff
@@ -293,25 +316,29 @@ body
     #sinusoid
         width: 100%
         height: 150px
-        background: url(/static/pic/sinusoid-m-c.png)
         position: absolute
         left: 0
         top: 100%
         margin: -190px 0 0 0px
-        &:hover
-            background: url(/static/pic/sinusoid-m-c-red.png)
+        div
+            &:nth-child(1)
+                background: url(/static/pic/sinusoid-m-c.png)
+            &:nth-child(2)
+                background: url(/static/pic/sinusoid-m-c-red.png)
 
 #todo-page
     #sinusoid
         height: 100%
         width: 150px
-        background: url(/static/pic/sinusoid-m-c-v.png)
         position: absolute
         left: 50%
         top: 0
         margin: 0px 0 0 -75px
-        &:hover
-            background: url(/static/pic/sinusoid-m-c-red-v.png)
+        div
+            &:nth-child(1)
+                background: url(/static/pic/sinusoid-m-c-v.png)
+            &:nth-child(2)
+                background: url(/static/pic/sinusoid-m-c-red-v.png)
     #todo-block
         background: #fff
         align: center

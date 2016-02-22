@@ -20,7 +20,9 @@
 (defn render-todo []
   (html
     [:div {:id "todo-page"}
-     [:a {:href (routes/main)} [:div {:id "sinusoid"}]]
+     [:a {:href (routes/main)}
+      [:div {:id "sinusoid" :class "imglink"}
+       [:div] [:div]]]
      [:div {:id "todo-block" :class "links"}
       "TO" [:a {:href (routes/do)} "DO."]]]))
 
@@ -33,7 +35,10 @@
       [:div {:id "main-post-text"}
        [:a {:href (routes/think)} "think"]
        " I " [:a {:href (routes/am)} "am"] "?"]
-      [:a {:href (routes/todo)} [:div {:id "barcode"}]]]]))
+      [:a {:href (routes/todo)}
+       [:div {:id "barcode" :class "imglink"}
+        [:img {:src "/static/pic/barcode-s-c.png"}]
+        [:img {:src "/static/pic/barcode-s-c-red.png"}]]]]]))
 
 (defn md->html [str]
   (let [Converter (.-converter js/Showdown)
@@ -51,7 +56,8 @@
     (render [_]
       (html
         [:div {:id "am-page"}
-         [:a {:href (routes/main)}  [:div {:id "sinusoid"}]]
+         [:a {:href (routes/main)}
+          [:div {:id "sinusoid" :class "imglink"} [:div] [:div]]]
          [:div {:id "am-block" :class "links"}
           [:p {:dangerouslySetInnerHTML
                {:__html "&nbsp;I&nbsp;<br/>&nbsp;am&nbsp;<br/>&nbsp;not&nbsp;<br/>"}}]]
@@ -88,7 +94,8 @@
 (defn render-do [do entries]
   (html
     [:div {:id "do-page"}
-     [:a {:href (routes/main)}  [:div {:id "sinusoid"}]]
+     [:a {:href (routes/main)}
+      [:div {:id "sinusoid" :class "imglink"} [:div] [:div]]]
      [:div {:id "presentation" :class "links"}
       [:div {:class "title"} "Do."]
       [:div {:class "intro"}
