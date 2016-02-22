@@ -73,7 +73,7 @@
        [:div {:id "desc"
               :dangerouslySetInnerHTML
               {:__html (md->html (:desc p))}}]
-       [:a {:class "link" :href (:link p)} "Link"]]
+       ([:a {:class "link" :href (:link p)} "Link"]])
       [:div {:id "footer"}
        (if-let [id (get-in entries [(- idx 1) :slug])]
          [:a {:class "prev enabled" :href (routes/do- {:id id})}]
@@ -130,10 +130,9 @@
   (letfn
       [(filter-entries []
          (let [lang-filters (get-in @do [:filter :languages])]
-           (apply vector (filter
-                           #(or (empty? lang-filters)
-                              (contains? lang-filters (:lang %)))
-                           (:entries @do)))))
+           (vec (filter #(or (empty? lang-filters)
+                           (contains? lang-filters (:lang %)))
+                  (:entries @do)))))
 
        (find-entry [entries id]
          (first (filter #(= id (:slug (% 1)))
