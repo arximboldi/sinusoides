@@ -124,8 +124,12 @@
          "Clear"])]
 
      [:div {:class "programs"}
-      (map (fn [p] [:a {:href (routes/do- {:id (:slug p)})}
-                    [:img {:src (str "/static/screens/" ((:imgs p) 0))}]])
+      (map (fn [p]
+             [:a {:href (routes/do- {:id (:slug p)})
+                  :style {:background-image
+                          (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}}
+              [:div]
+              [:span (:name p)]])
         entries)]]))
 
 (defn do-view [do _]
