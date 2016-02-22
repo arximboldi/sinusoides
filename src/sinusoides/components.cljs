@@ -73,7 +73,9 @@
        [:div {:id "desc"
               :dangerouslySetInnerHTML
               {:__html (md->html (:desc p))}}]
-       ([:a {:class "link" :href (:link p)} "Link"]])
+       (map (fn [link]
+              [:a {:class "link" :href (:href link)} (:name link)])
+         (:link p))]
       [:div {:id "footer"}
        (if-let [id (get-in entries [(- idx 1) :slug])]
          [:a {:class "prev enabled" :href (routes/do- {:id id})}]
