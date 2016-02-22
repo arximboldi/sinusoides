@@ -64,7 +64,7 @@
   (html
     [:div {:id "do-detail" :class "links"}
      [:a {:id "img"
-          :href (str "/static/screens" ((:imgs p) 1))
+          :href (str "/static/screens/" ((:imgs p) 1))
           :style {:background-image
                   (str "url(/static/screens/" ((:imgs p) 1) ")")}}]
      [:div {:id "body"}
