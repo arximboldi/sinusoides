@@ -5,6 +5,11 @@ RewriteEngine On
 
 RewriteBase /
 
+RewriteRule ^files/(.*)$ /static/files/$1 [L]
+RewriteRule ^pic/(.*)$ /static/pic/$1 [L]
+RewriteRule ^screens/(.*)$ /static/screens/$1 [L]
+RewriteRule ^soft/(.*)$ /static/soft/$1 [L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^debug(.*)$ /views/debug.html [L]

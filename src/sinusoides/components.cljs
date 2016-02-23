@@ -20,7 +20,9 @@
 (defn render-todo []
   (html
     [:div {:id "todo-page"}
-     [:a {:href (routes/main)} [:div {:id "sinusoid"}]]
+     [:a {:href (routes/main)}
+      [:div {:id "sinusoid" :class "imglink"}
+       [:div] [:div]]]
      [:div {:id "todo-block" :class "links"}
       "TO" [:a {:href (routes/do)} "DO."]]]))
 
@@ -33,7 +35,10 @@
       [:div {:id "main-post-text"}
        [:a {:href (routes/think)} "think"]
        " I " [:a {:href (routes/am)} "am"] "?"]
-      [:a {:href (routes/todo)} [:div {:id "barcode"}]]]]))
+      [:a {:href (routes/todo)}
+       [:div {:id "barcode" :class "imglink"}
+        [:img {:src "/static/pic/barcode-s-c.png"}]
+        [:img {:src "/static/pic/barcode-s-c-red.png"}]]]]]))
 
 (defn md->html [str]
   (let [Converter (.-converter js/Showdown)
@@ -51,7 +56,8 @@
     (render [_]
       (html
         [:div {:id "am-page"}
-         [:a {:href (routes/main)}  [:div {:id "sinusoid"}]]
+         [:a {:href (routes/main)}
+          [:div {:id "sinusoid" :class "imglink"} [:div] [:div]]]
          [:div {:id "am-block" :class "links"}
           [:p {:dangerouslySetInnerHTML
                {:__html "&nbsp;I&nbsp;<br/>&nbsp;am&nbsp;<br/>&nbsp;not&nbsp;<br/>"}}]]
@@ -64,7 +70,7 @@
   (html
     [:div {:id "do-detail" :class "links"}
      [:a {:id "img"
-          :href (str "/static/screens" ((:imgs p) 1))
+          :href (str "/static/screens/" ((:imgs p) 1))
           :style {:background-image
                   (str "url(/static/screens/" ((:imgs p) 1) ")")}}]
      [:div {:id "body"}
@@ -73,7 +79,9 @@
        [:div {:id "desc"
               :dangerouslySetInnerHTML
               {:__html (md->html (:desc p))}}]
-       [:a {:class "link" :href (:link p)} "Link"]]
+       (map (fn [link]
+              [:a {:class "link" :href (:href link)} (:name link)])
+         (:link p))]
       [:div {:id "footer"}
        (if-let [id (get-in entries [(- idx 1) :slug])]
          [:a {:class "prev enabled" :href (routes/do- {:id id})}]
@@ -86,22 +94,23 @@
 (defn render-do [do entries]
   (html
     [:div {:id "do-page"}
-     [:a {:href (routes/main)}  [:div {:id "sinusoid"}]]
+     [:a {:href (routes/main)}
+      [:div {:id "sinusoid" :class "imglink"} [:div] [:div]]]
      [:div {:id "presentation" :class "links"}
       [:div {:class "title"} "Do."]
       [:div {:class "intro"}
        [:a {:href (routes/am)} "Being"]
-       " is doing. People often do something for a living. One thing
-         that I do a lot is developing software. Most of it is "
+       " is doing. One thing that I do a lot is building and talking
+         about software. Most of it is "
        [:a {:href "http://www.gnu.org/philosophy/free-sw.html"}
-        "Free Software"]
-       ". Because programming is fun. Because Free Software is a
-       good "
-       [:a {:href "todo.html"} "thought"]
-       ". You can download some of the products of my doing here."]]
+        "libre software"]
+       ". Libre software is a nice "
+       [:a {:href "todo.html"} "thought"],
+       " that blurs the boundaries between consumers and producers of software." [:em " Blah blah."] "You
+       can taste a selection of my doing here."]]
 
      [:div {:id "language-links"}
-      [:a {:class "cv" :href "/static/files/cv-en.pdf"} "Curriculum Vitae"]
+      [:a {:class "cv" :href "/static/files/resume-en.pdf"} "Résumé"]
       (map
         (fn [lang]
           [:div {:class
@@ -122,18 +131,21 @@
          "Clear"])]
 
      [:div {:class "programs"}
-      (map (fn [p] [:a {:href (routes/do- {:id (:slug p)})}
-                    [:img {:src (str "/static/screens/" ((:imgs p) 0))}]])
+      (map (fn [p]
+             [:a {:href (routes/do- {:id (:slug p)})
+                  :style {:background-image
+                          (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}}
+              [:div]
+              [:span (:name p)]])
         entries)]]))
 
 (defn do-view [do _]
   (letfn
       [(filter-entries []
          (let [lang-filters (get-in @do [:filter :languages])]
-           (apply vector (filter
-                           #(or (empty? lang-filters)
-                              (contains? lang-filters (:lang %)))
-                           (:entries @do)))))
+           (vec (filter #(or (empty? lang-filters)
+                           (contains? lang-filters (:lang %)))
+                  (:entries @do)))))
 
        (find-entry [entries id]
          (first (filter #(= id (:slug (% 1)))
