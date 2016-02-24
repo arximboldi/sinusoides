@@ -227,7 +227,7 @@ body
                 height: 125px
                 background: black
                 opacity: 0
-                transition: opacity 0.5s ease-in-out
+                transition: opacity 0.4s ease-in-out
             span
                 position: relative
                 top: 0px
@@ -236,20 +236,19 @@ body
                 padding: 10px
                 margin: 0
                 color: red
-                text-shadow: 0 0 10px black
                 text-decoration: none
                 text-overflow: ellipsis
                 font-weight: bold
                 font-size: 1.3em
                 word-break: normal
                 display: block
-                transition: top 0.2s ease-in-out
+                transition: transform 0.2s ease-in-out
             &:hover
                 border-color: red
                 div
                     opacity: 0.7
                 span
-                    top: -120px
+                    transform: translate(0, -120px)
 
     #language-links
         margin: 48px 0 40px 40px
