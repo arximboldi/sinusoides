@@ -23,7 +23,7 @@ sass:
 cljs:
 	lein cljsbuild once
 figwheel:
-	lein figwheel
+	rlwrap lein figwheel
 serve:
 	coffee server.coffee
 watch-sass:
