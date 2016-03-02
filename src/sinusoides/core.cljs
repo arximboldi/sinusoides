@@ -3,16 +3,22 @@
             [sinusoides.routes :as routes]
             [reagent.core :as r]))
 
+(defonce app-state
+  (r/atom
+    {:view [:init]
+     :do {:entries []
+          :languages []
+          :filter {:languages #{}}
+          :detail nil}
+     :am []}))
+
 (defn init-app! []
-  (let [state (r/atom
-                {:view [:init]
-                 :do {:entries []
-                      :languages []
-                      :filter {:languages #{}}
-                      :detail nil}
-                 :am []})]
-    (enable-console-print!)
-    (routes/init-router! state)
-    (components/init-components! state)))
+  (enable-console-print!)
+  (routes/init-router! app-state)
+  (components/init-components! app-state))
+
+(defn on-figwheel-reload! []
+  (prn "Figwheel reloaded...")
+  (swap! app-state update-in [:__figwheel_counter] inc))
 
 (init-app!)

@@ -8,3 +8,6 @@ node_modules/
 .lein-repl-history
 .nrepl-port
 host.ncftpput
+figwheel_server.log
+resources/js/
+resources/css/

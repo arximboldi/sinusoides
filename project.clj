@@ -15,21 +15,32 @@
                  [reagent "0.6.0-alpha"]
                  [secretary "1.2.3"]]
 
-  :plugins [[lein-cljsbuild "1.1.2"]]
+  :min-lein-version "2.5.3"
+
+  :plugins [[lein-figwheel "0.5.0-1"]
+            [lein-cljsbuild "1.1.2"]]
   :source-paths ["src"]
+  :clean-targets ^{:protect false} ["resources/js/debug" "target"]
 
   :cljsbuild {
     :builds [
       {:id "debug"
        :source-paths ["src"]
-       :compiler {:output-to "build/debug/sinusoides.js"
-                  :output-dir "build/debug/out"
+       :figwheel {:on-jsload "sinusoides.core/on-figwheel-reload!"}
+       :compiler {:asset-path "js/debug/out"
+                  :output-to "resources/js/debug/sinusoides.js"
+                  :output-dir "resources/js/debug/out"
                   :main sinusoides.core
                   :optimizations :none
-                  :source-map true}}
+                  :source-map-timestamp true}}
       {:id "release"
        :source-paths ["src"]
-       :compiler {:output-to "build/release/sinusoides.js"
+       :compiler {:asset-path "js/release/out"
+                  :output-to "resources/js/release/sinusoides.js"
+                  :output-dir "resources/js/release/out"
                   :main sinusoides.core
                   :optimizations :advanced
-                  :pretty-print false}}]})
+                  :pretty-print false}}]}
+
+  :figwheel {:http-server-root ""
+             :css-dirs ["resources/css"]})

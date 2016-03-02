@@ -10,7 +10,7 @@
             [reagent.core :as r]))
 
 (defn init-view []
-  [:div])
+  [:div "..."])
 
 (defn not-found-view []
   [:div "Not found"])

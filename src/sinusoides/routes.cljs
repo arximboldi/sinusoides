@@ -30,6 +30,7 @@
 
 (defn init-history! []
   (when (aget js/window "SINUSOIDES_DEBUG_MODE")
+    (print "SINUSOIDES_DEBUG_MODE enabled")
     (secretary/set-config! :prefix "/debug"))
   (let [last-dispatched (atom) ;; We avoid dispatching the same URI
                                ;; twice.  This allows using fragments
