@@ -3,6 +3,8 @@
   :url "http://sinusoidesapp.appspot.com"
 
   :dependencies [[cljs-http "0.1.39"]
+                 [cljsjs/react-dom "0.14.3-1"]
+                 [cljsjs/react-dom-server "0.14.3-0"]
                  [cljsjs/showdown "0.4.0-1"]
                  [com.andrewmcveigh/cljs-time "0.3.0"]
                  [kibu/pushy "0.3.6"]
@@ -10,9 +12,7 @@
                  [org.clojure/clojurescript "1.7.228"]
                  [org.clojure/core.async "0.2.374"]
                  [org.clojure/core.match "0.3.0-alpha4"]
-                 [org.omcljs/om "0.8.8"]
-                 [prismatic/om-tools "0.3.10"]
-                 [sablono "0.3.4"]
+                 [reagent "0.6.0-alpha"]
                  [secretary "1.2.3"]]
 
   :plugins [[lein-cljsbuild "1.1.2"]]

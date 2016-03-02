@@ -5,141 +5,120 @@
             [cljs-http.client :as http]
             [cljs.core.match :refer-macros [match]]
             [goog.events :as events]
-            [om.core :as om :include-macros true]
-            [om.dom :as dom :include-macros true]
-            [sablono.core :as html :refer-macros [html]]
             [cljs.core.match]
-            [cljsjs.showdown]))
+            [cljsjs.showdown]
+            [reagent.core :as r]))
 
-(defn render-init []
-  (html [:div "Initializing..."]))
+(defn init-view []
+  [:div])
 
-(defn render-not-found []
-  (html [:div "Not found"]))
+(defn not-found-view []
+  [:div "Not found"])
 
-(defn render-todo []
-  (html
-    [:div {:id "todo-page"}
-     [:a {:href (routes/main)}
-      [:div {:id "sinusoid" :class "imglink"}
-       [:div] [:div]]]
-     [:div {:id "todo-block" :class "links"}
-      "TO" [:a {:href (routes/do)} "DO."]]]))
+(defn todo-view []
+  [:div#todo-page
+   [:a {:href (routes/main)} [:div#sinusoid.imglink [:div] [:div]]]
+   [:div#todo-block.links "TO" [:a {:href (routes/do)} "DO."]]])
 
-(defn render-main []
-  (html
-    [:div {:id "main-page"}
-     [:div {:id "main-block" :class "links"}
-      [:div {:id "main-pre-text"}
-       "What " [:a {:href (routes/do)} "do"] " you "]
-      [:div {:id "main-post-text"}
-       [:a {:href (routes/think)} "think"]
-       " I " [:a {:href (routes/am)} "am"] "?"]
-      [:a {:href (routes/todo)}
-       [:div {:id "barcode" :class "imglink"}
-        [:img {:src "/static/pic/barcode-s-c.png"}]
-        [:img {:src "/static/pic/barcode-s-c-red.png"}]]]]]))
+(defn main-view []
+  [:div#main-page
+   [:div#main-block.links
+    [:div#main-pre-text "What " [:a {:href (routes/do)} "do"] " you "]
+    [:div#main-post-text
+     [:a {:href (routes/think)} "think"] " I "
+     [:a {:href (routes/am)} "am"] "?"]
+    [:a {:href (routes/todo)}
+     [:div#barcode.imglink
+      [:img {:src "/static/pic/barcode-s-c.png"}]
+      [:img {:src "/static/pic/barcode-s-c-red.png"}]]]]])
 
 (defn md->html [str]
   (let [Converter (.-converter js/Showdown)
         converter (Converter.)]
     (.makeHtml converter str)))
 
-(defn am-view [am _]
-  (reify
-    om/IWillMount
-    (will-mount [this]
-      (go (let [response (<! (http/get "/data/am.json"))]
-            (om/update! am (:body response)))))
+(defn am-view [am]
+  (go (let [response (<! (http/get "/data/am.json"))]
+        (reset! am (:body response))))
 
-    om/IRender
-    (render [_]
-      (html
-        [:div {:id "am-page"}
-         [:a {:href (routes/main)}
-          [:div {:id "sinusoid" :class "imglink"} [:div] [:div]]]
-         [:div {:id "am-block" :class "links"}
-          [:p {:dangerouslySetInnerHTML
-               {:__html "&nbsp;I&nbsp;<br/>&nbsp;am&nbsp;<br/>&nbsp;not&nbsp;<br/>"}}]]
-         [:div {:id "profiles" :class "links"}
-          (map (fn [{name :name url :url}]
-                 [:div {:id name} [:a {:href url} "not this"]])
-               am)]]))))
+  (fn [am]
+    [:div#am-page
+     [:a {:href (routes/main)} [:div#sinusoid.imglink [:div] [:div]]]
+     [:div#am-block [:p " I " [:br] " am " [:br] " not " [:br]]]
+     [:div#profiles.links
+      (map (fn [{name :name url :url}]
+             [:div {:id name} [:a {:href url} "not this"]])
+        @am)]]))
 
-(defn render-do-detail [do [idx p] entries]
-  (html
-    [:div {:id "do-detail" :class "links"}
-     [:a {:id "img"
-          :href (str "/static/screens/" ((:imgs p) 1))
-          :style {:background-image
-                  (str "url(/static/screens/" ((:imgs p) 1) ")")}}]
-     [:div {:id "body"}
-      [:div {:id "content"}
-       [:div {:id "header"} (:name p)]
-       [:div {:id "desc"
-              :dangerouslySetInnerHTML
-              {:__html (md->html (:desc p))}}]
-       (map (fn [link]
-              [:a {:class "link" :href (:href link)} (:name link)])
-         (:link p))]
-      [:div {:id "footer"}
-       (if-let [id (get-in entries [(- idx 1) :slug])]
-         [:a {:class "prev enabled" :href (routes/do- {:id id})}]
-         [:div {:class "prev disabled"}])
-       (if-let [id (get-in entries [(+ idx 1) :slug])]
-         [:a {:class "next enabled" :href (routes/do- {:id id})}]
-         [:div {:class "next disabled"}])
-       [:a {:class "close" :href (routes/do)}]]]]))
+(defn do-detail-view [do [idx p] entries]
+  [:div#do-detail.links
+   [:a#img {:href (str "/static/screens/" ((:imgs p) 1))
+            :style {:background-image
+                    (str "url(/static/screens/" ((:imgs p) 1) ")")}}]
+   [:div#body
+    [:div#content
+     [:div#header (:name p)]
+     [:div#desc {:dangerouslySetInnerHTML
+                 {:__html (md->html (:desc p))}}]
+     (map (fn [link] [:a.link {:href (:href link)} (:name link)]) (:link p))]
 
-(defn render-do [do entries]
-  (html
-    [:div {:id "do-page"}
-     [:a {:href (routes/main)}
-      [:div {:id "sinusoid" :class "imglink"} [:div] [:div]]]
-     [:div {:id "presentation" :class "links"}
-      [:div {:class "title"} "Do."]
-      [:div {:class "intro"}
-       [:a {:href (routes/am)} "Being"]
-       " is doing. One thing that I do a lot is building and talking
+    [:div#footer
+     (if-let [id (get-in entries [(- idx 1) :slug])]
+       [:a.prev.enabled {:href (routes/do- {:id id})}]
+       [:div.prev.disabled])
+     (if-let [id (get-in entries [(+ idx 1) :slug])]
+       [:a.next.enabled {:href (routes/do- {:id id})}]
+       [:div.next.disabled])
+     [:a.close {:href (routes/do)}]]]])
+
+(defn do-view- [do entries]
+  [:div#do-page
+   [:a {:href (routes/main)}
+    [:div#sinusoid.imglink [:div] [:div]]]
+   [:div#presentation.links
+    [:div.title "Do."]
+    [:div.intro
+     [:a {:href (routes/am)} "Being"]
+     " is doing. One thing that I do a lot is building and talking
          about software. Most of it is "
-       [:a {:href "http://www.gnu.org/philosophy/free-sw.html"}
-        "libre software"]
-       ". Libre software is a nice "
-       [:a {:href "todo.html"} "thought"],
-       " that blurs the boundaries between consumers and producers of software." [:em " Blah blah."] "You
-       can taste a selection of my doing here."]]
+     [:a {:href "http://www.gnu.org/philosophy/free-sw.html"}
+      "libre software"]
+     ". Libre software is a nice "
+     [:a {:href "todo.html"} "thought"],
+     " that blurs the boundaries between consumers and producers of
+     software."
+     [:em " Blah blah."]
+     "You can taste a selection of my doing here."]]
 
-     [:div {:id "language-links"}
-      [:a {:class "cv" :href "/static/files/resume-en.pdf"} "Résumé"]
-      (map
-        (fn [lang]
-          [:div {:class
-                 (str "filter "
-                   (if (contains? (get-in do [:filter :languages]) lang)
-                     "on"
-                     "off"))
-                 :on-click
-                 (fn [] (om/transact! do [:filter :languages]
-                          #(util/togglej % lang)))}
-           lang])
-        (:languages do))
+   [:div#language-links
+    [:a.cv {:href "/static/files/resume-en.pdf"} "Résumé"]
+    (map
+      (fn [lang]
+        [:div.filter
+         {:class (if (contains? (get-in @do [:filter :languages]) lang)
+                   "on"
+                   "off")
+          :on-click
+          (fn [] (swap! do update-in [:filter :languages]
+                   #(util/togglej % lang)))}
+         lang])
+      (:languages @do))
 
-      (when-not (empty? (get-in do [:filter :languages]))
-        [:div {:class "filter clearf"
-               :on-click
-               (fn [] (om/update! do [:filter :languages] #{}))}
-         "Clear"])]
+    (when-not (empty? (get-in @do [:filter :languages]))
+      [:div.filter.clearf
+       {:on-click (fn [] (swap! do assoc-in [:filter :languages] #{}))}
+       "Clear"])]
 
-     [:div {:class "programs"}
-      (map (fn [p]
-             [:a {:href (routes/do- {:id (:slug p)})
-                  :style {:background-image
-                          (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}}
-              [:div]
-              [:span (:name p)]])
-        entries)]]))
+   [:div.programs
+    (map (fn [p]
+           [:a {:href (routes/do- {:id (:slug p)})
+                :style {:background-image
+                        (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}}
+            [:div]
+            [:span (:name p)]])
+      entries)]])
 
-(defn do-view [do _]
+(defn do-view [do]
   (letfn
       [(filter-entries []
          (let [lang-filters (get-in @do [:filter :languages])]
@@ -165,42 +144,41 @@
            27 (routes/nav! (routes/do))
            nil))]
 
-    (reify
-      om/IWillMount
-      (will-mount [this]
-        (events/listen js/document "keydown" key-listener)
-        (go (let [entries   (map #(assoc % :slug (util/to-slug (:name %)))
-                              (:body  (<! (http/get "/data/do.json"))))
-                  languages (apply sorted-set (map :lang entries))]
-              (om/update! do [:entries] entries)
-              (om/update! do [:languages] languages))))
+    (r/create-class
+      {:component-will-mount
+       (fn []
+         (go (let [entries   (map #(assoc % :slug (util/to-slug (:name %)))
+                               (:body  (<! (http/get "/data/do.json"))))
+                   languages (apply sorted-set (map :lang entries))]
+               (swap! do assoc-in [:entries] entries)
+               (swap! do assoc-in [:languages] languages))))
 
-      om/IWillUnmount
-      (will-unmount [this]
-        (events/unlisten js/document "keydown" key-listener))
+       :component-did-mount
+       #(events/listen js/document "keydown" key-listener)
 
-      om/IRender
-      (render [_]
-        (let [entries (filter-entries)]
-          (if-let [id (:detail do)]
-            (when-let [p (find-entry entries id)]
-              (render-do-detail do p entries))
-            (render-do do entries)))))))
+       :component-will-unmount
+       #(events/unlisten js/document "keydown" key-listener)
 
-(defn root-view [app _]
-  (reify om/IRender
-    (render [_]
-      (html
-        [:div {:class "sinusoides"}
-         (match [(om/value (:view app))]
-           [[:am]]    (om/build am-view (:am app))
-           [[:do]]    (om/build do-view (:do app))
-           [[:init]]  (render-init)
-           [[:main]]  (render-main)
-           [[:think]] (render-todo)
-           [[:todo]]  (render-todo)
-           :else      (render-not-found))]))))
+       :reagent-render
+       (fn [do]
+         (let [entries (filter-entries)]
+           (if-let [id (:detail @do)]
+             (when-let [p (find-entry entries id)]
+               [do-detail-view @do p entries])
+             [do-view- do entries])))})))
+
+(defn root-view [app]
+  [:div.sinusoides
+   (match [(:view @app)]
+     [[:am]]    [am-view (r/cursor app [:am])]
+     [[:do]]    [do-view (r/cursor app [:do])]
+     [[:init]]  [init-view]
+     [[:main]]  [main-view]
+     [[:think]] [todo-view]
+     [[:todo]]  [todo-view]
+     :else      [not-found-view])])
 
 (defn init-components! [state]
-  (om/root root-view state
-    {:target (.getElementById js/document "components")}))
+  (r/render-component
+    [root-view state]
+    (.getElementById js/document "components")))
