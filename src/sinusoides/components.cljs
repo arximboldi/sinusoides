@@ -46,31 +46,47 @@
      [:a {:href (routes/main)} [:div#sinusoid.imglink [:div] [:div]]]
      [:div#am-block [:p " I " [:br] " am " [:br] " not " [:br]]]
      [:div#profiles.links
-      (map (fn [{name :name url :url}]
-             ^{:key name}
-             [:div {:id name} [:a {:href url} "not this"]])
-        @am)]]))
+      (for [{name :name url :url} @am]
+        ^{:key name}
+        [:div {:id name} [:a {:href url} "not this"]])]]))
 
-(defn do-detail-view [do [idx p] entries]
-  [:div#do-detail.links
-   [:a#img {:href (str "/static/screens/" ((:imgs p) 1))
-            :style {:background-image
-                    (str "url(/static/screens/" ((:imgs p) 1) ")")}}]
-   [:div#body
-    [:div#content
-     [:div#header (:name p)]
-     [:div#desc {:dangerouslySetInnerHTML
-                 {:__html (md->html (:desc p))}}]
-     (map (fn [link] [:a.link {:href (:href link)} (:name link)]) (:link p))]
+(defn do-detail-view [entries entry]
+  (letfn
+      [(nav-arrow! [diff]
+         (when-let [[idx _] @entry]
+           (when-let [next (get-in @entries [(+ idx diff) :slug])]
+             (routes/nav! (routes/do- {:id next})))))
 
-    [:div#footer
-     (if-let [id (get-in entries [(- idx 1) :slug])]
-       [:a.prev.enabled {:href (routes/do- {:id id})}]
-       [:div.prev.disabled])
-     (if-let [id (get-in entries [(+ idx 1) :slug])]
-       [:a.next.enabled {:href (routes/do- {:id id})}]
-       [:div.next.disabled])
-     [:a.close {:href (routes/do)}]]]])
+       (handle-key [event]
+         (case (.-keyCode event)
+           37 (nav-arrow! -1)
+           39 (nav-arrow! +1)
+           27 (routes/nav! (routes/do))
+           nil))]
+
+    (r/with-let [listener (events/listen js/document "keydown" handle-key)]
+      (let [[idx p] @entry]
+        [:div#do-detail.links
+         [:a#img {:href (str "/static/screens/" ((:imgs p) 1))
+                  :style {:background-image
+                          (str "url(/static/screens/" ((:imgs p) 1) ")")}}]
+         [:div#body
+          [:div#content
+           [:div#header (:name p)]
+           [:div#desc {:dangerouslySetInnerHTML
+                       {:__html (md->html (:desc p))}}]
+           (for [link (:link p)]
+             ^{:key link}
+             [:a.link {:href (:href link)} (:name link)])]
+          [:div#footer
+           (if-let [id (get-in @entries [(- idx 1) :slug])]
+             [:a.prev.enabled {:href (routes/do- {:id id})}]
+             [:div.prev.disabled])
+           (if-let [id (get-in @entries [(+ idx 1) :slug])]
+             [:a.next.enabled {:href (routes/do- {:id id})}]
+             [:div.next.disabled])
+           [:a.close {:href (routes/do)}]]]])
+      (finally (events/unlistenByKey listener)))))
 
 (defn do-view- [do entries]
   [:div#do-page
@@ -94,33 +110,29 @@
    [:div#language-links
     [:a.cv {:href "/static/files/resume-en.pdf"} "Résumé"]
     (doall
-      (map
-        (fn [lang]
-          ^{:key lang}
-          [:div.filter
-           {:class (if (contains? (get-in @do [:filter :languages]) lang)
-                     "on"
-                     "off")
-            :on-click
-            (fn [] (swap! do update-in [:filter :languages]
-                     #(util/togglej % lang)))}
-           lang])
-        (:languages @do)))
-
+      (for [lang (:languages @do)]
+        ^{:key lang}
+        [:div.filter
+         {:class (if (contains? (get-in @do [:filter :languages]) lang)
+                   "on"
+                   "off")
+          :on-click
+          (fn [] (swap! do update-in [:filter :languages]
+                   #(util/togglej % lang)))}
+         lang]))
     (when-not (empty? (get-in @do [:filter :languages]))
       [:div.filter.clearf
        {:on-click (fn [] (swap! do assoc-in [:filter :languages] #{}))}
        "Clear"])]
 
    [:div.programs
-    (map (fn [p]
-           ^{:key p}
-           [:a {:href (routes/do- {:id (:slug p)})
-                :style {:background-image
-                        (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}}
-            [:div]
-            [:span (:name p)]])
-      entries)]])
+    (for [p @entries]
+      ^{:key p}
+      [:a {:href (routes/do- {:id (:slug p)})
+           :style {:background-image
+                   (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}}
+       [:div]
+       [:span (:name p)]])]])
 
 (defn do-view [do]
   (letfn
@@ -131,39 +143,24 @@
                   (:entries @do)))))
 
        (find-entry [entries id]
-         (first (filter #(= id (:slug (% 1)))
-                  (map-indexed vector entries))))
-
-       (nav-arrow! [diff]
-         (when-let [id (:detail @do)]
-           (let [entries (filter-entries)]
-             (when-let [[idx _] (find-entry entries id)]
-               (when-let [next (get-in entries [(+ idx diff) :slug])]
-                 (routes/nav! (routes/do- {:id next})))))))
-
-       (key-listener [event]
-         (case (.-keyCode event)
-           37 (nav-arrow! -1)
-           39 (nav-arrow! +1)
-           27 (routes/nav! (routes/do))
-           nil))
+         (when id
+           (first (filter #(= id (:slug (% 1)))
+                    (map-indexed vector entries)))))
 
        (fetch-data []
          (go (let [entries   (map #(assoc % :slug (util/to-slug (:name %)))
-                                         (:body  (<! (http/get "/data/do.json"))))
+                               (:body  (<! (http/get "/data/do.json"))))
                    languages (apply sorted-set (map :lang entries))]
                (swap! do assoc-in [:entries] entries)
                (swap! do assoc-in [:languages] languages))))]
 
-    (r/with-let [_ (fetch-data)
-                 _ (events/listen js/document "keydown" key-listener)]
-      (let [entries (filter-entries)]
-        (if-let [id (:detail @do)]
-          (when-let [p (find-entry entries id)]
-            [do-detail-view @do p entries])
-          [do-view- do entries]))
-      (finally
-        (events/unlisten js/document "keydown" key-listener)))))
+    (fetch-data)
+    (r/with-let [entries (r/track filter-entries)
+                 detail  (r/track #(:detail @do))
+                 entry   (r/track #(find-entry @entries @detail))]
+      (if @entry
+        [do-detail-view entries entry]
+        [do-view- do entries]))))
 
 (defn root-view [app]
   [:div.sinusoides
