@@ -47,6 +47,7 @@
      [:div#am-block [:p " I " [:br] " am " [:br] " not " [:br]]]
      [:div#profiles.links
       (map (fn [{name :name url :url}]
+             ^{:key name}
              [:div {:id name} [:a {:href url} "not this"]])
         @am)]]))
 
@@ -95,6 +96,7 @@
     (doall
       (map
         (fn [lang]
+          ^{:key lang}
           [:div.filter
            {:class (if (contains? (get-in @do [:filter :languages]) lang)
                      "on"
@@ -112,6 +114,7 @@
 
    [:div.programs
     (map (fn [p]
+           ^{:key p}
            [:a {:href (routes/do- {:id (:slug p)})
                 :style {:background-image
                         (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}}
