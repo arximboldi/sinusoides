@@ -92,17 +92,18 @@
 
    [:div#language-links
     [:a.cv {:href "/static/files/resume-en.pdf"} "Résumé"]
-    (map
-      (fn [lang]
-        [:div.filter
-         {:class (if (contains? (get-in @do [:filter :languages]) lang)
-                   "on"
-                   "off")
-          :on-click
-          (fn [] (swap! do update-in [:filter :languages]
-                   #(util/togglej % lang)))}
-         lang])
-      (:languages @do))
+    (doall
+      (map
+        (fn [lang]
+          [:div.filter
+           {:class (if (contains? (get-in @do [:filter :languages]) lang)
+                     "on"
+                     "off")
+            :on-click
+            (fn [] (swap! do update-in [:filter :languages]
+                     #(util/togglej % lang)))}
+           lang])
+        (:languages @do)))
 
     (when-not (empty? (get-in @do [:filter :languages]))
       [:div.filter.clearf
