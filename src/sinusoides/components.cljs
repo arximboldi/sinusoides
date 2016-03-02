@@ -146,30 +146,24 @@
            37 (nav-arrow! -1)
            39 (nav-arrow! +1)
            27 (routes/nav! (routes/do))
-           nil))]
+           nil))
 
-    (r/create-class
-      {:component-will-mount
-       (fn []
+       (fetch-data []
          (go (let [entries   (map #(assoc % :slug (util/to-slug (:name %)))
-                               (:body  (<! (http/get "/data/do.json"))))
+                                         (:body  (<! (http/get "/data/do.json"))))
                    languages (apply sorted-set (map :lang entries))]
                (swap! do assoc-in [:entries] entries)
-               (swap! do assoc-in [:languages] languages))))
+               (swap! do assoc-in [:languages] languages))))]
 
-       :component-did-mount
-       #(events/listen js/document "keydown" key-listener)
-
-       :component-will-unmount
-       #(events/unlisten js/document "keydown" key-listener)
-
-       :reagent-render
-       (fn [do]
-         (let [entries (filter-entries)]
-           (if-let [id (:detail @do)]
-             (when-let [p (find-entry entries id)]
-               [do-detail-view @do p entries])
-             [do-view- do entries])))})))
+    (r/with-let [_ (fetch-data)
+                 _ (events/listen js/document "keydown" key-listener)]
+      (let [entries (filter-entries)]
+        (if-let [id (:detail @do)]
+          (when-let [p (find-entry entries id)]
+            [do-detail-view @do p entries])
+          [do-view- do entries]))
+      (finally
+        (events/unlisten js/document "keydown" key-listener)))))
 
 (defn root-view [app]
   [:div.sinusoides
