@@ -1,26 +1,46 @@
+;; Copyright (c) 2011-2016 Juan Pedro Bolivar Puente <raskolnikov@gnu.org>
+;;
+;; This file is part of Sinusoid.es.
+;;
+;; Sinusoid.es is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU Affero General Public License as
+;; published by the Free Software Foundation, either version 3 of the
+;; License, or (at your option) any later version.
+;;
+;; Sinusoid.es is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; Affero General Public License for more details.
+;;
+;; You should have received a copy of the GNU Affero General Public
+;; License along with Sinusoid.es.  If not, see
+;; <http://www.gnu.org/licenses/>.
+
 (ns sinusoides.routes
   (:require [sinusoides.util :as util]
             [cljs.core.match]
             [clojure.string :as string]
             [secretary.core :as secretary :refer-macros [defroute]]
-            [om.core :as om :include-macros true]
-            [om.dom :as dom :include-macros true]
             [pushy.core :as pushy])
   (:import goog.History))
 
 (def history (atom))
 
 (defn make-routes! [app]
-  (defroute am "/am" [] (om/update! app :view [:am]))
+  (defroute am "/am" []
+    (swap! app assoc-in [:view] [:am]))
   (defroute do "/do" []
-    (om/update! app :view [:do])
-    (om/update! app [:do :detail] nil))
+    (swap! app assoc-in [:view] [:do])
+    (swap! app assoc-in [:do :detail] nil))
   (defroute do- "/do/:id" [id]
-    (om/update! app :view [:do])
-    (om/update! app [:do :detail] id))
-  (defroute think "/think" [] (om/update! app :view [:think]))
-  (defroute todo "/todo" [] (om/update! app :view [:todo]))
-  (defroute main "/" [] (om/update! app :view [:main])))
+    (swap! app assoc-in [:view] [:do])
+    (swap! app assoc-in [:do :detail] id))
+  (defroute think "/think" []
+    (swap! app assoc-in [:view] [:think]))
+  (defroute todo "/todo" []
+    (swap! app assoc-in [:view] [:todo]))
+  (defroute main "/" []
+    (swap! app assoc-in [:view] [:main])))
 
 (defn- no-prefix [uri]
   (let [prefix (secretary/get-config :prefix)]
@@ -28,6 +48,7 @@
 
 (defn init-history! []
   (when (aget js/window "SINUSOIDES_DEBUG_MODE")
+    (print "SINUSOIDES_DEBUG_MODE enabled")
     (secretary/set-config! :prefix "/debug"))
   (let [last-dispatched (atom) ;; We avoid dispatching the same URI
                                ;; twice.  This allows using fragments
@@ -41,16 +62,8 @@
                       uri))]
     (swap! history #(pushy/push-state! dispatch match-uri))))
 
-(defn router [app owner]
-  (reify
-    om/IWillMount
-    (will-mount [_] (make-routes! app))
-    om/IRender
-    (render [_] (dom/div nil))))
-
 (defn init-router! [state]
-  (om/root router state
-    {:target (.getElementById js/document "router")})
+  (make-routes! state)
   (init-history!))
 
 (defn nav! [token]
