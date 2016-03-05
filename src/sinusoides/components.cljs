@@ -78,17 +78,27 @@
     (.makeHtml converter str)))
 
 (defn am-view [am]
-  (go (let [response (<! (http/get "/data/am.json"))]
-        (reset! am (:body response))))
-
-  (fn [am]
+  (r/with-let [_ (go (let [response (<! (http/get "/data/am.json"))]
+                       (reset! am (vec (shuffle (:body response))))))
+               rand-px #(str (rand 60) "px")
+               hover (r/atom false)]
+    (print @am)
     [:div#am-page
-     [:a {:href (routes/main)} [:div#sinusoid.imglink [:div] [:div]]]
-     [:div#am-block [:p " I " [:br] " am " [:br] " not " [:br]]]
+     [:a {:href (routes/main)
+          :on-mouse-over #(reset! hover true)
+          :on-mouse-out #(reset! hover false)}
+      [:div#sinusoid.imglink [:div] [:div]]]
+     [:div#am-block
+      {:class (when @hover "hovered")}
+      [:p " I "] [:br] [:p " am "] [:br] [:p " not "]]
      [:div#profiles.links
       (for [{name :name url :url} @am]
         ^{:key name}
-        [:div {:id name} [:a {:href url} "not this"]])]]))
+        [:div
+         {:id name
+          :style {:padding-left (rand-px)
+                  :padding-top (rand-px)}}
+         [:a {:href url} "this"]])]]))
 
 (defn do-detail-view [entries entry]
   (letfn
