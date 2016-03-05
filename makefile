@@ -36,19 +36,19 @@ watch-cljs:
 # ==========
 #
 
-upload: upload-root upload-js upload-css upload-data upload-views upload-pic
+upload: upload-root upload-js upload-css upload-data upload-views upload-static
 
 upload-root:
-	ncftpput -R -f host.ncftpput / resources/.htaccess resources/favicon.ico
+	ncftpput -z -R -f host.ncftpput / resources/.htaccess resources/favicon.ico
 upload-js:
-	ncftpput -m -R -f host.ncftpput /js resources/js/*
+	ncftpput -z -m -R -f host.ncftpput /js resources/js/*
 upload-css:
-	ncftpput -m -R -f host.ncftpput /css resources/css/*
+	ncftpput -z -m -R -f host.ncftpput /css resources/css/*
 upload-data:
-	ncftpput -m -R -f host.ncftpput /data resources/data/*
+	ncftpput -z -m -R -f host.ncftpput /data resources/data/*
 upload-views:
-	ncftpput -m -R -f host.ncftpput /views resources/views/*
+	ncftpput -z -m -R -f host.ncftpput /views resources/views/*
 upload-pic:
-	ncftpput -m -R -f host.ncftpput /static/pic resources/static/pic/*
+	ncftpput -z -m -R -f host.ncftpput /static/pic resources/static/pic/*
 upload-static:
-	ncftpput -m -R -f host.ncftpput /static resources/static/*
+	ncftpput -z -m -R -f host.ncftpput /static resources/static/*
