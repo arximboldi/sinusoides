@@ -31,7 +31,16 @@
   [:div "..."])
 
 (defn not-found-view []
-  [:div "Not found"])
+  (let [hover (r/atom false)]
+      (fn []
+        [:div#not-found-page
+         [:div#sinusoid.imglink {:class (when @hover "hovered")} [:div] [:div]]
+         [:div#the-end {:class (when @hover "hovered")}]
+         [:a#dead-end {:href (routes/main)
+                       :on-mouse-over #(reset! hover true)
+                       :on-mouse-out #(reset! hover false)}
+          [:span.first "Dead"] [:br]
+          [:span.second "end"]]])))
 
 (defn todo-view []
   [:div#todo-page
