@@ -39,7 +39,7 @@ watch-cljs:
 upload: upload-root upload-js upload-css upload-data upload-views upload-pic
 
 upload-root:
-	ncftpput -R -f host.ncftpput / resources/.htaccess
+	ncftpput -R -f host.ncftpput / resources/.htaccess resources/favicon.ico
 upload-js:
 	ncftpput -m -R -f host.ncftpput /js resources/js/*
 upload-css:
