@@ -151,58 +151,56 @@ body
         background-repeat: no-repeat
         background-size: cover
         background-position: center -3120px
-        background-color: black
-        background-image: url(/static/pic/barcode-v-i-r.svg)
+        background-image: url(/static/pic/barcode-v-i.svg)
         transition: background-position 0.3s ease-in-out
         &:hover
             background-position: center -3220px
     #main-text
         position: absolute
-        width: 520px
+        width: 523px
         height: 148px
         top: 0
         right: 0
         bottom: 0
         margin: auto
-        margin-right: 112px
-        padding-right: 40px
-        padding-top: 20px
-        padding-bottom: 50px
-        background-color: black
+        margin-right: 40px
+        padding-right: 24px
+        padding-top: 10px
+        padding-bottom: 20px
+        white-space: nowrap
+        background-color: white
         border: 9px solid white
-        color: white
+        color: black
         transition: border-color 0.5s ease-in-out
+        font-weight: bold
+        text-transform: lowercase
         &.hovered
             border-color: red
-        &.links a
-            color: white
-            letter-spacing: 0px
-            text-decoration: underline
-            &:hover
-                color: red
     #main-pre-text
         text-align: right
-        font-size: 84px
-        line-height: 84px
+        font-size: 74px
+        line-height: 1em
     #main-post-text
         text-align: right
-        font-size: 84px
-        line-height: 84px
+        font-size: 74px
+        line-height: 1em
     #fingerprint
-        background-color: white
+        background-color: black
+        border: 4px solid white
+        border-right: black
         position: absolute
         top: 40px
-        right: 0px
+        right: 40px
         padding: 6px
         padding-left: 30px
-        padding-right: 50px
+        padding-right: 32px
         font-family: 'Inconsolata'
         font-weight: normal
         text-align: right
         font-size: 30px
         line-height: 30px
         a
-            color: black
+            color: white
             &:hover
                 color: red
 
