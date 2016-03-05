@@ -25,6 +25,7 @@
             [goog.events :as events]
             [cljs.core.match]
             [cljsjs.showdown]
+            [clojure.string :as s]
             [reagent.core :as r]))
 
 (defn init-view []
@@ -48,16 +49,23 @@
    [:div#todo-block.links "TO" [:a {:href (routes/do)} "DO."]]])
 
 (defn main-view []
-  [:div#main-page
-   [:div#main-block.links
-    [:div#main-pre-text "What " [:a {:href (routes/do)} "do"] " you "]
-    [:div#main-post-text
-     [:a {:href (routes/think)} "think"] " I "
-     [:a {:href (routes/am)} "am"] "?"]
-    [:a {:href (routes/todo)}
-     [:div#barcode.imglink
-      [:img {:src "/static/pic/barcode-s-c.png"}]
-      [:img {:src "/static/pic/barcode-s-c-red.png"}]]]]])
+  (r/with-let [hover (r/atom false)]
+    [:div#main-page
+     [:a {:href (routes/not-found)
+            :on-mouse-over #(reset! hover true)
+          :on-mouse-out #(reset! hover false)}
+      [:div#sinusoid.imglink [:div] [:div]]]
+     [:a {:href (routes/todo)} [:div#barcode]]
+     [:div#main-text.links {:class (when @hover "hovered")}
+      [:div#main-pre-text "What " [:a {:href (routes/do)} "do"] " you "]
+      [:div#main-post-text
+       [:a {:href (routes/think)} "think"] " I "
+       [:a {:href (routes/am)} "am"] "?"]]
+     [:div#fingerprint.links
+      [:a {:href (str "mailto:"
+                   (s/reverse "gro.ung@vokinloksar"))}
+       "CE3E CB30 6F40 3D98 DB2E" [:br]
+       "B65C 529B A962 690A 70B1"]]]))
 
 (defn md->html [str]
   (let [Converter (.-converter js/Showdown)
