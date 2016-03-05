@@ -30,3 +30,12 @@
 
 - name: youtube
   url: http://www.youtube.com/user/handerpora/videos
+
+- name: github
+  url: http://www.github.com/arximboldi
+
+- name: github2
+  url: http://www.github.com/jbo-ableton
+
+- name: savannah
+  url: https://savannah.gnu.org/users/raskolnikov
