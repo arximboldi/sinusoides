@@ -44,9 +44,14 @@
           [:span.second "end"]]])))
 
 (defn todo-view []
-  [:div#todo-page
-   [:a {:href (routes/main)} [:div#sinusoid.imglink [:div] [:div]]]
-   [:div#todo-block.links "TO" [:a {:href (routes/do)} "DO."]]])
+  (r/with-let [hover (r/atom false)]
+    [:div#todo-page
+     [:a {:href (routes/main)
+          :on-mouse-over #(reset! hover true)
+          :on-mouse-out #(reset! hover false)}
+      [:div#sinusoid.imglink [:div] [:div]]]
+     [:div#todo-block.links {:class (when @hover "hovered")}
+      "TO" [:a {:href (routes/do)} "DO."]]]))
 
 (defn main-view []
   (r/with-let [hover (r/atom false)]
