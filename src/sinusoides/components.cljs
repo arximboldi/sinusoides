@@ -35,7 +35,7 @@
   (let [hover (r/atom false)]
       (fn []
         [:div#not-found-page
-         [:div#sinusoid.imglink {:class (when @hover "hovered")} [:div] [:div]]
+         [:div#sinusoid {:class (when @hover "hovered")}]
          [:div#the-end {:class (when @hover "hovered")}]
          [:a#dead-end {:href (routes/main)
                        :on-mouse-over #(reset! hover true)
@@ -46,10 +46,9 @@
 (defn todo-view []
   (r/with-let [hover (r/atom false)]
     [:div#todo-page
-     [:a {:href (routes/main)
-          :on-mouse-over #(reset! hover true)
-          :on-mouse-out #(reset! hover false)}
-      [:div#sinusoid.imglink [:div] [:div]]]
+     [:a#sinusoid {:href (routes/main)
+                   :on-mouse-over #(reset! hover true)
+                   :on-mouse-out #(reset! hover false)}]
      [:div#todo-block.links {:class (when @hover "hovered")}
       "TO" [:a {:href (routes/do)} "DO."]]]))
 
@@ -72,10 +71,9 @@
                              (swap! parts #(assoc % idx (gen)))))
                interval (.setInterval js/window randomize 5000)]
     [:div#main-page
-     [:a {:href (routes/not-found)
-            :on-mouse-over #(reset! hover true)
-          :on-mouse-out #(reset! hover false)}
-      [:div#sinusoid.imglink [:div] [:div]]]
+     [:a#sinusoid {:href (routes/not-found)
+                   :on-mouse-over #(reset! hover true)
+                   :on-mouse-out #(reset! hover false)}]
      [:div#barcode]
      [:a {:href (routes/todo)} [:div#barcode2]]
      [:div#main-text.links {:class (when @hover "hovered")}
@@ -103,10 +101,9 @@
                hover (r/atom false)]
     (print @am)
     [:div#am-page
-     [:a {:href (routes/main)
-          :on-mouse-over #(reset! hover true)
-          :on-mouse-out #(reset! hover false)}
-      [:div#sinusoid.imglink [:div] [:div]]]
+     [:a#sinusoid {:href (routes/main)
+                   :on-mouse-over #(reset! hover true)
+                   :on-mouse-out #(reset! hover false)}]
      [:div#am-block
       {:class (when @hover "hovered")}
       [:p " I "] [:br] [:p " am "] [:br] [:p " not "]]
@@ -160,10 +157,9 @@
 (defn do-view- [do entries]
   (r/with-let [hover (r/atom false)]
     [:div#do-page
-     [:a {:href (routes/main)
-          :on-mouse-over #(reset! hover true)
-          :on-mouse-out #(reset! hover false)}
-      [:div#sinusoid.imglink [:div] [:div]]]
+     [:a#sinusoid {:href (routes/main)
+                   :on-mouse-over #(reset! hover true)
+                   :on-mouse-out #(reset! hover false)}]
 
      [:div#presentation.links
       {:class (when @hover "hovered")}
