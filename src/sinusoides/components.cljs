@@ -54,7 +54,23 @@
       "TO" [:a {:href (routes/do)} "DO."]]]))
 
 (defn main-view []
-  (r/with-let [hover (r/atom false)]
+  (r/with-let [gens [#(rand-nth ["What "
+                                 "Who "
+                                 "Where "
+                                 "Why "])
+                     #(rand-nth [" I"
+                                 " you"
+                                 " they"])
+                     #(rand-nth [[" I " "am"]
+                                 [" you " "are"]
+                                 [" they " "are"]])]
+               hover (r/atom false)
+               parts (r/atom ;; (vec (map apply gens))
+                       ["What " " you" [" I " "am"]])
+               randomize (fn []
+                           (let [[idx gen] (rand-nth (map-indexed vector gens))]
+                             (swap! parts #(assoc % idx (gen)))))
+               interval (.setInterval js/window randomize 5000)]
     [:div#main-page
      [:a {:href (routes/not-found)
             :on-mouse-over #(reset! hover true)
@@ -62,15 +78,17 @@
       [:div#sinusoid.imglink [:div] [:div]]]
      [:a {:href (routes/todo)} [:div#barcode]]
      [:div#main-text.links {:class (when @hover "hovered")}
-      [:div#main-pre-text "What " [:a {:href (routes/do)} "do"] " you "]
+      [:div#main-pre-text (@parts 0)
+       [:a {:href (routes/do)} "do"] (@parts 1)]
       [:div#main-post-text
-       [:a {:href (routes/think)} "think"] " I "
-       [:a {:href (routes/am)} "am"] "?"]]
+       [:a {:href (routes/think)} "think"] ((@parts 2) 0)
+       [:a {:href (routes/am)} ((@parts 2) 1)] "?"]]
      [:div#fingerprint.links
       [:a {:href (str "mailto:"
                    (s/reverse "gro.ung@vokinloksar"))}
        "CE3E CB30 6F40 3D98 DB2E" [:br]
-       "B65C 529B A962 690A 70B1"]]]))
+       "B65C 529B A962 690A 70B1"]]]
+    (finally (.clearInterval js/window interval))))
 
 (defn md->html [str]
   (let [Converter (.-converter js/Showdown)
