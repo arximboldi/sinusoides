@@ -26,6 +26,10 @@
   (.dir js/console obj)
   obj)
 
+(defn trace- [obj & more]
+  (apply prn (conj (if more more ["TRACE:"]) obj))
+  obj)
+
 (defn trace-debug [obj & more]
   (apply prn (if more more ["TRACE:"]))
   (.dir js/console obj)

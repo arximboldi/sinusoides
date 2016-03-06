@@ -31,28 +31,39 @@
 (defn init-view []
   [:div "..."])
 
-(defn not-found-view []
-  (let [hover (r/atom false)]
-      (fn []
-        [:div#not-found-page
-         [:div#sinusoid {:class (when @hover "hovered")}]
-         [:div#the-end {:class (when @hover "hovered")}]
-         [:a#dead-end {:href (routes/main)
-                       :on-mouse-over #(reset! hover true)
-                       :on-mouse-out #(reset! hover false)}
-          [:span.first "Dead"] [:br]
-          [:span.second "end"]]])))
+(defn sinusoid-hover-clear [sin tag]
+  (swap! sin #(update-in % [:hover] disj tag)))
 
-(defn todo-view []
-  (r/with-let [hover (r/atom false)]
-    [:div#todo-page
-     [:a#sinusoid {:href (routes/main)
-                   :on-mouse-over #(reset! hover true)
-                   :on-mouse-out #(reset! hover false)}]
-     [:div#todo-block.links {:class (when @hover "hovered")}
-      "TO" [:a {:href (routes/do)} "DO."]]]))
+(defn sinusoid-hover [sin tag & keyvals]
+  (merge
+    {:on-mouse-over
+     (fn [] (swap! sin #(update-in % [:hover] conj tag)))
+     :on-mouse-out
+     (fn [] (swap! sin #(update-in % [:hover] disj tag)))}
+    (apply hash-map keyvals)))
 
-(defn main-view []
+(defn sinusoid-hover? [sin]
+  (-> @sin :hover empty? not))
+
+(defn sinusoid-hovered [sin]
+  {:class (when (sinusoid-hover? sin) "hovered")})
+
+(defn not-found-view [sin]
+  (r/with-let []
+    [:div#not-found-page
+     [:div#the-end (sinusoid-hovered sin)]
+     [:a#dead-end (sinusoid-hover sin :not-found
+                    :href (routes/main))
+      [:span.first "Dead"] [:br]
+      [:span.second "end"]]]
+    (finally (sinusoid-hover-clear sin :not-found))))
+
+(defn todo-view [sin]
+  [:div#todo-page
+   [:div#todo-block.links (sinusoid-hovered sin)
+    "TO" [:a {:href (routes/do)} "DO."]]])
+
+(defn main-view [sin]
   (r/with-let [gens [#(rand-nth ["What "
                                  "Who "
                                  "Where "
@@ -63,7 +74,6 @@
                      #(rand-nth [[" I " "am"]
                                  [" you " "are"]
                                  [" they " "are"]])]
-               hover (r/atom false)
                parts (r/atom ;; (vec (map apply gens))
                        ["What " " you" [" I " "am"]])
                randomize (fn []
@@ -71,12 +81,9 @@
                              (swap! parts #(assoc % idx (gen)))))
                interval (.setInterval js/window randomize 5000)]
     [:div#main-page
-     [:a#sinusoid {:href (routes/not-found)
-                   :on-mouse-over #(reset! hover true)
-                   :on-mouse-out #(reset! hover false)}]
      [:div#barcode]
      [:a {:href (routes/todo)} [:div#barcode2]]
-     [:div#main-text.links {:class (when @hover "hovered")}
+     [:div#main-text.links (sinusoid-hovered sin)
       [:div#main-pre-text (@parts 0)
        [:a {:href (routes/do)} "do"] (@parts 1)]
       [:div#main-post-text
@@ -94,18 +101,12 @@
         converter (Converter.)]
     (.makeHtml converter str)))
 
-(defn am-view [am]
+(defn am-view [sin am]
   (r/with-let [_ (go (let [response (<! (http/get "/data/am.json"))]
                        (reset! am (vec (shuffle (:body response))))))
-               rand-px #(str (rand 60) "px")
-               hover (r/atom false)]
-    (print @am)
+               rand-px #(str (rand 60) "px")]
     [:div#am-page
-     [:a#sinusoid {:href (routes/main)
-                   :on-mouse-over #(reset! hover true)
-                   :on-mouse-out #(reset! hover false)}]
-     [:div#am-block
-      {:class (when @hover "hovered")}
+     [:div#am-block (sinusoid-hovered sin)
       [:p " I "] [:br] [:p " am "] [:br] [:p " not "]]
      [:div#profiles.links
       (for [{name :name url :url} @am]
@@ -154,57 +155,51 @@
            [:a.close {:href (routes/do)}]]]])
       (finally (events/unlistenByKey listener)))))
 
-(defn do-view- [do entries]
-  (r/with-let [hover (r/atom false)]
-    [:div#do-page
-     [:a#sinusoid {:href (routes/main)
-                   :on-mouse-over #(reset! hover true)
-                   :on-mouse-out #(reset! hover false)}]
-
-     [:div#presentation.links
-      {:class (when @hover "hovered")}
-      [:div.title "Do."]
-      [:div.intro
-       [:a {:href (routes/am)} "Being"]
-       " is doing. One thing that I do a lot is building and talking
+(defn do-view- [sin do entries]
+  [:div#do-page
+   [:div#presentation.links (sinusoid-hovered sin)
+    [:div.title "Do."]
+    [:div.intro
+     [:a {:href (routes/am)} "Being"]
+     " is doing. One thing that I do a lot is building and talking
          about software. Most of it is "
-       [:a {:href "http://www.gnu.org/philosophy/free-sw.html"}
-        "libre software"]
-       ". Libre software is a nice "
-       [:a {:href "todo.html"} "thought"],
-       " that blurs the boundaries between consumers and producers of
+     [:a {:href "http://www.gnu.org/philosophy/free-sw.html"}
+      "libre software"]
+     ". Libre software is a nice "
+     [:a {:href "todo.html"} "thought"],
+     " that blurs the boundaries between consumers and producers of
      software."
      [:em " Blah blah."]
      "You can taste a selection of my doing here."]]
 
-     [:div#language-links
-      [:a.cv {:href "/static/files/resume-en.pdf"} "Résumé"]
-      (doall
-        (for [lang (:languages @do)]
-          ^{:key lang}
-          [:div.filter
-           {:class (if (contains? (get-in @do [:filter :languages]) lang)
-                     "on"
-                     "off")
-            :on-click
-            (fn [] (swap! do update-in [:filter :languages]
-                     #(util/togglej % lang)))}
-           lang]))
-      (when-not (empty? (get-in @do [:filter :languages]))
-        [:div.filter.clearf
-         {:on-click (fn [] (swap! do assoc-in [:filter :languages] #{}))}
-         "Clear"])]
+   [:div#language-links
+    [:a.cv {:href "/static/files/resume-en.pdf"} "Résumé"]
+    (doall
+      (for [lang (:languages @do)]
+        ^{:key lang}
+        [:div.filter
+         {:class (if (contains? (get-in @do [:filter :languages]) lang)
+                   "on"
+                   "off")
+          :on-click
+          (fn [] (swap! do update-in [:filter :languages]
+                   #(util/togglej % lang)))}
+         lang]))
+    (when-not (empty? (get-in @do [:filter :languages]))
+      [:div.filter.clearf
+       {:on-click (fn [] (swap! do assoc-in [:filter :languages] #{}))}
+       "Clear"])]
 
-     [:div.programs
-      (for [p @entries]
-        ^{:key p}
-        [:a {:href (routes/do- {:id (:slug p)})
-             :style {:background-image
-                     (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}}
-         [:div]
-         [:span (:name p)]])]]))
+   [:div.programs
+    (for [p @entries]
+      ^{:key p}
+      [:a {:href (routes/do- {:id (:slug p)})
+           :style {:background-image
+                   (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}}
+       [:div]
+       [:span (:name p)]])]])
 
-(defn do-view [do]
+(defn do-view [sin do]
   (letfn
       [(filter-entries []
          (let [lang-filters (get-in @do [:filter :languages])]
@@ -231,18 +226,34 @@
                  entry   (r/track #(find-entry @entries @detail))]
       (if @entry
         [do-detail-view entries entry]
-        [do-view- do entries]))))
+        [do-view- sin do entries]))))
+
+(defn sinusoid-view [app sin]
+  (let [[class href]
+        (match (:view @app)
+          [:am]     ["am-sin" (routes/main)]
+          [:do]     ["do-sin" (routes/main)]
+          [:todo]   ["todo-sin" (routes/main)]
+          [:main]   ["main-sin" (routes/not-found)]
+          :else     ["not-found-sin" (routes/main)])]
+    [:a#sinusoid
+     (sinusoid-hover sin :sinusoid
+       :href href
+       :class (str class (when (sinusoid-hover? sin) " hovered")))]))
 
 (defn root-view [app]
-  [:div.sinusoides
-   (match [(:view @app)]
-     [[:am]]    [am-view (r/cursor app [:am])]
-     [[:do]]    [do-view (r/cursor app [:do])]
-     [[:init]]  [init-view]
-     [[:main]]  [main-view]
-     [[:think]] [todo-view]
-     [[:todo]]  [todo-view]
-     :else      [not-found-view])])
+  (r/with-let [am  (r/cursor app [:am])
+               do  (r/cursor app [:do])
+               sin (r/cursor app [:sinusoid])]
+    [:div.sinusoides
+     [sinusoid-view app sin]
+     (match [(:view @app)]
+       [[:am]]    [am-view sin am]
+       [[:do]]    [do-view sin do]
+       [[:init]]  [init-view]
+       [[:main]]  [main-view sin]
+       [[:todo]]  [todo-view sin]
+       :else      [not-found-view sin])]))
 
 (defn init-components! [state]
   (r/render-component

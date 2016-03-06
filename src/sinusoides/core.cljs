@@ -23,7 +23,8 @@
 
 (defonce app-state
   (r/atom
-    {:view [:init]
+    {:sinusoid {:hover #{}}
+     :view [:init]
      :do {:entries []
           :languages []
           :filter {:languages #{}}
