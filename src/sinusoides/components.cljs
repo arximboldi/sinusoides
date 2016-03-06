@@ -76,7 +76,8 @@
             :on-mouse-over #(reset! hover true)
           :on-mouse-out #(reset! hover false)}
       [:div#sinusoid.imglink [:div] [:div]]]
-     [:a {:href (routes/todo)} [:div#barcode]]
+     [:div#barcode]
+     [:a {:href (routes/todo)} [:div#barcode2]]
      [:div#main-text.links {:class (when @hover "hovered")}
       [:div#main-pre-text (@parts 0)
        [:a {:href (routes/do)} "do"] (@parts 1)]
