@@ -224,7 +224,8 @@
        (fetch-data []
          (go (let [entries   (map #(assoc % :slug (util/to-slug (:name %)))
                                (:body  (<! (http/get "/data/do.json"))))
-                   languages (apply sorted-set (map :lang entries))]
+                   languages (apply sorted-set
+                               (filter identity (map :lang entries)))]
                (swap! do assoc-in [:entries] entries)
                (swap! do assoc-in [:languages] languages))))]
 
