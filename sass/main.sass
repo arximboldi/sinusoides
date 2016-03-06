@@ -298,25 +298,29 @@ body
                 background-image: url(/static/pic/close-red.png)
 
 #do-page
+    width: 100%
     #sinusoid
-        position: relative
-        width: 100%
+        position: absolute
+        left: 604px
+        right: 0
+        top: 69
         height: 150px
-        margin: 90px 0 0 40px
+        margin: 0
         div
             &:nth-child(1)
                 background: url(/static/pic/sinusoid-m-c.png)
             &:nth-child(2)
                 background: url(/static/pic/sinusoid-m-c-red.png)
     #presentation
-        position: relative
         background: #fff
+        top: 40
         align: center
         width: 500px
         height: 150px
-        padding: 32px
+        padding: 24px
+        padding-bottom: 18px
         border: 8px solid white
-        margin: -190px 0 0 40px
+        margin: 40px 0 0 40px
         transition: border-color 0.5s ease-in-out
         &.hovered
             border-color: red
@@ -324,9 +328,12 @@ body
             font-size: 140px
             float: left
             font-weight: bold
-            text-align: center
             margin-right: 20px
+            margin-top: 4px
+            padding-top: 4px
+            line-height: 140px
             display: block
+            border-top: 8px solid white
         .intro
             font-size: 14px
             text-align: right
@@ -377,9 +384,8 @@ body
                     opacity: 0.7
                 span
                     transform: translate(0, -120px)
-
     #language-links
-        margin: 48px 0 40px 40px
+        margin: 40px 0 30px 40px
         a, .filter
             cursor: pointer
             display: inline-block
