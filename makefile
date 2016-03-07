@@ -20,16 +20,36 @@ data: $(DATA)
 
 sass:
 	compass compile
+
 cljs:
 	lein cljsbuild once
+
 figwheel:
 	rlwrap lein figwheel
+
 serve:
 	coffee server.coffee
+
+# pip install watchdog
+watch-data:
+	watchmedo shell-command \
+		--recursive \
+		--command="$(MAKE) data" \
+		data/
+
 watch-sass:
 	compass watch
+
 watch-cljs:
 	lein cljsbuild auto debug
+
+dev:
+	trap "trap - TERM && kill 0" EXIT TERM INT; \
+	$(MAKE) watch-data & \
+	$(MAKE) watch-sass & \
+	$(MAKE) serve & \
+	$(MAKE) figwheel
+
 
 #
 # Deployment

@@ -19,6 +19,15 @@ make
 
 ### Watchers
 
+**TL;DR** run this and go to:
+[localhost:8746/debug/](http://localhost:8746/debug/)
+
+```
+make dev
+```
+
+#### Long version
+
 ```
 make figwheel
 ```
