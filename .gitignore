@@ -11,3 +11,4 @@ host.ncftpput
 figwheel_server.log
 resources/js/
 resources/css/
+resources/data/*.json

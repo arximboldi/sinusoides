@@ -16,6 +16,40 @@
     Carrasco](http://www.carrasco.in) but I helped with some of the
     WebAudio, synchronization and React.js stuff.
 
+- name: "Share the code: open source music tech"
+  link:
+    - name: Website
+      href: https://loop.ableton.com/program/state-open-source
+  imgs: [ loop-small.png, loop.jpg ]
+  desc: |
+    I organized and moderated a panel at the
+    [Loop](https://loop.ableton.com) conference, where [Gianfranco
+    Ceccolini](http://moddevices.com/), [Marije
+    Baalman](http://marijebaalman.eu/), [Soledad
+    Penadés](http://soledadpenades.com/) and [Paul
+    Davis](https://en.wikipedia.org/wiki/Paul_Davis_(programmer))
+    discussed the challenges and opportunities in open source music
+    technology. [Sole](http://soledadpenades.com/2015/11/18/on-loop-2015)
+    and [Paul](https://community.ardour.org/node/12978) wrote about
+    their experience.
+
+- name: "Transducers: from Clojure to C++"
+  lang: C++
+  link:
+    - name: Slides (HTML)
+      href: /talks/transducers-cppcon15
+    - name: Video (Youtube)
+      href: https://www.youtube.com/watch?v=vohGJjGxtJQ
+    - name: Interview (CppCast)
+      href: http://cppcast.com/2015/12/juanpe-bolivar/
+  imgs: [ transducers-small.png, transducers2.jpg ]
+  desc: |
+    I presented the work on [Atria](/do/atria) at
+    [CppCon](http://cppcon.org/) in 2015.  The session describes the
+    transducers module and its implementation, which is somewhat
+    surprisingly, less stateful than the Clojure counterpart and very
+    performant.
+
 - name: Atria
   lang: C++
   link:
@@ -29,7 +63,7 @@
     [presented in CppCon
     2015](https://www.youtube.com/watch?v=vohGJjGxtJQ).
 
-- name: Aqt.Cassowary
+- name: Aqt Cassowary
   lang: C++
   link:
     - name: Code (Github)
@@ -47,6 +81,8 @@
   link:
     - name: Code (Github)
       href: https://github.com/arximboldi/cooper
+    - name: Slides (HTML)
+      href: /talks/europython-2015-lightning-talk
     - name: PyPI
       href: https://pypi.python.org/pypi/cooper
   desc: |
@@ -54,6 +90,18 @@
     allows to leverage the power of Python's multiple inheritance
     without so much of its drawbacks.  It was presented in a lightning
     talk in [EuroPython 2015](https://ep2015.europython.eu/en/).
+
+- name: Modernize Your C++
+  lang: C++
+  imgs: [ modernize-small.png, modernize.png ]
+  link:
+    - name: Slides (HTML)
+      href: /talks/moderncpp
+  desc: |
+    I did this talk on modern C++ both in an *Ableton Dev Salon* and a
+    [Berlin C++ Meetup](http://www.meetup.com/berlincplusplus/) between 2014 and 15.  It
+    discusses value semantics and non-intrusive polymorphism through a
+    provocative fable, and introduces the [Atria](/do/atria) library.
 
 - name: Mixco
   lang: CoffeeScript
@@ -106,7 +154,7 @@
     for my dotfiles.  Here are my settings for XMonad, Emacs, Bash and
     and friends.
 
-- name: EatOutBerlin
+- name: Eat Out Berlin
   lang: CoffeeScript
   link:
     - name: Website
@@ -135,8 +183,23 @@
     made this little piece about hidden things that can only be seen
     through movement -- movement of the self, and movement of the
     stars.
-
   code: https://github.com/jmdrouin/incredible-art
+
+- name: C++ Template Metaprogramming
+  lang: C++
+  imgs: [ meta-small.png, meta.png ]
+  link:
+    - name: Slides (PDF)
+      href: /talks/meta.pdf
+    - name: Materials
+      href: /talks/meta-16.05.2013.zip
+  desc: |
+    In 2012 I talked about template metaprogramming at a *Ableton Dev
+    Salon*, showing how C++ templates are lazy, purely functional,
+    meta-language with a unityped type system of its own.  Some of the
+    content is a bit dated, as
+    [Boost Hana](https://github.com/boostorg/hana) have refined the
+    techniques for C++14 and beyond.
 
 - name: jpblib
   lang: Python
@@ -256,6 +319,20 @@
     hooks. Written in 2010 for a university course in parallel
     programming.
 
+- name: Desarrollo rápido de videojuegos con el panda y la pitón
+  lang: Python
+  link:
+    - name: Slides (PDF)
+      href: /talks/charla-juegos.pdf
+    - name: Source (tar.gz)
+      href: /talks/charla-juegos.tar.gz
+  imgs: [ panda-small.png, panda.png ]
+  desc: |
+    Another of the workshops organized by the [Hacklab Colina
+    Roja](http://www.colinaroja.org). In this one from 2010 I talked
+    about the fundamentals of game development, with examples built in
+    Panda3D and Python.
+
 # -- Erasmus --
 
 - name: Noxim 3D
@@ -278,7 +355,7 @@
       href: https://savannah.nongnu.org/projects/pigeoncide
     - name: Video (Youtube)
       href: https://www.youtube.com/watch?v=ITEoz1KrCeY
-  imgs: [ pigeoncide-small.png, pigeoncide.png ]
+  imgs: [ pigeoncide-small.png, pigeoncide2.png ]
   desc: |
     A game written in 2010 with [Alberto Villegas
     Erce](http://albertovillegaserce.blogspot.com/) and others in the
@@ -376,11 +453,31 @@
     intelligence. Written in 2008 for a course in object oriented
     programming.
 
+- name: ANSI C Modular
+  lang: C
+  imgs: [ cmodular-small.png, cmodular.png ]
+  link:
+    - name: Slides (PDF)
+      href: /talks/c-modular.pdf
+    - name: Slides (Latex)
+      href: /talks/c-modular.tar.gz
+    - name: Code (tar.gz)
+      href: /talks/c-modular-src.tar.gz
+  desc: |
+    In 2008, as part of one of the few *Hackea y Lucha* workshop
+    sessions we did at the [Hacklab Colina
+    Roja](http://www.colinaroja.org), I held a session on modularity
+    and C, covering libraries and binary compatibility, object
+    orientation, and plugin systems, backed up with a lot of sample
+    code.
+
 - name: ¡Mete tu palabra en el diccionario!
   lang: PHP
   link:
     - name: Website
       href: http://sinusoid.es/rae
+    - name: Source (tar.gz)
+      href: /static/soft/rae-07.01.2011.tar.gz
   imgs: [ dicc-small.png, dicc.jpg ]
   desc: |
     Automated XSS exploit of the official Spanish dictionary to

@@ -9,11 +9,11 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="535.52271"
-   height="190.75"
+   width="208"
+   height="150"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.1 r9760"
+   inkscape:version="0.91 r13725"
    sodipodi:docname="sinusoid.svg">
   <defs
      id="defs4">
@@ -26,7 +26,7 @@
        style="overflow:visible">
       <path
          id="path4210"
-         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
          transform="matrix(-0.4,0,0,-0.4,-4,0)"
          inkscape:connector-curvature="0" />
@@ -49,7 +49,7 @@
        id="ArrowStart">
       <path
          id="path3119"
-         d="M 10,0 0,5 10,10 z"
+         d="M 10,0 0,5 10,10 Z"
          inkscape:connector-curvature="0" />
     </marker>
     <marker
@@ -63,7 +63,7 @@
        id="ArrowEnd">
       <path
          id="path3116"
-         d="M 0,0 10,5 0,10 z"
+         d="M 0,0 10,5 0,10 Z"
          inkscape:connector-curvature="0" />
     </marker>
   </defs>
@@ -74,16 +74,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="264.29367"
-     inkscape:cy="94.641834"
+     inkscape:zoom="2.8"
+     inkscape:cx="142.66695"
+     inkscape:cy="56.115033"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1020"
-     inkscape:window-height="744"
+     inkscape:window-width="1366"
+     inkscape:window-height="746"
      inkscape:window-x="0"
-     inkscape:window-y="20"
+     inkscape:window-y="22"
      inkscape:window-maximized="0"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -97,7 +97,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -105,17 +105,18 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-88.6875,-150.75)">
+     transform="translate(-88.6875,-191.5)">
     <g
-       id="g3844">
+       id="g3844"
+       transform="matrix(0.78642826,0,0,0.78642826,-139.05585,72.932269)">
       <path
          id="sin"
-         style="fill:none;stroke:#ffffff;stroke-width:10;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         style="fill:none;stroke:#ffffff;stroke-width:10;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 93.18374,246.5776 c 4.03758,-8.1665 36.27364,-90.82497 65.65136,-90.82497 30.74716,0 60.00536,77.43677 66.31489,90.82497 8.92391,19.4931 36.91263,89.9107 66.40291,89.9108 29.25966,0 60.00544,-80.2957 64.60624,-89.9108"
          inkscape:connector-curvature="0" />
       <path
          id="sin-5"
-         style="fill:none;stroke:#ffffff;stroke-width:10;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         style="fill:none;stroke:#ffffff;stroke-width:10;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 356.14674,246.5776 c 4.03758,-8.1665 36.27364,-90.82497 65.65136,-90.82497 30.74716,0 60.00536,77.43677 66.31489,90.82497 8.92391,19.4931 36.91263,89.9107 66.40291,89.9108 29.25966,0 60.00544,-80.2957 64.60624,-89.9108"
          inkscape:connector-curvature="0" />
     </g>

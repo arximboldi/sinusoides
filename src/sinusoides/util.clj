@@ -17,30 +17,8 @@
 ;; <http://www.gnu.org/licenses/>.
 
 (ns sinusoides.util
-  (:require-macros [sinusoides.util])
-  (:require [cljs.core.async :refer [close! chan pipe <!]]
-            [clojure.string :refer [lower-case replace]]))
+  (:require [pl.danieljanus.tagsoup :as tagsoup]))
 
-(defn trace [obj & more]
-  (apply prn (if more more ["TRACE:"]))
-  (.dir js/console obj)
-  obj)
-
-(defn trace-debug [obj & more]
-  (apply prn (if more more ["TRACE:"]))
-  (.dir js/console obj)
-  (js/eval "debugger")
-  obj)
-
-(defn to-slug [str]
-  (-> str
-    (lower-case)
-    (replace #"-+" "")
-    (replace #"\.+" "-")
-    (replace #"\s+" "-")
-    (replace #"[^a-z0-9-]" "")))
-
-(defn togglej [set thing]
-  (if (contains? set thing)
-    (disj set thing)
-    (conj set thing)))
+(defmacro embed-svg [svg-file]
+  (let [hiccup (tagsoup/parse-string (slurp svg-file))]
+    `~hiccup))

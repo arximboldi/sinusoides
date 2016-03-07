@@ -2,7 +2,8 @@
   :description "Web user interface for the Sinusoides app"
   :url "http://sinusoidesapp.appspot.com"
 
-  :dependencies [[cljs-http "0.1.39"]
+  :dependencies [[clj-tagsoup "0.3.0"]
+                 [cljs-http "0.1.39"]
                  [cljsjs/react-dom "0.14.3-1"]
                  [cljsjs/react-dom-server "0.14.3-0"]
                  [cljsjs/showdown "0.4.0-1"]

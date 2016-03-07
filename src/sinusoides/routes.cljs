@@ -40,7 +40,9 @@
   (defroute todo "/todo" []
     (swap! app assoc-in [:view] [:todo]))
   (defroute main "/" []
-    (swap! app assoc-in [:view] [:main])))
+    (swap! app assoc-in [:view] [:main]))
+  (defroute not-found "/dead-end" []
+    (swap! app assoc-in [:view] [:not-found])))
 
 (defn- no-prefix [uri]
   (let [prefix (secretary/get-config :prefix)]
@@ -50,16 +52,22 @@
   (when (aget js/window "SINUSOIDES_DEBUG_MODE")
     (print "SINUSOIDES_DEBUG_MODE enabled")
     (secretary/set-config! :prefix "/debug"))
-  (let [last-dispatched (atom) ;; We avoid dispatching the same URI
-                               ;; twice.  This allows using fragments
-                               ;; in an old-school way.
+  (let [last-dispatched (atom)
         dispatch (fn [uri]
                    (reset! last-dispatched uri)
                    (secretary/dispatch! uri))
         match-uri (fn [uri]
-                    (when (and (not= @last-dispatched uri)
-                            (secretary/locate-route (no-prefix uri)))
-                      uri))]
+                    (cond
+                      ;; We avoid dispatching the same URI twice.
+                      ;; This allows using fragments
+                      ;; in an old-school way.
+                      (and (not= @last-dispatched uri)
+                           (secretary/locate-route (no-prefix uri)))
+                      uri
+                      ;; If not route is found and we just loaded the
+                      ;; page, it basically means 404
+                      (nil? @last-dispatched)
+                      (not-found)))]
     (swap! history #(pushy/push-state! dispatch match-uri))))
 
 (defn init-router! [state]

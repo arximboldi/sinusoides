@@ -1,7 +1,7 @@
 sinusoid.es
 ===========
 
-![screenshot](https://raw.githubusercontent.com/arximboldi/sinusoides/master/resources/static/screens/sinusoides.png)
+[![screenshot](https://raw.githubusercontent.com/arximboldi/sinusoides/master/resources/static/screens/sinusoides.png)](http://sinusoid.es)
 
 This is the code for [my personal webpage](http://sinusoid.es).  It is
 built using [ClojureScript](http://clojurescript.net/) and
@@ -38,9 +38,9 @@ server with:
 make serve
 ```
 
-This creates a server in http://localhost:8746 that also serves the
-release version of the application.  The debug version is available on
-http://localhost:8746/debug/
+This creates a server in [localhost:8746](http://localhost:8746) that
+also serves the release version of the application.  The debug version
+is available on [localhost:8746/debug/](http://localhost:8746/debug/)
 
 ### Deployment
 
