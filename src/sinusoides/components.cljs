@@ -31,6 +31,9 @@
 (defn init-view []
   [:div "..."])
 
+(def css-transitions
+  (r/adapt-react-class js/React.addons.CSSTransitionGroup))
+
 (defn sinusoid-hover-clear [sin tag]
   (swap! sin #(update-in % [:hover] disj tag)))
 
@@ -156,48 +159,55 @@
       (finally (events/unlistenByKey listener)))))
 
 (defn do-view- [sin do entries]
-  [:div#do-page
-   [:div#presentation.links (sinusoid-hovered sin)
-    [:div.title "Do."]
-    [:div.intro
-     [:a {:href (routes/am)} "Being"]
-     " is doing. One thing that I do a lot is building and talking
+  [css-transitions {:transition-name "fade"
+                    :transition-appear true
+                    :transition-appear-timeout 500
+                    :transition-enter-timeout 500
+                    :transition-leave-timeout 300}
+   ^{:key "do-page"}
+   [:div#do-page
+    [:div#presentation.links (sinusoid-hovered sin)
+     [:div.title "Do."]
+     [:div.intro
+      [:a {:href (routes/am)} "Being"]
+      " is doing. One thing that I do a lot is building and talking
          about software. Most of it is "
-     [:a {:href "http://www.gnu.org/philosophy/free-sw.html"}
-      "libre software"]
-     ". Libre software is a nice "
-     [:a {:href "todo.html"} "thought"],
-     " that blurs the boundaries between consumers and producers of
+      [:a {:href "http://www.gnu.org/philosophy/free-sw.html"}
+       "libre software"]
+      ". Libre software is a nice "
+      [:a {:href "todo.html"} "thought"],
+      " that blurs the boundaries between consumers and producers of
      software."
-     [:em " Blah blah."]
-     "You can taste a selection of my doing here."]]
+      [:em " Blah blah."]
+      "You can taste a selection of my doing here."]]
 
-   [:div#language-links
-    [:a.cv {:href "/static/files/resume-en.pdf"} "Résumé"]
-    (doall
-      (for [lang (:languages @do)]
-        ^{:key lang}
-        [:div.filter
-         {:class (if (contains? (get-in @do [:filter :languages]) lang)
-                   "on"
-                   "off")
-          :on-click
-          (fn [] (swap! do update-in [:filter :languages]
-                   #(util/togglej % lang)))}
-         lang]))
-    (when-not (empty? (get-in @do [:filter :languages]))
-      [:div.filter.clearf
-       {:on-click (fn [] (swap! do assoc-in [:filter :languages] #{}))}
-       "Clear"])]
+    [:div#stuff
+     [:div#language-links
+      [:a.cv {:href "/static/files/resume-en.pdf"} "Résumé"]
+      (doall
+        (for [lang (:languages @do)]
+          ^{:key lang}
+          [:div.filter
+           {:class (if (contains? (get-in @do [:filter :languages]) lang)
+                     "on"
+                     "off")
+            :on-click
+            (fn [] (swap! do update-in [:filter :languages]
+                     #(util/togglej % lang)))}
+           lang]))
+      (when-not (empty? (get-in @do [:filter :languages]))
+        [:div.filter.clearf
+         {:on-click (fn [] (swap! do assoc-in [:filter :languages] #{}))}
+         "Clear"])]
 
-   [:div.programs
-    (for [p @entries]
-      ^{:key p}
-      [:a {:href (routes/do- {:id (:slug p)})
-           :style {:background-image
-                   (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}}
-       [:div]
-       [:span (:name p)]])]])
+     [:div.programs
+      (for [p @entries]
+        ^{:key p}
+        [:a {:href (routes/do- {:id (:slug p)})
+             :style {:background-image
+                     (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}}
+         [:div]
+         [:span (:name p)]])]]]])
 
 (defn do-view [sin do]
   (letfn

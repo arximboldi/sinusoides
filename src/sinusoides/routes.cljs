@@ -36,7 +36,7 @@
     (swap! app assoc-in [:view] [:do])
     (swap! app assoc-in [:do :detail] id))
   (defroute think "/think" []
-    (swap! app assoc-in [:view] [:think]))
+    (swap! app assoc-in [:view] [:todo]))
   (defroute todo "/todo" []
     (swap! app assoc-in [:view] [:todo]))
   (defroute main "/" []

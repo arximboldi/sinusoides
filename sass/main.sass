@@ -74,36 +74,42 @@ body
         stroke-dasharray: none
         stroke-opacity: 1
 
+.fade-enter, .fade-appear
+    opacity: 0
+    &.fade-enter-active, &.fade-appear-active
+        opacity: 1
+        transition: opacity 500ms ease-in
+
+.fade-leave
+    opacity: 1
+    &.fade-leave-active
+        opacity: 0.01
+        transition: opacity 300ms ease-in
+
 #sinusoid
     position: absolute
+    top: 50%
+    margin: -75px 0 0 0
+    width: 100%
+    height: 150px
     background-image: url(/static/pic/sinusoid-i.svg)
     background-color: white
-    transition: background-color 0.5s ease-in-out
+    background-position: 0 0
+    transition: all 0.5s ease-in-out
     &:hover, &.hovered
         background-color: red
     &.main-sin
-        width: 100%
-        height: 150px
-        top: 50%
-        margin: -75px 0 0 -200px
     &.do-sin
-        left: 604px
-        right: 0
-        top: 69
-        height: 150px
-        margin: 0
+        top: 144px
+        background-position: 2000px 0
     &.not-found-sin
-        width: 100%
-        height: 150px
-        top: 50%
-        margin: -75px 0 0 0
+        background-position: 1000px 0
     &.am-sin
-        width: 100%
-        height: 150px
-        left: 0
+        background-position: -2000px 0
         top: 100%
-        margin: -190px 0 0 0px
+        margin: -190px 0 0 0
     &.todo-sin
+        transition: none
         height: 100%
         width: 150px
         left: 50%
@@ -170,6 +176,7 @@ body
         top: 50%
         margin: -75px 0 0 -200px
     #barcode, #barcode2
+        background-color: black
         position: absolute
         width: 600px
         height: 50%
@@ -329,24 +336,26 @@ body
 
 #do-page
     width: 100%
-    #sinusoid
-        position: absolute
-        left: 604px
-        right: 0
-        top: 69
-        height: 150px
-        margin: 0
     #presentation
-        background: #fff
-        top: 40
-        align: center
+        position: absolute
+        top: 40px
+        left: 40px
         width: 500px
         height: 150px
+        background: #fff
         padding: 24px
         padding-bottom: 18px
         border: 8px solid white
-        margin: 40px 0 0 40px
         transition: border-color 0.5s ease-in-out
+        &::before
+            position: absolute
+            top: -8px
+            left: -48px
+            display: block
+            content: ""
+            width: 40px
+            height: 208px
+            background-color: black
         &.hovered
             border-color: red
         .title
@@ -364,6 +373,9 @@ body
             text-align: right
             color: #888
             line-height: 20px
+    #stuff
+        position: absolute
+        top: 300px
     .programs
         margin: -10px 30px 0 30px
         a
