@@ -75,8 +75,8 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
-     inkscape:cx="142.66695"
-     inkscape:cy="56.115033"
+     inkscape:cx="100.11574"
+     inkscape:cy="58.28998"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -97,7 +97,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -110,15 +110,11 @@
        id="g3844"
        transform="matrix(0.78642826,0,0,0.78642826,-139.05585,72.932269)">
       <path
-         id="sin"
-         style="fill:none;stroke:#ffffff;stroke-width:10;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="m 93.18374,246.5776 c 4.03758,-8.1665 36.27364,-90.82497 65.65136,-90.82497 30.74716,0 60.00536,77.43677 66.31489,90.82497 8.92391,19.4931 36.91263,89.9107 66.40291,89.9108 29.25966,0 60.00544,-80.2957 64.60624,-89.9108"
-         inkscape:connector-curvature="0" />
-      <path
          id="sin-5"
          style="fill:none;stroke:#ffffff;stroke-width:10;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="m 356.14674,246.5776 c 4.03758,-8.1665 36.27364,-90.82497 65.65136,-90.82497 30.74716,0 60.00536,77.43677 66.31489,90.82497 8.92391,19.4931 36.91263,89.9107 66.40291,89.9108 29.25966,0 60.00544,-80.2957 64.60624,-89.9108"
-         inkscape:connector-curvature="0" />
+         d="m 93.18374,246.5776 c 4.03758,-8.1665 36.27364,-88.28183 65.65136,-88.28183 30.74716,0 60.00536,74.89363 66.31489,88.28183 8.92391,19.4931 36.91263,87.36756 66.40291,87.36766 29.25966,0 60.00544,-77.75256 64.60004,-87.36766 4.03138,-8.1665 36.26744,-88.28183 65.64516,-88.28183 30.74716,0 60.00536,74.89363 66.31489,88.28183 8.92391,19.4931 36.91263,87.36756 66.40291,87.36766 29.25966,0 60.00544,-77.75256 64.60624,-87.36766"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cscscscsc" />
     </g>
   </g>
 </svg>
