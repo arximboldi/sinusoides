@@ -85,7 +85,7 @@
                interval (.setInterval js/window randomize 5000)]
     [:div#main-page
      [:div#barcode]
-     [:a {:href (routes/todo)} [:div#barcode2]]
+     [:a#barcode2 {:href (routes/todo)}]
      [:div#main-text.links (sinusoid-hovered sin)
       [:div#main-pre-text (@parts 0)
        [:a {:href (routes/do)} "do"] (@parts 1)]
@@ -163,7 +163,7 @@
                     :transition-appear true
                     :transition-appear-timeout 500
                     :transition-enter-timeout 500
-                    :transition-leave-timeout 300}
+                    :transition-leave-timeout 500}
    ^{:key "do-page"}
    [:div#do-page
     [:div#presentation.links (sinusoid-hovered sin)
@@ -257,13 +257,18 @@
                sin (r/cursor app [:sinusoid])]
     [:div.sinusoides
      [sinusoid-view app sin]
-     (match [(:view @app)]
-       [[:am]]    [am-view sin am]
-       [[:do]]    [do-view sin do]
-       [[:init]]  [init-view]
-       [[:main]]  [main-view sin]
-       [[:todo]]  [todo-view sin]
-       :else      [not-found-view sin])]))
+     [css-transitions {:transition-name "page"
+                       :transition-appear true
+                       :transition-appear-timeout 1000
+                       :transition-enter-timeout 1000
+                       :transition-leave-timeout 1000}
+      (match [(:view @app)]
+        [[:am]]    ^{:key am-view}   [am-view sin am]
+        [[:do]]    ^{:key do-view}   [do-view sin do]
+        [[:init]]  ^{:key init-view} [init-view]
+        [[:main]]  ^{:key main-view} [main-view sin]
+        [[:todo]]  ^{:key todo-view} [todo-view sin]
+        :else      ^{:key not-found-view} [not-found-view sin])]]))
 
 (defn init-components! [state]
   (r/render-component
