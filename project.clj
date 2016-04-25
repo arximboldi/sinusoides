@@ -8,6 +8,7 @@
                  [cljsjs/react-dom-server "0.14.3-0"]
                  [cljsjs/showdown "0.4.0-1"]
                  [com.andrewmcveigh/cljs-time "0.3.0"]
+                 [com.cemerick/piggieback "0.2.1"]
                  [kibu/pushy "0.3.6"]
                  [org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.7.228"]
@@ -19,7 +20,8 @@
   :min-lein-version "2.5.3"
 
   :plugins [[lein-figwheel "0.5.0-1"]
-            [lein-cljsbuild "1.1.2"]]
+            [lein-cljsbuild "1.1.2"]
+            [cider/cider-nrepl "0.13.0-SNAPSHOT"]]
   :source-paths ["src"]
   :clean-targets ^{:protect false} ["resources/js/debug" "target"]
 
@@ -44,4 +46,8 @@
                   :pretty-print false}}]}
 
   :figwheel {:http-server-root ""
-             :css-dirs ["resources/css"]})
+             :css-dirs ["resources/css"]
+             :nrepl-port 7888
+             :nrepl-middleware ["cider.nrepl/cider-middleware"
+                                "refactor-nrepl.middleware/wrap-refactor"
+                                "cemerick.piggieback/wrap-cljs-repl"]})
