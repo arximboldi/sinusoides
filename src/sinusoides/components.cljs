@@ -63,6 +63,10 @@
 
 (defn todo-view [sin]
   [:div#todo-page
+   [:a#sinusoid-todo
+    (sinusoid-hover sin :sinusoid-todo
+      :href (routes/main)
+      :class (when (sinusoid-hover? sin) "hovered"))]
    [:div#todo-block.links (sinusoid-hovered sin)
     "TO" [:a {:href (routes/do)} "DO."]]])
 
@@ -169,7 +173,7 @@
      [:a {:href "http://www.gnu.org/philosophy/free-sw.html"}
       "libre software"]
      ". Libre software is a nice "
-     [:a {:href "todo.html"} "thought"],
+     [:a {:href (routes/think)} "thought"],
      " that blurs the boundaries between consumers and producers of
      software."
      [:em " Blah blah."]
