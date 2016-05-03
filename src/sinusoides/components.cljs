@@ -207,7 +207,7 @@
 
     [:div.programs
      (for [p @entries]
-       ^{:key p}
+       ^{:key (:slug p)}
        [:a {:href (routes/do- {:id (:slug p)})
             :style {:background-image
                     (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}}
@@ -274,12 +274,12 @@
                        :transition-enter-timeout 3000
                        :transition-leave-timeout 3000}
       (match [(:view @app)]
-        [[:am]]    ^{:key am-view}   [am-view sin am]
-        [[:do]]    ^{:key do-view}   [do-view sin do]
-        [[:init]]  ^{:key init-view} [init-view]
-        [[:main]]  ^{:key main-view} [main-view sin]
-        [[:todo]]  ^{:key todo-view} [todo-view sin]
-        :else      ^{:key not-found-view} [not-found-view sin])]]))
+        [[:am]]    ^{:key :am-view}   [am-view sin am]
+        [[:do]]    ^{:key :do-view}   [do-view sin do]
+        [[:init]]  ^{:key :init-view} [init-view]
+        [[:main]]  ^{:key :main-view} [main-view sin]
+        [[:todo]]  ^{:key :todo-view} [todo-view sin]
+        :else      ^{:key :not-found-view} [not-found-view sin])]]))
 
 (defn init-components! [state]
   (r/render-component
