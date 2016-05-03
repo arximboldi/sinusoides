@@ -126,6 +126,10 @@ body {
         50%  { transform: scale(0.4); }
         to   { transform: scale(1); }
     }
+    @keyframes init-sin {
+        from { background-position: 30% 0; transform: scale(0); }
+        to   { transform: scale(1); }
+    }
     @keyframes do-sin {
         from { transform: scale(1); }
         50%  { transform: scale(0.3); }
@@ -154,6 +158,9 @@ body {
         top: -200px;
         transform: scale(0);
         background-position: 100% 0;
+    }
+    &.init-sin-last {
+        animation: init-sin $page-anim-full ease-in-out;
     }
 }
 

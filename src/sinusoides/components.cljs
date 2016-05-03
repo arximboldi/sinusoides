@@ -242,7 +242,7 @@
                   [:do]     ["do-sin" (routes/main)]
                   [:todo]   ["todo-sin" (routes/main)]
                   [:main]   ["main-sin" (routes/not-found)]
-                  [:init]   ["" ""]
+                  [:init]   ["init-sin" (routes/not-found)]
                   :else     ["not-found-sin" (routes/main)])
 
         [class1 _]    (expand (:last @app))
@@ -251,6 +251,7 @@
      (sinusoid-hover sin :sinusoid
        :href href
        :class (str
+                class1 "-last "
                 class2 " "
                 (when (sinusoid-hover? sin) "hovered")))]))
 
