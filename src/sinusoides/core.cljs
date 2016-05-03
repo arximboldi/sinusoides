@@ -25,6 +25,7 @@
   (r/atom
     {:sinusoid {:hover #{}}
      :view [:init]
+     :last [:init]
      :do {:entries []
           :languages []
           :filter {:languages #{}}

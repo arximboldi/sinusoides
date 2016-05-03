@@ -239,17 +239,22 @@
         [do-view- sin do entries]))))
 
 (defn sinusoid-view [app sin]
-  (let [[class href]
-        (match (:view @app)
-          [:am]     ["am-sin" (routes/main)]
-          [:do]     ["do-sin" (routes/main)]
-          [:todo]   ["todo-sin" (routes/main)]
-          [:main]   ["main-sin" (routes/not-found)]
-          :else     ["not-found-sin" (routes/main)])]
+  (let [expand #(match %
+                  [:am]     ["am-sin" (routes/main)]
+                  [:do]     ["do-sin" (routes/main)]
+                  [:todo]   ["todo-sin" (routes/main)]
+                  [:main]   ["main-sin" (routes/not-found)]
+                  [:init]   ["" ""]
+                  :else     ["not-found-sin" (routes/main)])
+
+        [class1 _]    (expand (:last @app))
+        [class2 href] (expand (:view @app))]
     [:a#sinusoid
      (sinusoid-hover sin :sinusoid
        :href href
-       :class (str class (when (sinusoid-hover? sin) " hovered")))]))
+       :class (str
+                class2 " "
+                (when (sinusoid-hover? sin) "hovered")))]))
 
 (defn root-view [app]
   (r/with-let [am  (r/cursor app [:am])
