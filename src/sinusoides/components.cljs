@@ -59,7 +59,7 @@
 
 (defn not-found-view [sin]
   (r/with-let []
-    [:div#not-found-page
+    [:div#not-found-page.page
      [:div#the-end (sinusoid-hovered sin)]
      [:a#dead-end (sinusoid-hover sin :not-found
                     :href (routes/main))
@@ -68,7 +68,7 @@
     (finally (sinusoid-hover-clear sin :not-found))))
 
 (defn todo-view [sin]
-  [:div#todo-page
+  [:div#todo-page.page
    [:a#sinusoid-todo
     {:href (routes/main)
      :class (when (sinusoid-hover? sin) "hovered")}
@@ -93,7 +93,7 @@
                            (let [[idx gen] (rand-nth (map-indexed vector gens))]
                              (swap! parts #(assoc % idx (gen)))))
                interval (.setInterval js/window randomize 5000)]
-    [:div#main-page
+    [:div#main-page.page
      [:div#barcode]
      [:a#barcode2 {:href (routes/todo)}]
      [:div#main-text.links (sinusoid-hovered sin)
@@ -122,7 +122,7 @@
                        (reset! am (vec (shuffle (:body response))))))
                rand-px #(str (rand 60) "px")
                rand-ms #(str (rand %) "ms")]
-    [:div#am-page
+    [:div#am-page.page
      [:div#am-block (sinusoid-hovered sin)
       [:div#i [:p " I " ]] [:br]
       [:div#am [:p" am "]] [:br]
@@ -182,7 +182,7 @@
       (finally (events/unlistenByKey listener)))))
 
 (defn do-view- [sin do entries]
-  [:div#do-page
+  [:div#do-page.page
    [:div#presentation.links (sinusoid-hovered sin)
     [:div.title "Do."]
     [:div.intro
@@ -276,7 +276,7 @@
   (r/with-let [am  (r/cursor app [:am])
                do  (r/cursor app [:do])
                sin (r/cursor app [:sinusoid])]
-    [:div.sinusoides
+    [:div#sinusoides
      [sinusoid-view app sin]
      [css-transitions {:transition-name "page"
                        :transition-appear true

@@ -38,8 +38,25 @@ body {
     font: 16px "Arimo";
     margin: 0px;
     background: black;
-    overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#sinusoides {
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
     overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.page {
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+    pointer-events: none;
+    * { pointer-events: auto; }
 }
 
 a, a:hover,
@@ -111,7 +128,6 @@ a:focus {
 
 #sinusoid {
     position: absolute;
-    margin: -75px 0 0 0;
     width: 1000%;
     height: 150px;
     transform-origin: 0% 50%;
@@ -156,12 +172,14 @@ a:focus {
 
     &.main-sin {
         &::before { background-position: 0 0; }
-        top: 50%;
+        top: 50vh;
+        margin-top: -75px;
         animation: main-sin $page-anim-full ease-in-out;
     }
     &.do-sin {
         &::before { background-position: -70% 0; }
-        top: 144px;
+        top: 0vh;
+        margin-top: 72px;
         animation: do-sin $page-anim-full ease-in-out;
     }
     &.not-found-sin {
@@ -169,14 +187,14 @@ a:focus {
     }
     &.am-sin {
         &::before { background-position: 80% 0; }
-        top: 100%;
+        top: 100vh;
         margin-top: -190px;
         animation: am-sin $page-anim-full ease-in-out;
     }
     &.todo-sin {
         &::before { background-position: 100% 0; }
-        top: -100%;
-        transform: scale(0);
+        top: -100vh;
+        margin-top: -75px;
     }
     &.init-sin-last {
         animation: init-sin $page-anim-full ease-in-out;
@@ -184,10 +202,6 @@ a:focus {
 }
 
 #not-found-page {
-    display: block;
-    width: 100%;
-    height: 100%;
-
     #the-end {
         position: absolute;
         top: 50%;
@@ -227,13 +241,6 @@ a:focus {
 }
 
 #main-page {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    overflow: hidden;
-    pointer-events: none;
-    * { pointer-events: auto; }
-
     @keyframes enter-fingerprint {
         from { transform: translateX(420px); }
         40% { transform: translateX(420px); }
@@ -460,8 +467,6 @@ a:focus {
 }
 
 #do-page {
-    width: 100%;
-
     @keyframes enter-presentation {
         from { transform: translateX(-700px); }
         40%  { transform: translateX(-700px); }
@@ -734,11 +739,6 @@ a:focus {
 }
 
 #todo-page {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    overflow: hidden;
-
     @keyframes enter-sinusoid {
         from { transform: translateX(-60vw) scale(0.3); }
         40%  { transform: translateX(-60vw) scale(0.1); }
