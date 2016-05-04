@@ -229,7 +229,7 @@ a:focus {
 #main-page {
     width: 100%;
     height: 100%;
-    position: relative;
+    position: absolute;
     overflow: hidden;
 
     @keyframes enter-fingerprint {
@@ -732,6 +732,10 @@ a:focus {
 }
 
 #todo-page {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
 
     @keyframes enter-sinusoid {
         from { transform: translateX(-60vw) scale(0.3); }
@@ -800,16 +804,16 @@ a:focus {
     }
 
     #todo-block {
-        background: white;
-        align: center;
-        width: 500px;
-        padding: 32px 32px 0px 40px;
-        padding-top: 0px;
-        border: 8px solid white;
         position: absolute;
         left: 50%;
         bottom: 40px;
         margin: 0 0 0 -290px;
+        width: 500px;
+        padding: 32px 32px 0px 40px;
+        padding-top: 0px;
+        border: 8px solid white;
+        background: white;
+        align: center;
         font-size: 160px;
         font-weight: bold;
         transition: border-color 0.5s ease-in-out;
