@@ -69,10 +69,6 @@
 
 (defn todo-view [sin]
   [:div#todo-page.page
-   [:a#sinusoid-todo
-    {:href (routes/main)
-     :class (when (sinusoid-hover? sin) "hovered")}
-    [sinusoid-hover sin :sinusoid-todo]]
    [:div#todo-block.links (sinusoid-hovered sin)
     "TO" [:a {:href (routes/do)} "DO."]]])
 
@@ -255,7 +251,7 @@
         [do-detail-view entries entry]
         [do-view- sin do entries]))))
 
-(defn sinusoid-view [app sin]
+(defn sinusoid-view [tag app sin]
   (let [expand #(match %
                   [:am]     ["am-sin" (routes/main)]
                   [:do]     ["do-sin" (routes/main)]
@@ -263,21 +259,22 @@
                   [:main]   ["main-sin" (routes/not-found)]
                   [:init]   ["init-sin" (routes/not-found)]
                   :else     ["not-found-sin" (routes/main)])
-
         [class1 _]    (expand (:last @app))
         [class2 href] (expand (:view @app))]
-    [:a#sinusoid {:href href
-                  :class (str class1 "-last "
-                              class2 " "
-                              (when (sinusoid-hover? sin) "hovered"))}
-     [sinusoid-hover sin :sinusoid]]))
+    [:a {:id tag
+         :href href
+         :class (str class1 "-last "
+                  class2 " "
+                  (when (sinusoid-hover? sin) "hovered"))}
+     [sinusoid-hover sin tag]]))
 
 (defn root-view [app]
   (r/with-let [am  (r/cursor app [:am])
                do  (r/cursor app [:do])
                sin (r/cursor app [:sinusoid])]
     [:div#sinusoides
-     [sinusoid-view app sin]
+     [sinusoid-view :sinusoid-h app sin]
+     [sinusoid-view :sinusoid-v app sin]
      [css-transitions {:transition-name "page"
                        :transition-appear true
                        :transition-appear-timeout 3000

@@ -126,7 +126,7 @@ a:focus {
     }
 }
 
-#sinusoid {
+#sinusoid-h {
     position: absolute;
     width: 1000%;
     height: 150px;
@@ -198,6 +198,62 @@ a:focus {
     }
     &.init-sin-last {
         animation: init-sin $page-anim-full ease-in-out;
+    }
+}
+
+
+#sinusoid-v {
+    position: absolute;
+    margin: 0 0 0 -75px;
+    width: 150px;
+    height: 1000%;
+    top: 0;
+    background-color: white;
+    transform-origin: 50% 0;
+    transition: background-color 500ms ease-in-out;
+    &:hover, &.hovered { background-color: red; }
+
+    &::before {
+        background-image: url(/static/pic/sinusoid-i-v.svg);
+        background-size: contain;
+        position: absolute;
+        left: -1px;
+        height: 100%;
+        width: 152px;
+        content: "";
+        transition: background-position $page-anim-full ease-in-out;
+    }
+
+    @keyframes todo-sin-v {
+        40%  { transform: translateX(-10vw) scale(0.1); }
+        to   { transform: translateX(50vw) scale(1); }
+    }
+    @keyframes todo-sin-vb {
+        from { background-position: 0 80%; }
+        40%  { background-position: 0 80%; }
+        to   { background-position: 0 0; }
+    }
+    @keyframes todo-sin-last-v {
+        from { transform: translateX(50vw) scale(1); }
+        80%  { transform: translateX(130vw) scale(4); }
+        to   { transform: translateX(130vw); }
+    }
+    @keyframes todo-sin-last-vb {
+        from { background-position: 0 0; }
+        80%  { background-position: 0 -30%; }
+        to   { background-position: 0 -30%; }
+    }
+
+    & {
+        transform: translateX(-100vw);
+    }
+    &.todo-sin-last {
+        animation: todo-sin-last-v $page-anim-full forwards;
+        &::before { animation: todo-sin-last-vb $page-anim-full forwards; }
+    }
+    &.todo-sin {
+        animation: todo-sin-v $page-anim-full forwards;
+        &::before { animation: todo-sin-vb $page-anim-full forwards; }
     }
 }
 
@@ -739,32 +795,12 @@ a:focus {
 }
 
 #todo-page {
-    @keyframes enter-sinusoid {
-        from { transform: translateX(-60vw) scale(0.3); }
-        40%  { transform: translateX(-60vw) scale(0.1); }
-        to   { transform: translateX(0px) scale(1); }
-    }
-    @keyframes enter-sinusoid-after {
-        from { background-position: 0 80%; }
-        40%  { background-position: 0 80%; }
-        to   { background-position: 0 0; }
-    }
     @keyframes enter-todo-block {
         from { transform: translateY(120%); }
         60%  { transform: translateY(140%); }
         to   { transform: translateY(0); }
     }
 
-    @keyframes leave-sinusoid {
-        from { transform: translateX(0) scale(1); }
-        80%  { transform: translateX(70vw) scale(4); }
-        to   { transform: translateX(70vw); }
-    }
-    @keyframes leave-sinusoid-after {
-        from { background-position: 0 0; }
-        80%  { background-position: 0 -30%; }
-        to   { background-position: 0 -30%; }
-    }
     @keyframes leave-todo-block {
         from { transform: translateY(0); }
         60%  { transform: translateY(140%); }
@@ -780,29 +816,6 @@ a:focus {
         #sinusoid-todo { animation: leave-sinusoid $page-anim-full forwards; }
         #sinusoid-todo::before { animation: leave-sinusoid-after $page-anim-full forwards; }
         #todo-block { animation: leave-todo-block $page-anim-full forwards; }
-    }
-
-    #sinusoid-todo {
-        position: absolute;
-        margin: 0 0 0 -75px;
-        width: 150px;
-        height: 1000%;
-        top: 0;
-        left: 50%;
-        background-color: white;
-        transform-origin: 50% 0;
-        transition: background-color 500ms ease-in-out;
-        &:hover, &.hovered { background-color: red; }
-        &::before {
-            background-image: url(/static/pic/sinusoid-i-v.svg);
-            background-size: contain;
-            position: absolute;
-            left: -1px;
-            height: 100%;
-            width: 152px;
-            content: "";
-            transition: background-position $page-anim-full ease-in-out;
-        }
     }
 
     #todo-block {
