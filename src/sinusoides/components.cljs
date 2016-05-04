@@ -180,7 +180,7 @@
            [:a.close {:href (routes/do)}]]]])
       (finally (events/unlistenByKey listener)))))
 
-(defn do-view- [sin do entries]
+(defn do-view- [sin do entries & children]
   [:div#do-page.page
    [:div#presentation.links (sinusoid-hovered sin)
     [:div.title "Do."]
@@ -223,7 +223,9 @@
             :style {:background-image
                     (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}}
         [:div]
-        [:span (:name p)]])]]])
+        [:span (:name p)]])]]
+
+   children])
 
 (defn do-view [sin do]
   (letfn
@@ -250,9 +252,13 @@
     (r/with-let [entries (r/track filter-entries)
                  detail  (r/track #(:detail @do))
                  entry   (r/track #(find-entry @entries @detail))]
-      (if @entry
-        [do-detail-view entries entry]
-        [do-view- sin do entries]))))
+      [do-view- sin do entries
+       [css-transitions {:transition-name "do-detail"
+                         :transition-appear true
+                         :transition-appear-timeout 1000
+                         :transition-enter-timeout 1000
+                         :transition-leave-timeout 1000}
+        (when @entry [do-detail-view entries entry])]])))
 
 (defn sinusoid-view [tag app sin]
   (let [expand #(match %

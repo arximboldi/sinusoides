@@ -489,6 +489,43 @@ a:focus {
     left: 0;
     width: 100%;
     height: 100%;
+    background-color: transparent;
+
+    @keyframes enter-detail {
+        from { background-color: transparent; }
+        to   { background-color: black; }
+    }
+    @keyframes enter-img {
+        from { transform: translateX(-50vw); }
+        to   { transform: translateX(0); }
+    }
+    @keyframes enter-body {
+        from { transform: translateX(50vw); }
+        to   { transform: translateX(0); }
+    }
+    @keyframes leave-detail {
+        from { background-color: black; }
+        to   { background-color: transparent; }
+    }
+    @keyframes leave-img {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50vw); }
+    }
+    @keyframes leave-body {
+        from { transform: translateX(0); }
+        to   { transform: translateX(50vw); }
+    }
+
+    &.do-detail-appear, &.do-detail-enter {
+        animation: enter-detail 1s forwards;
+        #img { animation: enter-img 1s forwards; }
+        #body { animation: enter-body 1s forwards; }
+    }
+    &.do-detail-leave {
+        animation: leave-detail 1s forwards;
+        #img { animation: leave-img 1s forwards; }
+        #body { animation: leave-body 1s forwards; }
+    }
 
     #img {
         display: block;
@@ -497,6 +534,7 @@ a:focus {
         height: 100%;
         background-size: cover;
         background-position: center center;
+        background-color: #333;
     }
 
     #body {
