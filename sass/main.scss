@@ -112,22 +112,27 @@ a:focus {
 #sinusoid {
     position: absolute;
     margin: -75px 0 0 0;
-    border: 2px black;
     width: 1000%;
-    left: 0%;
-    transform-origin: 0% 50%;
     height: 150px;
-    background-image: url(/static/pic/sinusoid-i.svg);
+    transform-origin: 0% 50%;
     background-color: white;
-    background-size: contain;
-
     transition: background-color 500ms ease-in-out,
     /**/        top $page-anim-full ease-in-out,
     /**/        margin-top $page-anim-full ease-in-out,
     /**/        transform $page-anim-full ease-in-out,
-    /**/        background-position $page-anim-full ease-in-out,
     /**/;
     &:hover, &.hovered { background-color: red; }
+
+    &::after {
+        background-image: url(/static/pic/sinusoid-i.svg);
+        background-size: contain;
+        position: absolute;
+        top: -1px;
+        width: 100%;
+        height: 152px;
+        content: "";
+        transition: background-position $page-anim-full ease-in-out
+    }
 
     @keyframes main-sin {
         from { transform: scale(1); }
@@ -150,26 +155,26 @@ a:focus {
     }
 
     &.main-sin {
-        background-position: 0 0;
+        &::after { background-position: 0 0; }
         top: 50%;
         animation: main-sin $page-anim-full ease-in-out;
     }
     &.do-sin {
-        background-position: -70% 0;
+        &::after { background-position: -70% 0; }
         top: 144px;
         animation: do-sin $page-anim-full ease-in-out;
     }
     &.not-found-sin {
-        background-position: 1000px 0;
+        &::after { background-position: 1000px 0; }
     }
     &.am-sin {
-        background-position: 80% 0;
+        &::after { background-position: 80% 0; }
         top: 100%;
         margin-top: -190px;
         animation: am-sin $page-anim-full ease-in-out;
     }
     &.todo-sin {
-        background-position: 100% 0;
+        &::after { background-position: 100% 0; }
         top: -200px;
         transform: scale(0);
     }
@@ -729,52 +734,71 @@ a:focus {
 #todo-page {
 
     @keyframes enter-sinusoid {
-        from  { transform: translateX(-60vw) scale(0.3); background-position: 0 80%; }
-        40%  { transform: translateX(-60vw) scale(0.1); background-position: 0 80%; }
-        to   { transform: translateX(0px) scale(1); background-position: 0 0; }
+        from { transform: translateX(-60vw) scale(0.3); }
+        40%  { transform: translateX(-60vw) scale(0.1); }
+        to   { transform: translateX(0px) scale(1); }
+    }
+    @keyframes enter-sinusoid-after {
+        from { background-position: 0 80%; }
+        40%  { background-position: 0 80%; }
+        to   { background-position: 0 0; }
     }
     @keyframes enter-todo-block {
         from { transform: translateY(120%); }
-        60% { transform: translateY(140%); }
+        60%  { transform: translateY(140%); }
         to   { transform: translateY(0); }
     }
 
     @keyframes leave-sinusoid {
-        from { transform: translateX(0) scale(1); background-position: 0 0; }
-        60% { transform: translateX(70vw) scale(2.5); background-position: 0 -30%; }
-        to   { transform: translateX(70vw); background-position: 0 -30%; }
+        from { transform: translateX(0) scale(1); }
+        60%  { transform: translateX(70vw) scale(2.5); }
+        to   { transform: translateX(70vw); }
+    }
+    @keyframes leave-sinusoid-after {
+        from { background-position: 0 0; }
+        60%  { background-position: 0 -30%; }
+        to   { background-position: 0 -30%; }
     }
     @keyframes leave-todo-block {
         from { transform: translateY(0); }
-        60% { transform: translateY(140%); }
+        60%  { transform: translateY(140%); }
         to   { transform: translateY(140%); }
     }
 
     &.page-appear, &.page-enter {
         #sinusoid-todo { animation: enter-sinusoid $page-anim-full forwards; }
+        #sinusoid-todo::after { animation: enter-sinusoid-after $page-anim-full forwards; }
         #todo-block { animation: enter-todo-block $page-anim-full forwards; }
     }
     &.page-leave {
         #sinusoid-todo { animation: leave-sinusoid $page-anim-full forwards; }
+        #sinusoid-todo::after { animation: leave-sinusoid-after $page-anim-full forwards; }
         #todo-block { animation: leave-todo-block $page-anim-full forwards; }
     }
 
     #sinusoid-todo {
         position: absolute;
         margin: 0 0 0 -75px;
-        height: 1000%;
         width: 150px;
-        left: 50%;
+        height: 1000%;
         top: 0;
-        transition: background-color 500ms ease-in-out;
-        background-image: url(/static/pic/sinusoid-i-v.svg);
+        left: 50%;
         background-color: white;
-        background-size: contain;
-        background-repeat: repeat-y;
-        background-position: 0 0;
         transform-origin: 50% 0;
+        transition: background-color 500ms ease-in-out;
         &:hover, &.hovered { background-color: red; }
+        &::after {
+            background-image: url(/static/pic/sinusoid-i-v.svg);
+            background-size: contain;
+            position: absolute;
+            left: -1px;
+            height: 100%;
+            width: 152px;
+            content: "";
+            transition: background-position $page-anim-full ease-in-out;
+        }
     }
+
     #todo-block {
         background: white;
         align: center;
