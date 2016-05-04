@@ -560,29 +560,24 @@ a:focus {
         position: absolute;
         bottom: 0;
         right: 0;
-        .prev, .next {
-            display: block;
-            width: 72px;
-            height: 72px;
-        }
-        .prev {
-            background: url(/static/pic/left.png);
-            &.enabled:hover { background: url(/static/pic/left-red.png); }
-        }
-        .next {
-            background: url(/static/pic/right.png);
-            &.enabled:hover { background: url(/static/pic/right-red.png); }
-        }
-        .disabled { opacity: 0.25; }
-        .close {
+        .prev, .next, .close {
             display: block;
             width: 30px;
-            height: 30px;
-            margin: 21px;
-            background-image: url(/static/pic/close.png);
-            background-position: center center;
-            &:hover { background-image: url(/static/pic/close-red.png); }
+            height: 72px;
+            margin-right: 28px;
+            background-color: white;
+            background-size: cover;
+            background-position: center 0;
+            transition: background-color 300ms ease-in-out;
+            &:hover { background-color: red; }
+            &.disabled {
+                opacity: 0.25;
+                &:hover { background-color: white; }
+            }
         }
+        .prev  { background-image: url(/static/pic/left-i.svg); }
+        .next  { background-image: url(/static/pic/right-i.svg); }
+        .close { background-image: url(/static/pic/close-i.svg); }
     }
 }
 
