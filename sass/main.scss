@@ -735,7 +735,7 @@ a:focus {
         div#i { animation: leave-i $page-anim-full forwards; }
         div#am { animation: leave-am $page-anim-full forwards; }
         div#not { animation: leave-not $page-anim-full forwards; }
-        #profiles div { animation: leave-profile forwards; }
+        #profiles a { animation: leave-profile forwards; }
     }
 
     #am-block {
@@ -780,7 +780,7 @@ a:focus {
         top: 0;
         display: block;
         padding: 30px 0px 0 0px;
-        div {
+        a {
             transition: padding-top 0.5s ease-in-out, padding-left 0.5s ease-in-out;
             font-size: 74px;
             display: block;
@@ -791,6 +791,17 @@ a:focus {
             width: 160px;
             border: 0px solid red;
             margin: 0 0px 0 0px;
+            span {
+                text-shadow: 2px 2px #fff;
+                color: black;
+                transition: all 0.5s ease-in-out;
+            }
+            &:hover {
+                span {
+                    color: black;
+                    text-shadow: 2px 2px red;
+                }
+            }
             &.profile-enter, &.profile-appear {
                 opacity: 0;
                 animation: enter-profile forwards;

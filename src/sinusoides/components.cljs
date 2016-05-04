@@ -111,7 +111,8 @@
     (.makeHtml converter str)))
 
 (defn am-view [sin am]
-  (r/with-let [should-add-children (r/atom false)
+  (r/with-let [updater (r/atom 1)
+               should-add-children (r/atom false)
                _ (go (<! (timeout 2000))
                      (reset! should-add-children true))
                _ (go (let [response (<! (http/get "/data/am.json"))]
@@ -124,20 +125,22 @@
       [:div#am [:p" am "]] [:br]
       [:div#not [:p " not "]]]
      [:div#profiles.links
-      (when @should-add-children
+      (when (and @updater @should-add-children)
         [css-transitions {:transition-name "profile"
                           :transition-appear true
                           :transition-appear-timeout 3000
                           :transition-enter-timeout 3000}
          (for [{name :name url :url} @am]
            ^{:key name}
-           [:div
+           [:a
             {:id name
+             :href url
+             :on-mouse-over #(reset! updater name)
              :style {:padding-left (rand-px)
                      :padding-top (rand-px)
                      :animation-delay (rand-ms 1000)
                      :animation-duration (rand-ms 2000)}}
-            [:a {:href url} "this"]])])]]))
+            [:span "this"]])])]]))
 
 (defn do-detail-view [entries entry]
   (letfn
