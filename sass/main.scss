@@ -231,6 +231,8 @@ a:focus {
     height: 100%;
     position: absolute;
     overflow: hidden;
+    pointer-events: none;
+    * { pointer-events: auto; }
 
     @keyframes enter-fingerprint {
         from { transform: translateX(420px); }
