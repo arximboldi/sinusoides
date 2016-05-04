@@ -175,7 +175,7 @@ a:focus {
     }
     &.todo-sin {
         &::before { background-position: 100% 0; }
-        top: -200px;
+        top: -100%;
         transform: scale(0);
     }
     &.init-sin-last {
@@ -757,12 +757,12 @@ a:focus {
 
     @keyframes leave-sinusoid {
         from { transform: translateX(0) scale(1); }
-        60%  { transform: translateX(70vw) scale(2.5); }
+        80%  { transform: translateX(70vw) scale(4); }
         to   { transform: translateX(70vw); }
     }
     @keyframes leave-sinusoid-after {
         from { background-position: 0 0; }
-        60%  { background-position: 0 -30%; }
+        80%  { background-position: 0 -30%; }
         to   { background-position: 0 -30%; }
     }
     @keyframes leave-todo-block {
