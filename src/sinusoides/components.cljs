@@ -61,8 +61,8 @@
   (r/with-let []
     [:div#not-found-page.page
      [:div#the-end (sinusoid-hovered sin)]
-     [:a#dead-end (sinusoid-hover sin :not-found
-                    :href (routes/main))
+     [:a#dead-end {:href (routes/main)}
+      [sinusoid-hover sin :not-found]
       [:span.first "Dead"] [:br]
       [:span.second "end"]]]
     (finally (sinusoid-hover-clear sin :not-found))))
