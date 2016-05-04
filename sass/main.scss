@@ -188,7 +188,7 @@ a:focus {
     &.am-sin {
         &::before { background-position: 80% 0; }
         top: 100vh;
-        margin-top: -190px;
+        margin-top: -194px;
         animation: am-sin $page-anim-full ease-in-out;
     }
     &.todo-sin {
@@ -693,12 +693,12 @@ a:focus {
     }
     @keyframes enter-am {
         from { transform: translateX(150%); }
-        50%  { transform: translateX(150%); }
+        50%  { transform: scale(1.5) translateX(150%); }
         90%   { transform: translateX(0px); }
     }
     @keyframes enter-not {
         from { transform: translateX(150%); }
-        70%  { transform: translateX(150%); }
+        70%  { transform: scale(2) translateX(150%); }
         100%   { transform: translateX(0px); }
     }
     @keyframes enter-profile {
@@ -741,21 +741,26 @@ a:focus {
     #am-block {
         padding: 0px;
         position: absolute;
+        pointer-events: none;
         right: 0;
         bottom: 0;
-        max-width: 400px;
-        height: 600px;
+        width: 100%;
         margin: 0 0 0 0;
-        font-size: 140px;
-        font-weight: bold;
-        line-height: 140%;
-        text-align: right;
+        padding-bottom: 20px;
         vertical-align: bottom;
         display: inline-block;
+        text-align: right;
+        line-height: 200px;
         div {
+            font-size: 140px;
+            font-weight: bold;
             box-sizing: border-box;
             display: inline-block;
             margin: 0;
+            &#not {
+                margin-top: 10px;
+                font-size: 160px;
+            }
             p {
                 color: black;
                 background: white;
