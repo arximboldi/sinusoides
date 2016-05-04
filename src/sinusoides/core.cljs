@@ -29,7 +29,8 @@
      :do {:entries []
           :languages []
           :filter {:languages #{}}
-          :detail nil}
+          :detail nil
+          :last nil}
      :am []}))
 
 (defn init-app! []

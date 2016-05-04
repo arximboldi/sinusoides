@@ -142,7 +142,7 @@
                      :animation-duration (rand-ms 2000)}}
             [:span "this"]])])]]))
 
-(defn do-detail-view [entries entry]
+(defn do-detail-view [entries entry last-entry]
   (letfn
       [(nav-arrow! [diff]
          (when-let [[idx _] @entry]
@@ -157,27 +157,48 @@
            nil))]
 
     (r/with-let [listener (events/listen js/document "keydown" handle-key)]
-      (let [[idx p] @entry]
-        [:div#do-detail.links
-         [:a#img {:href (str "/static/screens/" ((:imgs p) 1))
-                  :style {:background-image
-                          (str "url(/static/screens/" ((:imgs p) 1) ")")}}]
-         [:div#body
-          [:div#content
-           [:div#header (:name p)]
-           [:div#desc {:dangerouslySetInnerHTML
-                       {:__html (md->html (:desc p))}}]
-           (for [link (:link p)]
-             ^{:key link}
-             [:a.link {:href (:href link)} (:name link)])]
-          [:div#footer
-           (if-let [id (get-in @entries [(- idx 1) :slug])]
-             [:a.prev.enabled {:href (routes/do- {:id id})}]
-             [:div.prev.disabled])
-           (if-let [id (get-in @entries [(+ idx 1) :slug])]
-             [:a.next.enabled {:href (routes/do- {:id id})}]
-             [:div.next.disabled])
-           [:a.close {:href (routes/do)}]]]])
+      [css-transitions {:transition-name "do-detail"
+                        :transition-appear true
+                        :transition-appear-timeout 1000
+                        :transition-enter-timeout 1000
+                        :transition-leave-timeout 1000}
+       (when @entry
+         (let [[idx p] @entry
+               last-idx (if @last-entry (@last-entry 0) -1)
+               transition-name (str "swipe"
+                                 (cond
+                                   (< idx last-idx) "-left"
+                                   (> idx last-idx) "-right"))]
+           ^{:key :do-detail}
+           [:div#do-detail.links
+            [:div#left-side
+             [css-transitions {:transition-name transition-name
+                               :transition-enter-timeout 500
+                               :transition-leave-timeout 500}
+              ^{:key idx}
+              [:a#img {:href (str "/static/screens/" ((:imgs p) 1))
+                       :style {:background-image
+                               (str "url(/static/screens/" ((:imgs p) 1) ")")}}]]]
+            [:div#right-side
+             [css-transitions {:transition-name transition-name
+                               :transition-enter-timeout 500
+                               :transition-leave-timeout 500}
+              ^{:key idx}
+              [:div#content
+               [:div#header (:name p)]
+               [:div#desc {:dangerouslySetInnerHTML
+                           {:__html (md->html (:desc p))}}]
+               (for [link (:link p)]
+                 ^{:key link}
+                 [:a.link {:href (:href link)} (:name link)])]]
+             [:div#footer
+              (if-let [id (get-in @entries [(- idx 1) :slug])]
+                [:a.prev.enabled {:href (routes/do- {:id id})}]
+                [:div.prev.disabled])
+              (if-let [id (get-in @entries [(+ idx 1) :slug])]
+                [:a.next.enabled {:href (routes/do- {:id id})}]
+                [:div.next.disabled])
+              [:a.close {:href (routes/do)}]]]]))]
       (finally (events/unlistenByKey listener)))))
 
 (defn do-view- [sin do entries & children]
@@ -225,7 +246,8 @@
         [:div]
         [:span (:name p)]])]]
 
-   children])
+   (first children)
+   (rest children)])
 
 (defn do-view [sin do]
   (letfn
@@ -249,16 +271,11 @@
                (swap! do assoc-in [:languages] languages))))]
 
     (fetch-data)
-    (r/with-let [entries (r/track filter-entries)
-                 detail  (r/track #(:detail @do))
-                 entry   (r/track #(find-entry @entries @detail))]
+    (r/with-let [entries    (r/track filter-entries)
+                 entry      (r/track #(find-entry @entries (:detail @do)))
+                 last-entry (r/track #(find-entry @entries (:last @do)))]
       [do-view- sin do entries
-       [css-transitions {:transition-name "do-detail"
-                         :transition-appear true
-                         :transition-appear-timeout 1000
-                         :transition-enter-timeout 1000
-                         :transition-leave-timeout 1000}
-        (when @entry [do-detail-view entries entry])]])))
+       [do-detail-view entries entry last-entry]])))
 
 (defn sinusoid-view [tag app sin]
   (let [expand #(match %

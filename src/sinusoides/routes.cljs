@@ -30,15 +30,21 @@
   (swap! app assoc-in [:last] (:view @app))
   (swap! app assoc-in [:view] page))
 
+(defn goto-do! [app id]
+  (goto! app [:do])
+  (if (nil? id)
+    (do (swap! app assoc-in [:do :last] nil)
+        (swap! app assoc-in [:do :detail] nil))
+    (do (swap! app assoc-in [:do :last] (get-in @app [:do :detail]))
+        (swap! app assoc-in [:do :detail] id))))
+
 (defn make-routes! [app]
   (defroute am "/am" []
     (goto! app [:am]))
   (defroute do "/do" []
-    (goto! app [:do])
-    (swap! app assoc-in [:do :detail] nil))
+    (goto-do! app nil))
   (defroute do- "/do/:id" [id]
-    (goto! app [:do])
-    (swap! app assoc-in [:do :detail] id))
+    (goto-do! app id))
   (defroute think "/think" []
     (goto! app [:todo]))
   (defroute todo "/todo" []

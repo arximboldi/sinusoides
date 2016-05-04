@@ -489,65 +489,106 @@ a:focus {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: transparent;
+    background-color: black;
+    box-sizing: border-box;
+
+    &.left-entry {
+        border-left: 100px solid red;
+    }
+    &.right-entry {
+        border-right: 100px solid blue;
+    }
 
     @keyframes enter-detail {
         from { background-color: transparent; }
         to   { background-color: black; }
     }
-    @keyframes enter-img {
-        from { transform: translateX(-50vw); }
-        to   { transform: translateX(0); }
-    }
-    @keyframes enter-body {
-        from { transform: translateX(50vw); }
-        to   { transform: translateX(0); }
-    }
     @keyframes leave-detail {
         from { background-color: black; }
         to   { background-color: transparent; }
     }
-    @keyframes leave-img {
+    @keyframes enter-left-side {
+        from { transform: translateX(-50vw); }
+        to   { transform: translateX(0); }
+    }
+    @keyframes leave-left-side {
         from { transform: translateX(0); }
         to   { transform: translateX(-50vw); }
     }
-    @keyframes leave-body {
+    @keyframes enter-right-side {
+        from { transform: translateX(50vw); }
+        to   { transform: translateX(0); }
+    }
+    @keyframes leave-right-side {
         from { transform: translateX(0); }
         to   { transform: translateX(50vw); }
+    }
+    @keyframes enter-right {
+        from { transform: translateX(50vw); }
+        to   { transform: translateX(0); }
+    }
+    @keyframes enter-left {
+        from { transform: translateX(-50vw); }
+        to   { transform: translateX(0); }
+    }
+    @keyframes leave-fade {
+        from { opacity: 1; }
+        to   { opacity: 0; }
     }
 
     &.do-detail-appear, &.do-detail-enter {
         animation: enter-detail 1s forwards;
-        #img { animation: enter-img 1s forwards; }
-        #body { animation: enter-body 1s forwards; }
+        #left-side { animation: enter-left-side 1s forwards; }
+        #right-side { animation: enter-right-side 1s forwards; }
     }
+
     &.do-detail-leave {
         animation: leave-detail 1s forwards;
-        #img { animation: leave-img 1s forwards; }
-        #body { animation: leave-body 1s forwards; }
+        #left-side { animation: leave-left-side 1s forwards; }
+        #right-side { animation: leave-right-side 1s forwards; }
     }
 
-    #img {
-        display: block;
-        float: left;
-        width: 50%;
-        height: 100%;
-        background-size: cover;
-        background-position: center center;
-        background-color: #333;
-    }
-
-    #body {
-        float: left;
+    #left-side {
+        overflow: hidden;
+        position: absolute;
+        left: 0;
         width: 50%;
         height: 100%;
         background-color: black;
     }
 
+    #right-side {
+        overflow: hidden;
+        position: absolute;
+        right: 0;
+        width: 50%;
+        height: 100%;
+        background-color: black;
+    }
+
+    #img {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center center;
+        background-color: #333;
+        &.swipe-left-enter { z-index: 2; animation: enter-left 500ms forwards; }
+        &.swipe-left-leave { animation: leave-fade 500ms forwards; }
+        &.swipe-right-enter { z-index: 2; animation: enter-right 500ms forwards; }
+        &.swipe-right-leave { animation: leave-fade 500ms forwards; }
+    }
+
     #content {
+        position: absolute;
         width: 100%;
         padding: 16%;
         box-sizing: border-box;
+        &.swipe-left-enter { z-index: 2; animation: enter-left 500ms forwards; }
+        &.swipe-left-leave { animation: leave-fade 500ms forwards; }
+        &.swipe-right-enter { z-index: 2; animation: enter-right 500ms forwards; }
+        &.swipe-right-leave { animation: leave-fade 500ms forwards; }
     }
 
     #header {
@@ -596,6 +637,7 @@ a:focus {
     }
 
     #footer {
+        z-index: 4;
         position: absolute;
         bottom: 0;
         right: 0;
