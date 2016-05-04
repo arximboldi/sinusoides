@@ -362,13 +362,13 @@ a:focus {
 
 #main-page {
     @keyframes enter-fingerprint {
-        from { transform: translateX(420px); }
-        40% { transform: translateX(420px); }
+        from { transform: scale(0.5) translateX(800px); }
+        40% { transform: scale(0.5) translateX(800px); }
         to   { transform: translateX(0px); }
     }
     @keyframes enter-main-text {
-        from { transform: translateX(700px); }
-        50% { transform: translateX(700px); }
+        from { transform: scale(1.5) translateX(700px); }
+        50% { transform: scale(1.5) translateX(700px); }
         to   { transform: translateX(0px); }
     }
     @keyframes enter-barcode {
@@ -589,8 +589,8 @@ a:focus {
 #do-page {
     @keyframes enter-presentation {
         from { transform: translateX(-700px); }
-        40%  { transform: translateX(-700px); }
-        to   { transform: translateX(0px); }
+        40%  { transform: scale(1.3) translateX(-700px); }
+        to   { transform: scale(1) translateX(0px); }
     }
     @keyframes enter-stuff {
         from { transform: translateX(-100%); }
