@@ -42,6 +42,12 @@ body {
     overflow-x: hidden;
 }
 
+a, a:hover,
+a:active,
+a:focus {
+    outline: 0;
+}
+
 .hidden { isplay: none; }
 
 .links a, .linksinv a {
