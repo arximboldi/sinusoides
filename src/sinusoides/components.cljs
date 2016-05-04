@@ -21,6 +21,7 @@
   (:require [sinusoides.util :as util]
             [sinusoides.routes :as routes]
             [cljs-http.client :as http]
+            [cljs.core.async :refer [<! timeout]]
             [cljs.core.match :refer-macros [match]]
             [goog.events :as events]
             [cljs.core.match]
@@ -109,27 +110,33 @@
     (.makeHtml converter str)))
 
 (defn am-view [sin am]
-  (r/with-let [_ (go (let [response (<! (http/get "/data/am.json"))]
+  (r/with-let [should-add-children (r/atom false)
+               _ (go (<! (timeout 2000))
+                     (reset! should-add-children true))
+               _ (go (let [response (<! (http/get "/data/am.json"))]
                        (reset! am (vec (shuffle (:body response))))))
                rand-px #(str (rand 60) "px")
-               rand-ms #(str (rand (- 3000 %)) "ms")]
+               rand-ms #(str (rand %) "ms")]
     [:div#am-page
      [:div#am-block (sinusoid-hovered sin)
       [:div#i [:p " I " ]] [:br]
       [:div#am [:p" am "]] [:br]
       [:div#not [:p " not "]]]
      [:div#profiles.links
-      (for [{name :name url :url} @am]
-        (let [delay    (rand-ms 0)
-              duration (rand-ms duration)]
-          ^{:key name}
-          [:div
-           {:id name
-            :style {:padding-left (rand-px)
-                    :padding-top (rand-px)
-                    :animation-delay delay
-                    :animation-duration duration}}
-           [:a {:href url} "this"]]))]]))
+      (when @should-add-children
+        [css-transitions {:transition-name "profile"
+                          :transition-appear true
+                          :transition-appear-timeout 3000
+                          :transition-enter-timeout 3000}
+         (for [{name :name url :url} @am]
+           ^{:key name}
+           [:div
+            {:id name
+             :style {:padding-left (rand-px)
+                     :padding-top (rand-px)
+                     :animation-delay (rand-ms 1000)
+                     :animation-duration (rand-ms 2000)}}
+            [:a {:href url} "this"]])])]]))
 
 (defn do-detail-view [entries entry]
   (letfn

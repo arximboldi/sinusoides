@@ -667,10 +667,6 @@ a:focus {
         div#i { animation: enter-i $page-anim-full forwards; }
         div#am { animation: enter-am $page-anim-full forwards; }
         div#not { animation: enter-not $page-anim-full forwards; }
-        #profiles div {
-            opacity: 0;
-            animation: enter-profile forwards;
-        }
     }
     &.page-leave {
         div#i { animation: leave-i $page-anim-full forwards; }
@@ -727,6 +723,10 @@ a:focus {
             width: 160px;
             border: 0px solid red;
             margin: 0 0px 0 0px;
+            &.profile-enter, &.profile-appear {
+                opacity: 0;
+                animation: enter-profile forwards;
+            }
         }
     }
 }
