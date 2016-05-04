@@ -39,12 +39,17 @@
   (swap! sin #(update-in % [:hover] disj tag)))
 
 (defn sinusoid-hover [sin tag & keyvals]
-  (merge
-    {:on-mouse-over
-     (fn [] (swap! sin #(update-in % [:hover] conj tag)))
-     :on-mouse-out
-     (fn [] (swap! sin #(update-in % [:hover] disj tag)))}
-    (apply hash-map keyvals)))
+  (r/with-let []
+    [:div
+     {:style {:width "100%"
+              :height "100%"
+              :position "absolute"
+              :cursor "pointer"}
+      :on-mouse-over
+      (fn [] (swap! sin #(update-in % [:hover] conj tag)))
+      :on-mouse-out
+      (fn [] (swap! sin #(update-in % [:hover] disj tag)))}]
+    (finally (swap! sin #(update-in % [:hover] disj tag)))))
 
 (defn sinusoid-hover? [sin]
   (-> @sin :hover empty? not))
@@ -65,9 +70,9 @@
 (defn todo-view [sin]
   [:div#todo-page
    [:a#sinusoid-todo
-    (sinusoid-hover sin :sinusoid-todo
-      :href (routes/main)
-      :class (when (sinusoid-hover? sin) "hovered"))]
+    {:href (routes/main)
+     :class (when (sinusoid-hover? sin) "hovered")}
+    [sinusoid-hover sin :sinusoid-todo]]
    [:div#todo-block.links (sinusoid-hovered sin)
     "TO" [:a {:href (routes/do)} "DO."]]])
 
@@ -261,13 +266,11 @@
 
         [class1 _]    (expand (:last @app))
         [class2 href] (expand (:view @app))]
-    [:a#sinusoid
-     (sinusoid-hover sin :sinusoid
-       :href href
-       :class (str
-                class1 "-last "
-                class2 " "
-                (when (sinusoid-hover? sin) "hovered")))]))
+    [:a#sinusoid {:href href
+                  :class (str class1 "-last "
+                              class2 " "
+                              (when (sinusoid-hover? sin) "hovered"))}
+     [sinusoid-hover sin :sinusoid]]))
 
 (defn root-view [app]
   (r/with-let [am  (r/cursor app [:am])

@@ -123,7 +123,7 @@ a:focus {
     /**/;
     &:hover, &.hovered { background-color: red; }
 
-    &::after {
+    &::before {
         background-image: url(/static/pic/sinusoid-i.svg);
         background-size: contain;
         position: absolute;
@@ -155,26 +155,26 @@ a:focus {
     }
 
     &.main-sin {
-        &::after { background-position: 0 0; }
+        &::before { background-position: 0 0; }
         top: 50%;
         animation: main-sin $page-anim-full ease-in-out;
     }
     &.do-sin {
-        &::after { background-position: -70% 0; }
+        &::before { background-position: -70% 0; }
         top: 144px;
         animation: do-sin $page-anim-full ease-in-out;
     }
     &.not-found-sin {
-        &::after { background-position: 1000px 0; }
+        &::before { background-position: 1000px 0; }
     }
     &.am-sin {
-        &::after { background-position: 80% 0; }
+        &::before { background-position: 80% 0; }
         top: 100%;
         margin-top: -190px;
         animation: am-sin $page-anim-full ease-in-out;
     }
     &.todo-sin {
-        &::after { background-position: 100% 0; }
+        &::before { background-position: 100% 0; }
         top: -200px;
         transform: scale(0);
     }
@@ -771,12 +771,12 @@ a:focus {
 
     &.page-appear, &.page-enter {
         #sinusoid-todo { animation: enter-sinusoid $page-anim-full forwards; }
-        #sinusoid-todo::after { animation: enter-sinusoid-after $page-anim-full forwards; }
+        #sinusoid-todo::before { animation: enter-sinusoid-after $page-anim-full forwards; }
         #todo-block { animation: enter-todo-block $page-anim-full forwards; }
     }
     &.page-leave {
         #sinusoid-todo { animation: leave-sinusoid $page-anim-full forwards; }
-        #sinusoid-todo::after { animation: leave-sinusoid-after $page-anim-full forwards; }
+        #sinusoid-todo::before { animation: leave-sinusoid-after $page-anim-full forwards; }
         #todo-block { animation: leave-todo-block $page-anim-full forwards; }
     }
 
@@ -791,7 +791,7 @@ a:focus {
         transform-origin: 50% 0;
         transition: background-color 500ms ease-in-out;
         &:hover, &.hovered { background-color: red; }
-        &::after {
+        &::before {
             background-image: url(/static/pic/sinusoid-i-v.svg);
             background-size: contain;
             position: absolute;
