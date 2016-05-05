@@ -35,8 +35,8 @@
                                  [" you " "are"]
                                  [" they " "are"]])]
 
-               parts (r/atom ;; (vec (map apply gens))
-                      ["What " " you" [" I " "am"]])
+               parts (r/atom ;; ["What " " you" [" I " "am"]]
+                      (vec (map apply gens)))
 
                update-parts
                (fn [parts]
