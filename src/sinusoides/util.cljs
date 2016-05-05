@@ -19,7 +19,13 @@
 (ns sinusoides.util
   (:require-macros [sinusoides.util])
   (:require [cljs.core.async :refer [close! chan pipe <!]]
+            [cljsjs.showdown]
             [clojure.string :refer [lower-case replace]]))
+
+(defn md->html [str]
+  (let [Converter (.-converter js/Showdown)
+        converter (Converter.)]
+    (.makeHtml converter str)))
 
 (defn trace [obj & more]
   (apply prn (if more more ["TRACE:"]))
