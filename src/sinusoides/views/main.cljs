@@ -44,11 +44,10 @@
      [:div#barcode]
      [:a#barcode2 {:href (routes/todo)}]
      [:div#main-text.links (sinusoid/hovered sin)
-      [:div#main-pre-text (@parts 0)
-       [:a {:href (routes/do)} "do"] (@parts 1)]
-      [:div#main-post-text
-       [:a {:href (routes/think)} "think"] ((@parts 2) 0)
-       [:a {:href (routes/am)} ((@parts 2) 1)] "?"]]
+      (@parts 0) " " [:a {:href (routes/do)} "do"] [:br]
+      (@parts 1) " " [:a {:href (routes/think)} "think"] [:br]
+      ((@parts 2) 0) " " [:a {:href (routes/am)} ((@parts 2) 1)]
+      [:span.questionmark "?"]]
      [:div#fingerprint.links
       [:a {:href (str "mailto:"
                    (s/reverse "gro.ung@vokinloksar"))}

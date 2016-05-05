@@ -7,8 +7,8 @@
         to   { transform: translateX(0px); }
     }
     @keyframes enter-main-text {
-        from { transform: scale(1.5) translateX(700px); }
-        50% { transform: scale(1.5) translateX(700px); }
+        from { transform: scale(1.5) translateX(60vw); }
+        50% { transform: scale(1.5) translateX(60vw); }
         to   { transform: translateX(0px); }
     }
     @keyframes enter-barcode {
@@ -24,8 +24,8 @@
     }
     @keyframes leave-main-text {
         from { transform: translateX(0px); }
-        60% { transform: translateX(700px); }
-        to   { transform: translateX(700px); }
+        60% { transform: translateX(100vw); }
+        to   { transform: translateX(100vw); }
     }
     @keyframes leave-barcode {
         from { transform: translateX(0px); }
@@ -64,40 +64,42 @@
 
     #main-text {
         position: absolute;
-        width: 523px;
-        height: 148px;
+        box-sizing: border-box;
+        width: 400px;
+        height: 400px;
         top: 0;
         right: 0;
+        left: 0;
         bottom: 0;
         margin: auto;
-        margin-right: 111px;
-        padding-right: 24px;
-        padding-top: 10px;
-        padding-bottom: 20px;
+        padding-right: 60px;
+        padding-top: 30px;
+
         white-space: nowrap;
-        background-color: white;
-        border: 9px solid white;
-        color: black;
-        transition: border-color 0.5s ease-in-out;
+        background-color: black;
+        color: white;
+        border: 8px solid white;
+
         font-weight: normal;
+        font-size: 60px;
+        text-align: right;
+        line-height: 76px;
         text-transform: lowercase;
+
+        transition: border-color 0.5s ease-in-out;
         &.hovered { border-color: red; }
-        a {
-            color: black;
+        .questionmark {
             display: inline-block;
-            line-height: 23px;
-            border-bottom: 14px solid black;
-            &:hover { color: red; }
+            width: 0;
         }
-        #main-pre-text {
-            text-align: right;
-            font-size: 74px;
-            line-height: 1em;
-        }
-        #main-post-text {
-            text-align: right;
-            font-size: 74px;
-            line-height: 1em;
+        a {
+            color: white;
+            display: inline-block;
+            line-height: 60px;
+            border-bottom: 4px solid white;
+            transition: color 0.3s ease-in-out,
+            /**/        border-color 0.3s ease-in-out;
+            &:hover { color: red; border-bottom-color: red; }
         }
     }
 
