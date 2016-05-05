@@ -1,0 +1,126 @@
+@import '../global';
+
+#am-page {
+    @keyframes enter-i {
+        from { transform: translateX(150%); }
+        60%  { transform: translateX(150%); }
+        100%   { transform: translateX(0px); }
+    }
+    @keyframes enter-am {
+        from { transform: translateX(150%); }
+        50%  { transform: scale(1.5) translateX(150%); }
+        90%   { transform: translateX(0px); }
+    }
+    @keyframes enter-not {
+        from { transform: translateX(150%); }
+        70%  { transform: scale(2) translateX(150%); }
+        100%   { transform: translateX(0px); }
+    }
+    @keyframes enter-profile {
+        from { opacity: 0; }
+        to  { opacity: 1; }
+    }
+
+    @keyframes leave-i {
+        20% { transform: translateX(0); }
+        60%  { transform: translateX(150%); }
+        to   { transform: translateX(150%); }
+    }
+    @keyframes leave-am {
+        10% { transform: translateX(0); }
+        50%  { transform: translateX(150%); }
+        to   { transform: translateX(150%); }
+    }
+    @keyframes leave-not {
+        from { transform: translateX(0); }
+        60%  { transform: translateX(150%); }
+        to   { transform: translateX(150%); }
+    }
+    @keyframes leave-profile {
+        from { opacity: 1; }
+        to  { opacity: 0; }
+    }
+
+    &.page-appear, &.page-enter {
+        div#i { animation: enter-i $page-anim-full forwards; }
+        div#am { animation: enter-am $page-anim-full forwards; }
+        div#not { animation: enter-not $page-anim-full forwards; }
+    }
+    &.page-leave {
+        div#i { animation: leave-i $page-anim-full forwards; }
+        div#am { animation: leave-am $page-anim-full forwards; }
+        div#not { animation: leave-not $page-anim-full forwards; }
+        #profiles a { animation: leave-profile forwards; }
+    }
+
+    #am-block {
+        padding: 0px;
+        position: absolute;
+        pointer-events: none;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        margin: 0 0 0 0;
+        padding-bottom: 20px;
+        vertical-align: bottom;
+        display: inline-block;
+        text-align: right;
+        line-height: 200px;
+        div {
+            font-size: 140px;
+            font-weight: bold;
+            box-sizing: border-box;
+            display: inline-block;
+            margin: 0;
+            &#not {
+                margin-top: 10px;
+                font-size: 160px;
+            }
+            p {
+                color: black;
+                background: white;
+                display: inline;
+                transition: box-shadow 0.5s ease-in-out;
+                border-right: 40px solid black;
+            }
+        }
+        &.hovered {
+            p { box-shadow: inset 0 0 0 8px red; }
+        }
+    }
+
+    #profiles {
+        position: absolute;
+        width: 70%;
+        top: 0;
+        display: block;
+        padding: 30px 0px 0 0px;
+        a {
+            transition: padding-top 0.5s ease-in-out, padding-left 0.5s ease-in-out;
+            font-size: 74px;
+            display: block;
+            float: left;
+            text-align: center;
+            box-sizing: border-box;
+            height: 100px;
+            width: 160px;
+            border: 0px solid red;
+            margin: 0 0px 0 0px;
+            span {
+                text-shadow: 2px 2px #fff;
+                color: black;
+                transition: all 0.5s ease-in-out;
+            }
+            &:hover {
+                span {
+                    color: black;
+                    text-shadow: 2px 2px red;
+                }
+            }
+            &.profile-enter, &.profile-appear {
+                opacity: 0;
+                animation: enter-profile forwards;
+            }
+        }
+    }
+}

@@ -1,0 +1,158 @@
+
+@import '../global';
+
+#sinusoid-h {
+    position: absolute;
+    width: 1000%;
+    height: 150px;
+    transform-origin: 0% 50%;
+    transition: top $page-anim-full ease-in-out,
+    /**/        margin-top $page-anim-full ease-in-out,
+    /**/        transform $page-anim-full ease-in-out,
+    /**/;
+
+    &::before {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: blue;
+        background-color: white;
+        transition: background-color 500ms ease-in-out;
+    }
+    &:hover::before, &.hovered::before { background-color: red; }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: -1px;
+        width: 100%;
+        height: 152px;
+        pointer-events: none;
+        background-image: url(/static/pic/sinusoid-i.svg);
+        background-size: contain;
+        transition: background-position $page-anim-full ease-in-out;
+    }
+
+    @keyframes main-sin {
+        from { transform: scale(1); }
+        50%  { transform: scale(0.4); }
+        to   { transform: scale(1); }
+    }
+    @keyframes init-sin {
+        from { background-position: 30% 0; transform: scale(0); }
+        to   { transform: scale(1); }
+    }
+    @keyframes do-sin {
+        from { transform: scale(1); }
+        50%  { transform: scale(0.3); }
+        to   { transform: scale(1); }
+    }
+    @keyframes am-sin {
+        from { transform: scale(1); }
+        40%  { transform: scale(2); }
+        to   { transform: scale(1); }
+    }
+    @keyframes not-found-sin {}
+
+    &.main-sin {
+        &::after { background-position: 0 0; }
+        top: 50vh;
+        margin-top: -75px;
+        animation: main-sin $page-anim-full ease-in-out;
+    }
+    &.do-sin {
+        &::after { background-position: -70% 0; }
+        top: 0vh;
+        margin-top: 72px;
+        animation: do-sin $page-anim-full ease-in-out;
+    }
+    &.am-sin {
+        &::after { background-position: 80% 0; }
+        top: 100vh;
+        margin-top: -194px;
+        animation: am-sin $page-anim-full ease-in-out;
+    }
+    &.todo-sin {
+        &::after { background-position: 100% 0; }
+        top: -100vh;
+        margin-top: -75px;
+    }
+    &.not-found-sin {
+        &::after { background-position: 20% 0; }
+        animation: not-found-sin $page-anim-full ease-in-out;
+        transition-duration: $page-anim-half;
+        top: 50vh;
+        margin-top: -75px;
+    }
+    &.init-sin-last {
+        animation: init-sin $page-anim-full ease-in-out;
+    }
+}
+
+
+#sinusoid-v {
+    position: absolute;
+    margin: 0 0 0 -75px;
+    width: 150px;
+    height: 1000%;
+    top: 0;
+    transform-origin: 50% 0;
+
+    &::before {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        transition: background-color 500ms ease-in-out;
+    }
+    &:hover::before, &.hovered::before { background-color: red; }
+
+    &::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+        left: -1px;
+        height: 100%;
+        width: 152px;
+        background-image: url(/static/pic/sinusoid-i-v.svg);
+        background-size: contain;
+        transition: background-position $page-anim-full ease-in-out;
+    }
+
+    @keyframes todo-sin-v {
+        40%  { transform: translateX(-10vw) scale(0.1); }
+        to   { transform: translateX(50vw) scale(1); }
+    }
+    @keyframes todo-sin-vb {
+        from { background-position: 0 80%; }
+        40%  { background-position: 0 80%; }
+        to   { background-position: 0 0; }
+    }
+    @keyframes todo-sin-last-v {
+        from { transform: translateX(50vw) scale(1); }
+        80%  { transform: translateX(130vw) scale(4); }
+        to   { transform: translateX(130vw); }
+    }
+    @keyframes todo-sin-last-vb {
+        from { background-position: 0 0; }
+        80%  { background-position: 0 -30%; }
+        to   { background-position: 0 -30%; }
+    }
+
+    & {
+        transform: translateX(-100vw);
+    }
+    &.todo-sin-last {
+        animation: todo-sin-last-v $page-anim-full forwards;
+        &::after { animation: todo-sin-last-vb $page-anim-full forwards; }
+    }
+    &.todo-sin {
+        animation: todo-sin-v $page-anim-full forwards;
+        &::after { animation: todo-sin-vb $page-anim-full forwards; }
+    }
+}

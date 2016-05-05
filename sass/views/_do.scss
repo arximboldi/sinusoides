@@ -1,0 +1,343 @@
+@import '../global';
+
+#do-detail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    box-sizing: border-box;
+
+    &.left-entry {
+        border-left: 100px solid red;
+    }
+    &.right-entry {
+        border-right: 100px solid blue;
+    }
+
+    @keyframes enter-detail {
+        from { background-color: transparent; }
+        to   { background-color: black; }
+    }
+    @keyframes leave-detail {
+        from { background-color: black; }
+        to   { background-color: transparent; }
+    }
+    @keyframes enter-left-side {
+        from { transform: translateX(-50vw); }
+        to   { transform: translateX(0); }
+    }
+    @keyframes leave-left-side {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50vw); }
+    }
+    @keyframes enter-right-side {
+        from { transform: translateX(50vw); }
+        to   { transform: translateX(0); }
+    }
+    @keyframes leave-right-side {
+        from { transform: translateX(0); }
+        to   { transform: translateX(50vw); }
+    }
+    @keyframes enter-right {
+        from { transform: translateX(50vw); }
+        to   { transform: translateX(0); }
+    }
+    @keyframes enter-left {
+        from { transform: translateX(-50vw); }
+        to   { transform: translateX(0); }
+    }
+    @keyframes leave-fade {
+        from { opacity: 1; }
+        to   { opacity: 0; }
+    }
+
+    &.do-detail-appear, &.do-detail-enter {
+        animation: enter-detail 1s forwards;
+        #left-side { animation: enter-left-side 1s forwards; }
+        #right-side { animation: enter-right-side 1s forwards; }
+    }
+
+    &.do-detail-leave {
+        animation: leave-detail 1s forwards;
+        #left-side { animation: leave-left-side 1s forwards; }
+        #right-side { animation: leave-right-side 1s forwards; }
+    }
+
+    #left-side {
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        background-color: black;
+    }
+
+    #right-side {
+        overflow: hidden;
+        position: absolute;
+        right: 0;
+        width: 50%;
+        height: 100%;
+        background-color: black;
+    }
+
+    #img {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center center;
+        background-color: #333;
+        &.swipe-left-enter { z-index: 2; animation: enter-left 500ms forwards; }
+        &.swipe-left-leave { animation: leave-fade 500ms forwards; }
+        &.swipe-right-enter { z-index: 2; animation: enter-right 500ms forwards; }
+        &.swipe-right-leave { animation: leave-fade 500ms forwards; }
+    }
+
+    #content {
+        position: absolute;
+        width: 100%;
+        padding: 16%;
+        box-sizing: border-box;
+        &.swipe-left-enter { z-index: 2; animation: enter-left 500ms forwards; }
+        &.swipe-left-leave { animation: leave-fade 500ms forwards; }
+        &.swipe-right-enter { z-index: 2; animation: enter-right 500ms forwards; }
+        &.swipe-right-leave { animation: leave-fade 500ms forwards; }
+    }
+
+    #header {
+        float: right;
+        display: inline-block;
+        background: white;
+        margin: -2% -2% 0 0;
+        padding: 10px;
+        text-transform: uppercase;
+        text-align: right;
+        font-size: 2em;
+        font-weight: bold;
+    }
+
+    #desc {
+        a {
+            color: white;
+            &:hover { color: red; }
+        }
+        color: #999999;
+        font-size: 1.5em;
+        float: right;
+        width: 100%;
+        padding: 20px 0 0 0;
+        box-sizing: border-box;
+        line-height: 1.25em;
+    }
+
+    a.link {
+        color: white;
+        border: 2px solid white;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        display: block;
+        float: left;
+        padding: 10px;
+        font-weight: bold;
+        transition: border 0.2s ease-in-out,
+        /**/        background 0.2s ease-in-out,
+        /**/        color 0.2s ease-in-out;
+        &:hover {
+            color: black;
+            border: 2px solid red;
+            background: red;
+        }
+    }
+
+    #footer {
+        z-index: 4;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        .prev, .next, .close {
+            display: block;
+            width: 30px;
+            height: 72px;
+            margin-right: 28px;
+            background-color: white;
+            background-size: cover;
+            background-position: center 0;
+            transition: background-color 300ms ease-in-out;
+            &:hover { background-color: red; }
+            &.disabled {
+                opacity: 0.25;
+                &:hover { background-color: white; }
+            }
+        }
+        .prev  { background-image: url(/static/pic/left-i.svg); }
+        .next  { background-image: url(/static/pic/right-i.svg); }
+        .close { background-image: url(/static/pic/close-i.svg); }
+    }
+}
+
+#do-page {
+    @keyframes enter-presentation {
+        from { transform: translateX(-700px); }
+        40%  { transform: scale(1.3) translateX(-700px); }
+        to   { transform: scale(1) translateX(0px); }
+    }
+    @keyframes enter-stuff {
+        from { transform: translateX(-100%); }
+        70%  { transform: translateX(-100%); }
+        to   { transform: translateX(0px); }
+    }
+
+    @keyframes leave-presentation {
+        from { transform: translateX(0px); }
+        50%  { transform: translateX(-700px); }
+        to   { transform: translateX(-700px); }
+    }
+    @keyframes leave-stuff {
+        from { transform: translateX(0px); }
+        40%  { transform: translateX(-100%); }
+        to   { transform: translateX(-100%); }
+    }
+
+    &.page-appear, &.page-enter {
+        #presentation { animation: enter-presentation $page-anim-full forwards; }
+        #stuff { animation: enter-stuff $page-anim-full forwards; }
+    }
+    &.page-leave {
+        #presentation { animation: leave-presentation $page-anim-full forwards; }
+        #stuff { animation: leave-stuff $page-anim-full forwards; }
+    }
+
+    #presentation {
+        position: absolute;
+        top: 40px;
+        left: 40px;
+        width: 500px;
+        height: 150px;
+        background: white;
+        padding: 24px;
+        padding-bottom: 18px;
+        border: 8px solid white;
+        transition: border-color 0.5s ease-in-out;
+        &.hovered { border-color: red; }
+        &::before {
+            position: absolute;
+            top: -8px;
+            left: -48px;
+            display: block;
+            content: "";
+            width: 40px;
+            height: 208px;
+            background-color: black;
+        }
+        .title {
+            font-size: 140px;
+            float: left;
+            font-weight: bold;
+            margin-right: 20px;
+            margin-top: 4px;
+            padding-top: 4px;
+            line-height: 140px;
+            display: block;
+            border-top: 8px solid white;
+        }
+        .intro {
+            font-size: 14px;
+            text-align: right;
+            color: #888888;
+            line-height: 20px;
+        }
+    }
+
+    #stuff {
+        position: absolute;
+        top: 300px;
+    }
+
+    .programs {
+        margin: -10px 30px 0 30px;
+        a {
+            display: block;
+            position: relative;
+            float: left;
+            margin: 6px;
+            background-size: contain;
+            width: 125px;
+            height: 125px;
+            border: 0px;
+            overflow: hidden;
+            text-decoration: none;
+            border: 4px solid black;
+            transition: border-color 0.2s ease-in-out;
+            div {
+                position: relative;
+                margin: 0;
+                padding: 0;
+                width: 125px;
+                height: 125px;
+                background: black;
+                opacity: 0;
+                transition: opacity 0.4s ease-in-out;
+            }
+            span {
+                position: relative;
+                top: 0px;
+                left: 0px;
+                display: block;
+                padding: 10px;
+                margin: 0;
+                color: red;
+                text-decoration: none;
+                text-overflow: ellipsis;
+                font-weight: bold;
+                font-size: 1.3em;
+                word-break: normal;
+                display: block;
+                transition: transform 0.2s ease-in-out;
+            }
+            &:hover {
+                border-color: red;
+                div { opacity: 0.7; }
+                span { transform: translate(0, -120px); }
+            }
+        }
+    }
+
+    #language-links {
+        margin: 40px 0 30px 40px;
+        a, .filter {
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+            color: #777777;
+            padding: 10px;
+            margin-right: 0px;
+            margin-top: 2px;
+            font-weight: bold;
+            transition: border-color 0.2s ease-in-out, background 0.2s ease-in-out, color 0.2s ease-in-out;
+            &.on {
+                border-bottom: 2px solid red;
+                margin-bottom: -2px;
+            }
+            &.cv {
+                color: white;
+                border-right: 1px solid #777777;
+            }
+            &.clearf {
+                color: red;
+                border-left: 1px solid red;
+            }
+            &:hover {
+                background: red;
+                color: white;
+                &.on {
+                    border-bottom: 2px solid white;
+                    margin-bottom: -2px;
+                }
+            }
+        }
+    }
+}

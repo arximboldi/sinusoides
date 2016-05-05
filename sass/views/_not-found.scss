@@ -1,0 +1,79 @@
+@import '../global';
+
+#not-found-page {
+    pointer-events: auto;
+
+    @keyframes enter-the-end {
+        from { width: 0; height: 0; }
+        30%  { width: 0; height: 0; }
+        50%  { width: 0; height: 150px; }
+        to   { width: 400px; height: 150px; }
+    }
+    @keyframes enter-dead-end {
+        from { width: 0; }
+        50%  { width: 0; }
+        to   { width: 400px; }
+    }
+
+    @keyframes leave-the-end {
+        from { width: 400px; height: 150px; }
+        50%  { width: 0; height: 150px; }
+        70%  { width: 0; height: 0; }
+        to   { width: 0; height: 0; }
+    }
+    @keyframes leave-dead-end {
+        from { width: 400px; }
+        50%  { width: 0; }
+        to   { width: 0; }
+    }
+
+    &.page-appear, &.page-enter {
+        #the-end { animation: enter-the-end $page-anim-full forwards; }
+        #dead-end { animation: enter-dead-end $page-anim-full forwards; }
+    }
+    &.page-leave {
+        #the-end { animation: leave-the-end $page-anim-full forwards; }
+        #dead-end { animation: leave-dead-end $page-anim-full forwards; }
+    }
+
+    #the-end {
+        position: absolute;
+        height: 150px;
+        width: 400px;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+        background-color: black;
+        color: white;
+        border-left: 10px solid white;
+        border-right: 10px solid white;
+        transition: border-color 0.5s ease-in-out;
+        &.hovered {
+            border-left: 10px solid red;
+            border-right: 10px solid red;
+        }
+    }
+
+    #dead-end {
+        position: absolute;
+        overflow: hidden;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        color: white;
+        height: 220px;
+        width: 400px;
+        text-transform: uppercase;
+        text-align: left;
+        line-height: 110px;
+        padding-left: 10px;
+        font-size: 140px;
+        text-decoration: none;
+        span.first { letter-spacing: initial; }
+        span.second { letter-spacing: 46px; }
+    }
+}
