@@ -34,11 +34,21 @@
                      #(rand-nth [[" I " "am"]
                                  [" you " "are"]
                                  [" they " "are"]])]
+
                parts (r/atom ;; (vec (map apply gens))
-                       ["What " " you" [" I " "am"]])
-               randomize (fn []
-                           (let [[idx gen] (rand-nth (map-indexed vector gens))]
-                             (swap! parts #(assoc % idx (gen)))))
+                      ["What " " you" [" I " "am"]])
+
+               gen-new
+               (fn [gen elem]
+                 (first (first
+                   (drop-while (fn [[a b]] (= a b))
+                               (map vector (repeatedly gen) (repeat elem))))))
+
+               randomize
+               (fn []
+                 (let [[idx gen] (rand-nth (map-indexed vector gens))]
+                   (swap! parts #(assoc % idx (gen-new gen (% idx))))))
+
                interval (.setInterval js/window randomize 6000)
 
                transition {:transition-name "part"
