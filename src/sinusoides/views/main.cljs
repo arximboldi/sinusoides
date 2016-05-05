@@ -38,6 +38,11 @@
                parts (r/atom ;; (vec (map apply gens))
                       ["What " " you" [" I " "am"]])
 
+               update-parts
+               (fn [parts]
+                 (let [[idx gen] (rand-nth (map-indexed vector gens))]
+                   (assoc parts idx (gen))))
+
                gen-new
                (fn [gen elem]
                  (first (first
@@ -47,7 +52,7 @@
                randomize
                (fn []
                  (let [[idx gen] (rand-nth (map-indexed vector gens))]
-                   (swap! parts #(assoc % idx (gen-new gen (% idx))))))
+                   (swap! parts #(gen-new (partial update-parts %) %))))
 
                interval (.setInterval js/window randomize 6000)
 
