@@ -65,19 +65,22 @@
      [:a#barcode2 {:href (routes/todo)}]
 
      [:div#main-text (sinusoid/hovered sin)
-      [css-transitions transition
+      [:div.parts
+       [css-transitions transition
         ^{:key (@parts 0)}
-        [:div.part (@parts 0) " " [:a {:href (routes/do)} "do"]]]
+        [:div.part (@parts 0) " " [:a {:href (routes/do)} "do"]]]]
 
-      [css-transitions transition
-       ^{:key (@parts 1)}
-       [:div.part (@parts 1) " " [:a {:href (routes/think)} "think"]]]
+      [:div.parts
+       [css-transitions transition
+        ^{:key (@parts 1)}
+        [:div.part (@parts 1) " " [:a {:href (routes/think)} "think"]]]]
 
-      [css-transitions transition
-       ^{:key (@parts 2)}
-       [:div.part ((@parts 2) 0)
-        " " [:a {:href (routes/am)} ((@parts 2) 1)]
-        [:span.questionmark "?"]]]]
+      [:div.parts
+       [css-transitions transition
+        ^{:key (@parts 2)}
+        [:div.part ((@parts 2) 0)
+         " " [:a {:href (routes/am)} ((@parts 2) 1)]
+         [:span.questionmark "?"]]]]]
 
      [:div#fingerprint.links
       [:a {:href (str "mailto:"
