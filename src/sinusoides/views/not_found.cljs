@@ -21,7 +21,7 @@
             [sinusoides.views.sinusoid :as sinusoid]))
 
 (defn not-found-view [sin]
-  [:div#not-found-page.page
+  [:div#not-found-page.fixed-page
    [:div#the-end (sinusoid/hovered sin)]
    [:a#dead-end {:href (routes/main)}
     [sinusoid/hover-view sin :not-found]

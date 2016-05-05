@@ -21,6 +21,6 @@
             [sinusoides.views.sinusoid :as sinusoid]))
 
 (defn todo-view [sin]
-  [:div#todo-page.page
+  [:div#todo-page.fixed-page
    [:div#todo-block.links (sinusoid/hovered sin)
     "TO" [:a {:href (routes/do)} "DO."]]])

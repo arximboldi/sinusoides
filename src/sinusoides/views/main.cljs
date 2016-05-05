@@ -40,7 +40,7 @@
                            (let [[idx gen] (rand-nth (map-indexed vector gens))]
                              (swap! parts #(assoc % idx (gen)))))
                interval (.setInterval js/window randomize 5000)]
-    [:div#main-page.page
+    [:div#main-page.fixed-page
      [:div#barcode]
      [:a#barcode2 {:href (routes/todo)}]
      [:div#main-text.links (sinusoid/hovered sin)

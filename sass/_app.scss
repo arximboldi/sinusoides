@@ -25,6 +25,15 @@ body {
     * { pointer-events: auto; }
 }
 
+.fixed-page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    * { pointer-events: auto; }
+}
+
 a, a:hover,
 a:active,
 a:focus {

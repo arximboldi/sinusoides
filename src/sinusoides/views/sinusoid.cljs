@@ -54,9 +54,10 @@
                   :else     ["not-found-sin" (routes/main)])
         [class1 _]    (expand (:last @app))
         [class2 href] (expand (:view @app))]
-    [:a {:id tag
-         :href href
-         :class (str class1 "-last "
-                  class2 " "
-                  (when (hover? sin) "hovered"))}
-     [hover-view sin tag]]))
+    [:div.sinusoid-container
+     [:a {:id tag
+          :href href
+          :class (str class1 "-last "
+                      class2 " "
+                      (when (hover? sin) "hovered"))}
+      [hover-view sin tag]]]))
