@@ -17,232 +17,36 @@
 ;; <http://www.gnu.org/licenses/>.
 
 (ns sinusoides.components
-  (:require-macros [cljs.core.async.macros :refer [go]])
-  (:require [sinusoides.util :as util]
-            [sinusoides.routes :as routes]
-            [cljs-http.client :as http]
+  (:require [sinusoides.views.addons :refer [css-transitions]]
+            [sinusoides.views.am :refer [am-view]]
+            [sinusoides.views.do- :refer [do-view]]
+            [sinusoides.views.main :refer [main-view]]
+            [sinusoides.views.not-found :refer [not-found-view]]
+            [sinusoides.views.sinusoid :as sinusoid]
+            [sinusoides.views.todo :refer [todo-view]]
             [cljs.core.match :refer-macros [match]]
-            [goog.events :as events]
             [cljs.core.match]
-            [cljsjs.showdown]
-            [clojure.string :as s]
             [reagent.core :as r]))
 
-(defn init-view []
-  [:div "..."])
-
-(defn not-found-view []
-  (let [hover (r/atom false)]
-      (fn []
-        [:div#not-found-page
-         [:div#sinusoid {:class (when @hover "hovered")}]
-         [:div#the-end {:class (when @hover "hovered")}]
-         [:a#dead-end {:href (routes/main)
-                       :on-mouse-over #(reset! hover true)
-                       :on-mouse-out #(reset! hover false)}
-          [:span.first "Dead"] [:br]
-          [:span.second "end"]]])))
-
-(defn todo-view []
-  (r/with-let [hover (r/atom false)]
-    [:div#todo-page
-     [:a#sinusoid {:href (routes/main)
-                   :on-mouse-over #(reset! hover true)
-                   :on-mouse-out #(reset! hover false)}]
-     [:div#todo-block.links {:class (when @hover "hovered")}
-      "TO" [:a {:href (routes/do)} "DO."]]]))
-
-(defn main-view []
-  (r/with-let [gens [#(rand-nth ["What "
-                                 "Who "
-                                 "Where "
-                                 "Why "])
-                     #(rand-nth [" I"
-                                 " you"
-                                 " they"])
-                     #(rand-nth [[" I " "am"]
-                                 [" you " "are"]
-                                 [" they " "are"]])]
-               hover (r/atom false)
-               parts (r/atom ;; (vec (map apply gens))
-                       ["What " " you" [" I " "am"]])
-               randomize (fn []
-                           (let [[idx gen] (rand-nth (map-indexed vector gens))]
-                             (swap! parts #(assoc % idx (gen)))))
-               interval (.setInterval js/window randomize 5000)]
-    [:div#main-page
-     [:a#sinusoid {:href (routes/not-found)
-                   :on-mouse-over #(reset! hover true)
-                   :on-mouse-out #(reset! hover false)}]
-     [:div#barcode]
-     [:a {:href (routes/todo)} [:div#barcode2]]
-     [:div#main-text.links {:class (when @hover "hovered")}
-      [:div#main-pre-text (@parts 0)
-       [:a {:href (routes/do)} "do"] (@parts 1)]
-      [:div#main-post-text
-       [:a {:href (routes/think)} "think"] ((@parts 2) 0)
-       [:a {:href (routes/am)} ((@parts 2) 1)] "?"]]
-     [:div#fingerprint.links
-      [:a {:href (str "mailto:"
-                   (s/reverse "gro.ung@vokinloksar"))}
-       "CE3E CB30 6F40 3D98 DB2E" [:br]
-       "B65C 529B A962 690A 70B1"]]]
-    (finally (.clearInterval js/window interval))))
-
-(defn md->html [str]
-  (let [Converter (.-converter js/Showdown)
-        converter (Converter.)]
-    (.makeHtml converter str)))
-
-(defn am-view [am]
-  (r/with-let [_ (go (let [response (<! (http/get "/data/am.json"))]
-                       (reset! am (vec (shuffle (:body response))))))
-               rand-px #(str (rand 60) "px")
-               hover (r/atom false)]
-    (print @am)
-    [:div#am-page
-     [:a#sinusoid {:href (routes/main)
-                   :on-mouse-over #(reset! hover true)
-                   :on-mouse-out #(reset! hover false)}]
-     [:div#am-block
-      {:class (when @hover "hovered")}
-      [:p " I "] [:br] [:p " am "] [:br] [:p " not "]]
-     [:div#profiles.links
-      (for [{name :name url :url} @am]
-        ^{:key name}
-        [:div
-         {:id name
-          :style {:padding-left (rand-px)
-                  :padding-top (rand-px)}}
-         [:a {:href url} "this"]])]]))
-
-(defn do-detail-view [entries entry]
-  (letfn
-      [(nav-arrow! [diff]
-         (when-let [[idx _] @entry]
-           (when-let [next (get-in @entries [(+ idx diff) :slug])]
-             (routes/nav! (routes/do- {:id next})))))
-
-       (handle-key [event]
-         (case (.-keyCode event)
-           37 (nav-arrow! -1)
-           39 (nav-arrow! +1)
-           27 (routes/nav! (routes/do))
-           nil))]
-
-    (r/with-let [listener (events/listen js/document "keydown" handle-key)]
-      (let [[idx p] @entry]
-        [:div#do-detail.links
-         [:a#img {:href (str "/static/screens/" ((:imgs p) 1))
-                  :style {:background-image
-                          (str "url(/static/screens/" ((:imgs p) 1) ")")}}]
-         [:div#body
-          [:div#content
-           [:div#header (:name p)]
-           [:div#desc {:dangerouslySetInnerHTML
-                       {:__html (md->html (:desc p))}}]
-           (for [link (:link p)]
-             ^{:key link}
-             [:a.link {:href (:href link)} (:name link)])]
-          [:div#footer
-           (if-let [id (get-in @entries [(- idx 1) :slug])]
-             [:a.prev.enabled {:href (routes/do- {:id id})}]
-             [:div.prev.disabled])
-           (if-let [id (get-in @entries [(+ idx 1) :slug])]
-             [:a.next.enabled {:href (routes/do- {:id id})}]
-             [:div.next.disabled])
-           [:a.close {:href (routes/do)}]]]])
-      (finally (events/unlistenByKey listener)))))
-
-(defn do-view- [do entries]
-  (r/with-let [hover (r/atom false)]
-    [:div#do-page
-     [:a#sinusoid {:href (routes/main)
-                   :on-mouse-over #(reset! hover true)
-                   :on-mouse-out #(reset! hover false)}]
-
-     [:div#presentation.links
-      {:class (when @hover "hovered")}
-      [:div.title "Do."]
-      [:div.intro
-       [:a {:href (routes/am)} "Being"]
-       " is doing. One thing that I do a lot is building and talking
-         about software. Most of it is "
-       [:a {:href "http://www.gnu.org/philosophy/free-sw.html"}
-        "libre software"]
-       ". Libre software is a nice "
-       [:a {:href "todo.html"} "thought"],
-       " that blurs the boundaries between consumers and producers of
-     software."
-     [:em " Blah blah."]
-     "You can taste a selection of my doing here."]]
-
-     [:div#language-links
-      [:a.cv {:href "/static/files/resume-en.pdf"} "Résumé"]
-      (doall
-        (for [lang (:languages @do)]
-          ^{:key lang}
-          [:div.filter
-           {:class (if (contains? (get-in @do [:filter :languages]) lang)
-                     "on"
-                     "off")
-            :on-click
-            (fn [] (swap! do update-in [:filter :languages]
-                     #(util/togglej % lang)))}
-           lang]))
-      (when-not (empty? (get-in @do [:filter :languages]))
-        [:div.filter.clearf
-         {:on-click (fn [] (swap! do assoc-in [:filter :languages] #{}))}
-         "Clear"])]
-
-     [:div.programs
-      (for [p @entries]
-        ^{:key p}
-        [:a {:href (routes/do- {:id (:slug p)})
-             :style {:background-image
-                     (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}}
-         [:div]
-         [:span (:name p)]])]]))
-
-(defn do-view [do]
-  (letfn
-      [(filter-entries []
-         (let [lang-filters (get-in @do [:filter :languages])]
-           (vec (filter #(or (empty? lang-filters)
-                           (contains? lang-filters (:lang %)))
-                  (:entries @do)))))
-
-       (find-entry [entries id]
-         (when id
-           (first (filter #(= id (:slug (% 1)))
-                    (map-indexed vector entries)))))
-
-       (fetch-data []
-         (go (let [entries   (map #(assoc % :slug (util/to-slug (:name %)))
-                               (:body  (<! (http/get "/data/do.json"))))
-                   languages (apply sorted-set
-                               (filter identity (map :lang entries)))]
-               (swap! do assoc-in [:entries] entries)
-               (swap! do assoc-in [:languages] languages))))]
-
-    (fetch-data)
-    (r/with-let [entries (r/track filter-entries)
-                 detail  (r/track #(:detail @do))
-                 entry   (r/track #(find-entry @entries @detail))]
-      (if @entry
-        [do-detail-view entries entry]
-        [do-view- do entries]))))
-
 (defn root-view [app]
-  [:div.sinusoides
-   (match [(:view @app)]
-     [[:am]]    [am-view (r/cursor app [:am])]
-     [[:do]]    [do-view (r/cursor app [:do])]
-     [[:init]]  [init-view]
-     [[:main]]  [main-view]
-     [[:think]] [todo-view]
-     [[:todo]]  [todo-view]
-     :else      [not-found-view])])
+  (r/with-let [am  (r/cursor app [:am])
+               do  (r/cursor app [:do])
+               sin (r/cursor app [:sinusoid])]
+    [:div#sinusoides
+     [sinusoid/sinusoid-view :sinusoid-h app sin]
+     [sinusoid/sinusoid-view :sinusoid-v app sin]
+     [css-transitions {:transition-name "page"
+                       :transition-appear true
+                       :transition-appear-timeout 3000
+                       :transition-enter-timeout 3000
+                       :transition-leave-timeout 3000}
+      (match [(:view @app)]
+        [[:am]]    ^{:key :am-view}   [am-view sin am]
+        [[:do]]    ^{:key :do-view}   [do-view sin do]
+        [[:init]]  ^{:key :init-view} [:div]
+        [[:main]]  ^{:key :main-view} [main-view sin]
+        [[:todo]]  ^{:key :todo-view} [todo-view sin]
+        :else      ^{:key :not-found-view} [not-found-view sin])]]))
 
 (defn init-components! [state]
   (r/render-component

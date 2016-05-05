@@ -26,23 +26,33 @@
 
 (def history (atom))
 
+(defn goto! [app page]
+  (swap! app assoc-in [:last] (:view @app))
+  (swap! app assoc-in [:view] page))
+
+(defn goto-do! [app id]
+  (goto! app [:do])
+  (if (nil? id)
+    (do (swap! app assoc-in [:do :last] nil)
+        (swap! app assoc-in [:do :detail] nil))
+    (do (swap! app assoc-in [:do :last] (get-in @app [:do :detail]))
+        (swap! app assoc-in [:do :detail] id))))
+
 (defn make-routes! [app]
   (defroute am "/am" []
-    (swap! app assoc-in [:view] [:am]))
+    (goto! app [:am]))
   (defroute do "/do" []
-    (swap! app assoc-in [:view] [:do])
-    (swap! app assoc-in [:do :detail] nil))
+    (goto-do! app nil))
   (defroute do- "/do/:id" [id]
-    (swap! app assoc-in [:view] [:do])
-    (swap! app assoc-in [:do :detail] id))
+    (goto-do! app id))
   (defroute think "/think" []
-    (swap! app assoc-in [:view] [:think]))
+    (goto! app [:todo]))
   (defroute todo "/todo" []
-    (swap! app assoc-in [:view] [:todo]))
+    (goto! app [:todo]))
   (defroute main "/" []
-    (swap! app assoc-in [:view] [:main]))
+    (goto! app [:main]))
   (defroute not-found "/dead-end" []
-    (swap! app assoc-in [:view] [:not-found])))
+    (goto! app [:not-found])))
 
 (defn- no-prefix [uri]
   (let [prefix (secretary/get-config :prefix)]

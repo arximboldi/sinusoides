@@ -1,0 +1,30 @@
+@font-face {
+    font-family: "Arimo";
+    src: url(/static/files/Arimo-Regular.ttf);
+}
+@font-face {
+    font-family: "Arimo";
+    src: url(/static/files/Arimo-Bold.ttf);
+    font-weight: bold;
+}
+@font-face {
+    font-family: "Arimo";
+    src: url(/static/files/Arimo-Italic.ttf);
+    font-style: italic;
+}
+@font-face {
+    font-family: "Arimo";
+    src: url(/static/files/Arimo-BoldItalic.ttf);
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Inconsolata";
+    src: url(/static/files/Inconsolata-Regular.ttf);
+}
+@font-face {
+    font-family: "Inconsolata";
+    font-weight: bold;
+    src: url(/static/files/Inconsolata-Bold.ttf);
+}

@@ -1,0 +1,143 @@
+@import '../global';
+
+#main-page {
+    @keyframes enter-fingerprint {
+        from { transform: scale(0.5) translateX(800px); }
+        40% { transform: scale(0.5) translateX(800px); }
+        to   { transform: translateX(0px); }
+    }
+    @keyframes enter-main-text {
+        from { transform: scale(1.5) translateX(60vw); }
+        50% { transform: scale(1.5) translateX(60vw); }
+        to   { transform: translateX(0px); }
+    }
+    @keyframes enter-barcode {
+        from { transform: translateX(640px); }
+        60% { transform: translateX(640px); }
+        to   { transform: translateX(0px); }
+    }
+
+    @keyframes leave-fingerprint {
+        from { transform: translateX(0px); }
+        50% { transform: translateX(420px); }
+        to   { transform: translateX(420px); }
+    }
+    @keyframes leave-main-text {
+        from { transform: translateX(0px); }
+        60% { transform: translateX(100vw); }
+        to   { transform: translateX(100vw); }
+    }
+    @keyframes leave-barcode {
+        from { transform: translateX(0px); }
+        70% { transform: translateX(640px); }
+        to   { transform: translateX(640px); }
+    }
+
+    &.page-appear, &.page-enter {
+        #barcode, #barcode2 { animation: enter-barcode $page-anim-full forwards; }
+        #main-text { animation: enter-main-text $page-anim-full forwards; }
+        #fingerprint { animation: enter-fingerprint $page-anim-full forwards; }
+    }
+    &.page-leave {
+        #barcode, #barcode2 { animation: leave-barcode $page-anim-full forwards; }
+        #main-text { animation: leave-main-text $page-anim-full forwards; }
+        #fingerprint { animation: leave-fingerprint $page-anim-full forwards; }
+    }
+
+    #barcode, #barcode2 {
+        position: absolute;
+        width: 600px;
+        height: 50%;
+        right: 0;
+        top: 0;
+        border-right: 40px solid black;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center 97.5%;
+        background-image: url(/static/pic/barcode-v-i-r.svg);
+    }
+    #barcode2 {
+        top: 50%;
+        transition: background-position 0.3s ease-in-out;
+        &:hover { background-position: center 100.5%; }
+    }
+
+    #main-text {
+        position: absolute;
+        box-sizing: border-box;
+        width: 400px;
+        height: 400px;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        margin: auto;
+        padding-right: 60px;
+        padding-top: 30px;
+
+        white-space: nowrap;
+        background-color: black;
+        color: white;
+        border: 8px solid white;
+
+        font-weight: normal;
+        font-size: 60px;
+        text-align: right;
+        line-height: 76px;
+        text-transform: lowercase;
+
+        transition: border-color 0.5s ease-in-out;
+        &.hovered { border-color: red; }
+
+        .parts {
+            width: 100%;
+            height: 76px;
+            .part {
+                width: 100%;
+                height: 0;
+                transition: opacity 2s ease-in-out;
+                &.part-enter { opacity: 0; }
+                &.part-enter-active { opacity: 1; }
+                &.part-leave { opacity: 1; }
+                &.part-leave-active { opacity: 0; }
+            }
+        }
+
+        .questionmark {
+            display: inline-block;
+            width: 0;
+        }
+
+        a {
+            color: white;
+            display: inline-block;
+            text-decoration: none;
+            line-height: 64px;
+            border-bottom: 4px solid white;
+            transition: color 0.3s ease-in-out,
+            /**/        border-color 0.3s ease-in-out;
+            &:hover { color: red; border-bottom-color: red; }
+        }
+    }
+
+    #fingerprint {
+        background-color: white;
+        border-right: black;
+        position: absolute;
+        top: 40px;
+        right: 0px;
+        padding: 8px;
+        padding-left: 27px;
+        padding-right: 30px;
+        font-family: "Inconsolata";
+        font-weight: normal;
+        text-align: right;
+        font-size: 25px;
+        line-height: 28px;
+        border-left: black;
+        a {
+            color: black;
+            &:hover { color: red; }
+        }
+    }
+}
