@@ -39,18 +39,35 @@
                randomize (fn []
                            (let [[idx gen] (rand-nth (map-indexed vector gens))]
                              (swap! parts #(assoc % idx (gen)))))
-               interval (.setInterval js/window randomize 5000)]
+               interval (.setInterval js/window randomize 6000)
+
+               transition {:transition-name "part"
+                           :transition-enter-timeout 2000
+                           :transition-leave-timeout 2000}]
+
     [:div#main-page.fixed-page
      [:div#barcode]
      [:a#barcode2 {:href (routes/todo)}]
-     [:div#main-text.links (sinusoid/hovered sin)
-      (@parts 0) " " [:a {:href (routes/do)} "do"] [:br]
-      (@parts 1) " " [:a {:href (routes/think)} "think"] [:br]
-      ((@parts 2) 0) " " [:a {:href (routes/am)} ((@parts 2) 1)]
-      [:span.questionmark "?"]]
+
+     [:div#main-text (sinusoid/hovered sin)
+      [css-transitions transition
+        ^{:key (@parts 0)}
+        [:div.part (@parts 0) " " [:a {:href (routes/do)} "do"]]]
+
+      [css-transitions transition
+       ^{:key (@parts 1)}
+       [:div.part (@parts 1) " " [:a {:href (routes/think)} "think"]]]
+
+      [css-transitions transition
+       ^{:key (@parts 2)}
+       [:div.part ((@parts 2) 0)
+        " " [:a {:href (routes/am)} ((@parts 2) 1)]
+        [:span.questionmark "?"]]]]
+
      [:div#fingerprint.links
       [:a {:href (str "mailto:"
                    (s/reverse "gro.ung@vokinloksar"))}
        "CE3E CB30 6F40 3D98 DB2E" [:br]
        "B65C 529B A962 690A 70B1"]]]
+
     (finally (.clearInterval js/window interval))))

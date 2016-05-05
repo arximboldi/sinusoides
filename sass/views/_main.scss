@@ -88,14 +88,26 @@
 
         transition: border-color 0.5s ease-in-out;
         &.hovered { border-color: red; }
+
+        .part {
+            width: 100%;
+            transition: opacity 2s ease-in-out;
+            &.part-enter { height: 0; opacity: 0; }
+            &.part-enter-active { opacity: 1; }
+            &.part-leave { opacity: 1; }
+            &.part-leave-active { opacity: 0; }
+        }
+
         .questionmark {
             display: inline-block;
             width: 0;
         }
+
         a {
             color: white;
             display: inline-block;
-            line-height: 60px;
+            text-decoration: none;
+            line-height: 64px;
             border-bottom: 4px solid white;
             transition: color 0.3s ease-in-out,
             /**/        border-color 0.3s ease-in-out;
