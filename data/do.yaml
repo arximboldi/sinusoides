@@ -1,6 +1,20 @@
 # Recent
 # ------
 
+- name: Mittagessen
+  lang: ClojureScript
+  link:
+    - name: Website
+      href: http://sinusoid.es/mittagessen
+    - name: Code (Github)
+      href: https://github.com/arximboldi/mittagessen
+  imgs: [ mittagessen-small.png, mittagessen.png ]
+  desc: |
+    A web app to choose a place to eat close to the Ableton office, in
+    Berlin mitte.  I made this app on my last week of work, in march
+    2016, as a farewell present for my colleagues that eat outside of
+    the office.
+
 - name: ZBeats
   lang: JavaScript
   link:
@@ -10,7 +24,7 @@
       href: https://github.com/kostspielig/zbeats
   imgs: [ zbeats-small.png, zbeats.png ]
   desc: |
-    This an Ableton Live inspired web app to make music by playing
+    This is an Ableton Live inspired web app to make music by playing
     multiple clips.  Tempo can be adjusted and everything is kept in
     sync.  The app was done mostly by [Maria
     Carrasco](http://www.carrasco.in) but I helped with some of the
