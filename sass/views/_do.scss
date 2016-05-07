@@ -91,9 +91,9 @@
         background-size: cover;
         background-position: center center;
         background-color: #333;
-        &.swipe-left-enter { z-index: 2; animation: enter-left 500ms forwards; }
+        &.swipe-left-enter { animation: enter-left 500ms forwards; }
         &.swipe-left-leave { animation: leave-fade 500ms forwards; }
-        &.swipe-right-enter { z-index: 2; animation: enter-right 500ms forwards; }
+        &.swipe-right-enter { animation: enter-right 500ms forwards; }
         &.swipe-right-leave { animation: leave-fade 500ms forwards; }
     }
 
@@ -102,9 +102,10 @@
         width: 100%;
         padding: 16%;
         box-sizing: border-box;
-        &.swipe-left-enter { z-index: 2; animation: enter-left 500ms forwards; }
+        background-color: black;
+        &.swipe-left-enter { animation: enter-left 500ms forwards; }
         &.swipe-left-leave { animation: leave-fade 500ms forwards; }
-        &.swipe-right-enter { z-index: 2; animation: enter-right 500ms forwards; }
+        &.swipe-right-enter { animation: enter-right 500ms forwards; }
         &.swipe-right-leave { animation: leave-fade 500ms forwards; }
     }
 
@@ -154,7 +155,7 @@
     }
 
     #footer {
-        z-index: 4;
+        z-index: 1000;
         position: absolute;
         bottom: 0;
         right: 0;

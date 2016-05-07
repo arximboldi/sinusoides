@@ -50,10 +50,10 @@
        (when @entry
          (let [[idx p] @entry
                last-idx (if @last-entry (@last-entry 0) -1)
-               transition-name (str "swipe"
-                                 (cond
-                                   (< idx last-idx) "-left"
-                                   (> idx last-idx) "-right"))]
+               [transition-name z-index]
+               (cond
+                 (< idx last-idx) ["swipe-left"  (- (count @entries) idx)]
+                 (> idx last-idx) ["swipe-right" idx])]
            ^{:key :do-detail}
            [:div#do-detail.links
             [:div#left-side
@@ -62,14 +62,15 @@
                                :transition-leave-timeout 500}
               ^{:key idx}
               [:a#img {:href (str "/static/screens/" ((:imgs p) 1))
-                       :style {:background-image
+                       :style {:z-index z-index
+                               :background-image
                                (str "url(/static/screens/" ((:imgs p) 1) ")")}}]]]
             [:div#right-side
              [css-transitions {:transition-name transition-name
                                :transition-enter-timeout 500
                                :transition-leave-timeout 500}
               ^{:key idx}
-              [:div#content
+              [:div#content {:style {:z-index z-index}}
                [:div#header (:name p)]
                [:div#desc {:dangerouslySetInnerHTML
                            {:__html (util/md->html (:desc p))}}]
@@ -136,10 +137,20 @@
 
 (defn do-view [sin do]
   (letfn
-      [(filter-entries []
+      [(get-langs [p]
+         (let [lang (:lang p)]
+           (if (vector? lang)
+             lang
+             [lang])))
+
+       (contain-any? [set v]
+         (some #(contains? set %) v))
+
+       (filter-entries []
          (let [lang-filters (get-in @do [:filter :languages])]
            (vec (filter #(or (empty? lang-filters)
-                           (contains? lang-filters (:lang %)))
+                             (contain-any? lang-filters
+                                           (get-langs %)))
                   (:entries @do)))))
 
        (find-entry [entries id]
@@ -151,7 +162,7 @@
          (go (let [entries   (map #(assoc % :slug (util/to-slug (:name %)))
                                (:body  (<! (http/get "/data/do.json"))))
                    languages (apply sorted-set
-                               (filter identity (map :lang entries)))]
+                               (filter identity (mapcat get-langs entries)))]
                (swap! do assoc-in [:entries] entries)
                (swap! do assoc-in [:languages] languages))))]
 
