@@ -137,10 +137,20 @@
 
 (defn do-view [sin do]
   (letfn
-      [(filter-entries []
+      [(get-langs [p]
+         (let [lang (:lang p)]
+           (if (vector? lang)
+             lang
+             [lang])))
+
+       (contain-any? [set v]
+         (some #(contains? set %) v))
+
+       (filter-entries []
          (let [lang-filters (get-in @do [:filter :languages])]
            (vec (filter #(or (empty? lang-filters)
-                           (contains? lang-filters (:lang %)))
+                             (contain-any? lang-filters
+                                           (get-langs %)))
                   (:entries @do)))))
 
        (find-entry [entries id]
@@ -152,7 +162,7 @@
          (go (let [entries   (map #(assoc % :slug (util/to-slug (:name %)))
                                (:body  (<! (http/get "/data/do.json"))))
                    languages (apply sorted-set
-                               (filter identity (map :lang entries)))]
+                               (filter identity (mapcat get-langs entries)))]
                (swap! do assoc-in [:entries] entries)
                (swap! do assoc-in [:languages] languages))))]
 

@@ -2,7 +2,7 @@
 # ------
 
 - name: Mittagessen
-  lang: ClojureScript
+  lang: Clojure
   link:
     - name: Website
       href: http://sinusoid.es/mittagessen
@@ -48,7 +48,7 @@
     their experience.
 
 - name: "Transducers: from Clojure to C++"
-  lang: C++
+  lang: [C++, Clojure]
   link:
     - name: Slides (HTML)
       href: /talks/transducers-cppcon15
@@ -78,7 +78,7 @@
     2015](https://www.youtube.com/watch?v=vohGJjGxtJQ).
 
 - name: Aqt Cassowary
-  lang: C++
+  lang: [C++, QML]
   link:
     - name: Code (Github)
       href: http://www.github.com/ableton/aqt-cassowary
@@ -118,7 +118,7 @@
     provocative fable, and introduces the [Atria](/do/atria) library.
 
 - name: Mixco
-  lang: CoffeeScript
+  lang: [CoffeeScript, JavaScript]
   link:
     - name: Website
       href: http://sinusoid.es/mixco
@@ -133,7 +133,7 @@
     all the fancy technologies of the time (Gulp, NodeJS, etc.).
 
 - name: Heterarchy
-  lang: CoffeeScript
+  lang: [CoffeeScript, JavaScript]
   link:
     - name: Website
       href: http://sinusoid.es/heterarchy
@@ -146,7 +146,7 @@
     linearization Dylan paper](linearization).
 
 - name: sinusoides
-  lang: ClojureScript
+  lang: Clojure
   imgs: [ sinusoides-small.png, sinusoides.png ]
   link:
     - name: Code (Github)
@@ -169,7 +169,7 @@
     and friends.
 
 - name: Eat Out Berlin
-  lang: CoffeeScript
+  lang: [CoffeeScript, JavaScript]
   link:
     - name: Website
       href: http://www.eatoutberlin.com
@@ -182,7 +182,7 @@
     for now.  Pics are nice though.
 
 - name: Black Hole
-  lang: CoffeeScript
+  lang: [CoffeeScript, JavaScript]
   link:
     - name: Website
       href: http://www.arthackday.net/projects/juan-pedro-bolivar-puente-jerome-morin-drouin-black-hole
@@ -200,7 +200,7 @@
   code: https://github.com/jmdrouin/incredible-art
 
 - name: C++ Template Metaprogramming
-  lang: C++
+  lang: [C++, Haskell]
   imgs: [ meta-small.png, meta.png ]
   link:
     - name: Slides (PDF)
@@ -285,7 +285,7 @@
     2008. Written in 2007 onwards.
 
 - name: Mixxx
-  lang: C++
+  lang: [C++, JavaScript]
   link:
     - name: Website
       href: http://www.mixxx.org
