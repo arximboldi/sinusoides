@@ -50,10 +50,10 @@
        (when @entry
          (let [[idx p] @entry
                last-idx (if @last-entry (@last-entry 0) -1)
-               transition-name (str "swipe"
-                                 (cond
-                                   (< idx last-idx) "-left"
-                                   (> idx last-idx) "-right"))]
+               [transition-name z-index]
+               (cond
+                 (< idx last-idx) ["swipe-left"  (- (count @entries) idx)]
+                 (> idx last-idx) ["swipe-right" idx])]
            ^{:key :do-detail}
            [:div#do-detail.links
             [:div#left-side
@@ -62,14 +62,15 @@
                                :transition-leave-timeout 500}
               ^{:key idx}
               [:a#img {:href (str "/static/screens/" ((:imgs p) 1))
-                       :style {:background-image
+                       :style {:z-index z-index
+                               :background-image
                                (str "url(/static/screens/" ((:imgs p) 1) ")")}}]]]
             [:div#right-side
              [css-transitions {:transition-name transition-name
                                :transition-enter-timeout 500
                                :transition-leave-timeout 500}
               ^{:key idx}
-              [:div#content
+              [:div#content {:style {:z-index z-index}}
                [:div#header (:name p)]
                [:div#desc {:dangerouslySetInnerHTML
                            {:__html (util/md->html (:desc p))}}]
