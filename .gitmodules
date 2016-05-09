@@ -1,0 +1,3 @@
+[submodule "libs/fontfaceobserver"]
+	path = libs/fontfaceobserver
+	url = https://github.com/bramstein/fontfaceobserver
