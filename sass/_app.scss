@@ -1,7 +1,6 @@
 @import 'global';
 
 body {
-    font-family: $normal-font-stack;
     font-size: 16px;
     margin: 0px;
     background: black;
@@ -68,6 +67,7 @@ $loading-color: red;
     min-height: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
+    font-family: $normal-font-stack;
 }
 
 .page {
