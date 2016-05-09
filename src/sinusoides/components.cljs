@@ -29,13 +29,17 @@
             [cljs.core.async :as async :refer [<!]]
             [cljs.core.match :refer-macros [match]]
             [cljs.core.match]
+            [clojure.string :as str]
             [reagent.core :as r]))
 
 (defn root-view [app]
-  (r/with-let [am  (r/cursor app [:am])
-               do  (r/cursor app [:do])
-               sin (r/cursor app [:sinusoid])]
+  (r/with-let [fonts (r/cursor app [:fonts])
+               am    (r/cursor app [:am])
+               do    (r/cursor app [:do])
+               sin   (r/cursor app [:sinusoid])]
     [:div#sinusoides
+     {:class (str/join " " (map #(str (name %) "-font-loaded") @fonts))}
+
      [sinusoid/sinusoid-view :sinusoid-h app sin]
      [sinusoid/sinusoid-view :sinusoid-v app sin]
      [css-transitions {:transition-name "page"
@@ -59,14 +63,33 @@
    "/static/pic/right-i.svg"
    "/static/pic/close-i.svg"])
 
-(defn init-components! [state]
+(def delayed-fonts
+  {:main [{:family "Arimo"}
+          {:family "Arimo" :weight "bold"}
+          {:family "Arimo" :style "italic"}]
+   :mono [{:family "Inconsolata"}
+          {:family "Inconsolata" :style "bold"}]})
+
+(defn load-preload! []
   (go
     (when-let [loading-node (js/document.getElementById "loading")]
-      (<! (async/into [] (async/merge (map util/load-image preload-images))))
+      (<! (util/load-all util/load-image preload-images))
       (set! (.-className loading-node) "loaded")
       (go
         (<! (async/timeout 500))
-        (.removeChild (.-parentNode loading-node) loading-node)))
-    (r/render
-     [root-view state]
-     (js/document.getElementById "components"))))
+        (.removeChild (.-parentNode loading-node) loading-node)))))
+
+(defn load-delayed! [state]
+  (go
+    (let [loaded (r/cursor state [:fonts])
+          load-font (fn [[name fonts]]
+                      (go (<! (util/load-all util/load-font fonts))
+                          (swap! loaded conj name)))]
+      (<! (util/load-all load-font delayed-fonts)))))
+
+(defn init-components! [state]
+  (go
+    (<! (load-preload!))
+    (r/render [root-view state]
+              (js/document.getElementById "components")
+              #(load-delayed! state))))

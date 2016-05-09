@@ -1,30 +1,36 @@
 @font-face {
     font-family: "Arimo";
-    src: url(/static/files/Arimo-Regular.ttf);
+    src: local("Arimo"),
+    /**/ local("Arimo-Regular"),
+    /**/ url(/static/files/Arimo-Regular.ttf);
+    font-weight: normal;
 }
 @font-face {
     font-family: "Arimo";
-    src: url(/static/files/Arimo-Bold.ttf);
+    src: local("Arimo"),
+    /**/ local("Arimo-Bold"),
+    /**/ url(/static/files/Arimo-Bold.ttf);
     font-weight: bold;
 }
 @font-face {
     font-family: "Arimo";
-    src: url(/static/files/Arimo-Italic.ttf);
-    font-style: italic;
-}
-@font-face {
-    font-family: "Arimo";
-    src: url(/static/files/Arimo-BoldItalic.ttf);
-    font-weight: bold;
+    src: local("Arimo"),
+    /**/ local("Arimo-Italic"),
+    /**/ url(/static/files/Arimo-Italic.ttf);
     font-style: italic;
 }
 
 @font-face {
     font-family: "Inconsolata";
-    src: url(/static/files/Inconsolata-Regular.ttf);
+    src: local("Inconsolata"),
+    /**/ local("Inconsolata-Regular"),
+    /**/ url(/static/files/Inconsolata-Regular.ttf);
+    font-weight: normal;
 }
 @font-face {
     font-family: "Inconsolata";
     font-weight: bold;
-    src: url(/static/files/Inconsolata-Bold.ttf);
+    src: local("Inconsolata"),
+    /**/ local("Inconsolata-Bold"),
+    /**/ url(/static/files/Inconsolata-Bold.ttf);
 }

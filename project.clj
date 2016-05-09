@@ -34,6 +34,8 @@
                   :output-dir "resources/js/debug/out"
                   :main sinusoides.core
                   :optimizations :none
+                  :foreign-libs [{:file "libs/fontfaceobserver/fontfaceobserver.js"
+                                  :provides  ["fontfaceobserver"]}]
                   :source-map-timestamp true}}
       {:id "release"
        :source-paths ["src"]
@@ -42,7 +44,10 @@
                   :output-dir "resources/js/release/out"
                   :main sinusoides.core
                   :optimizations :advanced
-                  :pretty-print false}}]}
+                  :pretty-print false
+                  :foreign-libs [{:file "libs/fontfaceobserver/fontfaceobserver.js"
+                                  :provides  ["fontfaceobserver"]}]
+                  :externs ["libs/fontfaceobserver/externs.js"]}}]}
 
   :figwheel {:http-server-root ""
              :css-dirs ["resources/css"]

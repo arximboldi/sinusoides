@@ -21,7 +21,12 @@
                    [cljs.core.async.macros :refer [go]])
   (:require [cljs.core.async :as async :refer [>!]]
             [cljsjs.showdown]
-            [clojure.string :refer [lower-case replace]]))
+            [clojure.string :refer [lower-case replace]]
+            [goog.events :as events]
+            [fontfaceobserver :as fonts]))
+
+(defn load-all [fn things]
+  (async/into [] (async/merge (map fn things))))
 
 (defn load-image
   ([path]
@@ -33,6 +38,23 @@
                             (async/close! port)))]
      (set! (.-src img) path)
      (set! (.-onload img) on-load)
+     port)))
+
+(defn load-font
+  ([desc]
+   (load-font desc (async/chan)))
+
+  ([desc port]
+   (let [font     (js/FontFaceObserver. (:family desc) (clj->js desc))
+         on-load  (fn []
+                    (go (>! port font)
+                        (async/close! port)))
+         on-error (fn [err]
+                    (print "Error while loading: " desc)
+                    (print err))]
+     (-> font
+         (.load nil 10000)
+         (.then on-load on-error))
      port)))
 
 (defn md->html [str]

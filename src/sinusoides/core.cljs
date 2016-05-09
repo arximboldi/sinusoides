@@ -27,6 +27,7 @@
      :view [:init]
      :last [:init]
      :loading true
+     :fonts #{}
      :do {:entries []
           :languages []
           :filter {:languages #{}}

@@ -67,7 +67,8 @@ $loading-color: red;
     min-height: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
-    font-family: $normal-font-stack;
+    font-family: $main-font-stack;
+    &.main-font-loaded { font-family: $main-font; }
 }
 
 .page {
