@@ -1,4 +1,21 @@
 
+$normal-font-stack: Arimo,
+/**/   "Liberation Sans",
+/**/   "Helvetica Neue", HelveticaNeue,
+/**/   "TeX Gyre Heros", TeXGyreHeros,
+/**/   FreeSans, "Nimbus Sans L",
+/**/   Helvetica, Arial,
+/**/   sans-serif;
+
+$mono-font-stack: Inconsolata,
+/**/  Consolas,
+/**/  ‘Andale Mono WT’, ‘Andale Mono’,
+/**/  ‘Lucida Console’, ‘Lucida Sans Typewriter’,
+/**/  ‘DejaVu Sans Mono’, ‘Bitstream Vera Sans Mono’,
+/**/  ‘Liberation Mono’, ‘Nimbus Mono L’,
+/**/  Monaco, ‘Courier New’, Courier,
+/**/  monospace;
+
 $page-anim-full: 3000ms;
 $page-anim-half: 1500ms;
 $page-anim-third: 1000ms;
