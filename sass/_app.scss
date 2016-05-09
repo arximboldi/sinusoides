@@ -10,6 +10,58 @@ body {
     overflow: hidden;
 }
 
+$loading-size: 31px;
+$loading-border: 16px;
+$loading-color: red;
+
+#loading {
+    transition: opacity 0.5s ease-in-out;
+    &.loaded { opacity: 0; }
+
+    &::after {
+        content: "";
+        position: absolute;
+        box-sizing: border-box;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        width: $loading-size;
+        height: $loading-size;
+        border-radius: $loading-border;
+        border: 0px solid $loading-color;
+        animation: loading 1.2s infinite reverse linear;
+
+        @keyframes loading {
+            0% {
+                background-color: black;
+                border-color: $loading-color;
+                border-width: 0px;
+                opacity: 0;
+            }
+            50% {
+                background-color: black;
+                border-color: $loading-color;
+                border-width: $loading-border;
+                opacity: 1;
+            }
+            50.001% {
+                background-color: $loading-color;
+                border-color: black;
+                border-width: 0px;
+                opacity: 1;
+            }
+            100% {
+                background-color: $loading-color;
+                border-color: black;
+                border-width: $loading-border;
+                opacity: 0;
+            }
+        }
+    }
+}
+
 #sinusoides {
     position: absolute;
     width: 100%;

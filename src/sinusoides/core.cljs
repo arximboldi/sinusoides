@@ -26,6 +26,7 @@
     {:sinusoid {:hover #{}}
      :view [:init]
      :last [:init]
+     :loading true
      :do {:entries []
           :languages []
           :filter {:languages #{}}

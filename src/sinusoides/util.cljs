@@ -17,10 +17,23 @@
 ;; <http://www.gnu.org/licenses/>.
 
 (ns sinusoides.util
-  (:require-macros [sinusoides.util])
-  (:require [cljs.core.async :refer [close! chan pipe <!]]
+  (:require-macros [sinusoides.util]
+                   [cljs.core.async.macros :refer [go]])
+  (:require [cljs.core.async :as async :refer [>!]]
             [cljsjs.showdown]
             [clojure.string :refer [lower-case replace]]))
+
+(defn load-image
+  ([path]
+   (load-image path (async/chan)))
+
+  ([path port]
+   (let [img     (js/Image.)
+         on-load (fn [] (go (>! port img)
+                            (async/close! port)))]
+     (set! (.-src img) path)
+     (set! (.-onload img) on-load)
+     port)))
 
 (defn md->html [str]
   (let [Converter (.-converter js/Showdown)

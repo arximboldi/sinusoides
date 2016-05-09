@@ -17,6 +17,7 @@
 ;; <http://www.gnu.org/licenses/>.
 
 (ns sinusoides.components
+  (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [sinusoides.views.addons :refer [css-transitions]]
             [sinusoides.views.am :refer [am-view]]
             [sinusoides.views.do- :refer [do-view]]
@@ -24,6 +25,8 @@
             [sinusoides.views.not-found :refer [not-found-view]]
             [sinusoides.views.sinusoid :as sinusoid]
             [sinusoides.views.todo :refer [todo-view]]
+            [sinusoides.util :as util]
+            [cljs.core.async :as async :refer [<!]]
             [cljs.core.match :refer-macros [match]]
             [cljs.core.match]
             [reagent.core :as r]))
@@ -48,7 +51,22 @@
         [[:todo]]  ^{:key :todo-view} [todo-view sin]
         :else      ^{:key :not-found-view} [not-found-view sin])]]))
 
+(def preload-images
+  ["/static/pic/barcode-v-i-r.svg"
+   "/static/pic/sinusoid-i.svg"
+   "/static/pic/sinusoid-i-v.svg"
+   "/static/pic/left-i.svg"
+   "/static/pic/right-i.svg"
+   "/static/pic/close-i.svg"])
+
 (defn init-components! [state]
-  (r/render-component
-    [root-view state]
-    (.getElementById js/document "components")))
+  (go
+    (when-let [loading-node (js/document.getElementById "loading")]
+      (<! (async/into [] (async/merge (map util/load-image preload-images))))
+      (set! (.-className loading-node) "loaded")
+      (go
+        (<! (async/timeout 500))
+        (.removeChild (.-parentNode loading-node) loading-node)))
+    (r/render
+     [root-view state]
+     (js/document.getElementById "components"))))
