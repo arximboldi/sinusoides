@@ -24,6 +24,7 @@
             [sinusoides.views.main :refer [main-view]]
             [sinusoides.views.not-found :refer [not-found-view]]
             [sinusoides.views.sinusoid :as sinusoid]
+            [sinusoides.views.think :refer [think-view]]
             [sinusoides.views.todo :refer [todo-view]]
             [sinusoides.util :as util]
             [cljs.core.async :as async :refer [<!]]
@@ -36,10 +37,10 @@
   (r/with-let [fonts (r/cursor app [:fonts])
                am    (r/cursor app [:am])
                do    (r/cursor app [:do])
-               sin   (r/cursor app [:sinusoid])]
+               sin   (r/cursor app [:sinusoid])
+               think (r/cursor app [:think])]
     [:div#sinusoides
      {:class (str/join " " (map #(str (name %) "-font-loaded") @fonts))}
-
      [sinusoid/sinusoid-view :sinusoid-h app sin]
      [sinusoid/sinusoid-view :sinusoid-v app sin]
      [css-transitions {:transition-name "page"
@@ -52,6 +53,7 @@
         [[:do]]    ^{:key :do-view}   [do-view sin do]
         [[:init]]  ^{:key :init-view} [:div]
         [[:main]]  ^{:key :main-view} [main-view sin]
+        [[:think]] ^{:key :think-view} [think-view sin think]
         [[:todo]]  ^{:key :todo-view} [todo-view sin]
         :else      ^{:key :not-found-view} [not-found-view sin])]]))
 

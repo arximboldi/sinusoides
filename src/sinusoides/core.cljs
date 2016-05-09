@@ -33,6 +33,7 @@
           :filter {:languages #{}}
           :detail nil
           :last nil}
+     :think {:entries []}
      :am []}))
 
 (defn init-app! []

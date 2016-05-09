@@ -8,7 +8,8 @@ all: data sass cljs
 #
 
 DATA =  resources/data/do.json \
-	resources/data/am.json
+	resources/data/am.json \
+	resources/data/think.json
 
 resources/%.json: %.yaml
 	mkdir -p $(@D)

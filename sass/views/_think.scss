@@ -1,0 +1,80 @@
+@import '../global';
+
+#think-page {
+    @keyframes enter-title {
+        from { transform: scale(1.3) translateY(130%); }
+        60%  { transform: scale(1.3) translateY(130%); }
+        to   { transform: scale(1) translateY(0px); }
+    }
+    @keyframes enter-stuff {
+        from { opacity: 0; }
+        70%  { opacity: 0; }
+        to   { opacity: 1; }
+    }
+
+    @keyframes leave-title {
+        from { transform: translateY(0px); }
+        50%  { transform: translateY(100%); }
+        to   { transform: translateY(100%); }
+    }
+
+    @keyframes leave-stuff {
+        from { opacity: 1; }
+        40%  { opacity: 0; }
+        to   { opacity: 0; }
+    }
+
+    &.page-appear, &.page-enter {
+        #title { animation: enter-title $page-anim-full forwards; }
+        #stuff { animation: enter-stuff $page-anim-full forwards; }
+    }
+    &.page-leave {
+        #title { animation: leave-title $page-anim-full forwards; }
+        #stuff { animation: leave-stuff $page-anim-full forwards; }
+    }
+
+    #title {
+        position: fixed;
+        bottom: 0;
+        left: 40px;
+        width: 150px;
+        color: white;
+        background-color: black;
+        font-size: 60px;
+        text-transform: uppercase;
+        border-top: 8px solid white;
+        transition: border-top-color 0.5s ease-in-out;
+        &.hovered { border-top-color: red; }
+    }
+
+    #stuff {
+        padding: 40px;
+        position: absolute;
+        left: 210px;
+        color: white;
+        font-size: 1.7em;
+
+        .thingy {
+            box-sizing: border-box;
+            position: relative;
+            float: left;
+            width: 260px;
+            height: 260px;
+            border: 4px solid white;
+            padding: 20px;
+            margin: 10px;
+            transition: border-color 0.5s ease-in-out,
+            /**/        color 0.5s ease-in-out;
+
+            &:hover {
+                color: red;
+                border-color: red;
+            }
+
+            &.soundcloud {
+                padding: 0px;
+                border: 0px;
+            }
+        }
+    }
+}
