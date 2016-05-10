@@ -21,37 +21,63 @@
   (:require [sinusoides.views.sinusoid :as sinusoid]
             [sinusoides.views.addons :refer [css-transitions]]
             [sinusoides.util :as util]
+            [clojure.string :as string]
             [cljs-http.client :as http]
             [cljs.core.async :refer [<! timeout]]
-            [reagent.core :as r]))
+            [reagent.core :as r]
+            [plyr]))
 
-(defn soundcloud-thumbnail-view [thing]
-  [:iframe.thingy.soundcloud
-   {:scrolling "no"
-    :frame-border "no"
-    :src (str "https://w.soundcloud.com/player/?"
-              "url=https%3A//api.soundcloud.com/tracks/" (:track thing) "&amp;"
-              "auto_play=false&amp;"
-              "hide_related=true&amp;"
-              "buying=false&amp;"
-              "liking=false&amp;"
-              "sharing=false&amp;"
-              "download=false&amp;"
-              "show_comments=false&amp;"
-              "show_user=true&amp;"
-              "show_reposts=false&amp;"
-              "show_playcount=false&amp;"
-              "visual=true")}])
+(def sc-client-id
+  "485230fd2a6e151244a57a584f904070")
+
+(defn sc-add-client-id [api-call]
+  (str api-call "?client_id=" sc-client-id))
+
+(defn sc-api [& command]
+  (http/jsonp (sc-add-client-id
+                (str "http://api.soundcloud.com"
+                     (apply str command)
+                     ".json"))))
+
+(defn plyr-sc-thumbnail-view [thing]
+  (r/with-let
+    [plyr-view
+     ^{:component-did-mount
+       (fn [this]
+         (js/plyr.setup
+           (r/dom-node this)
+           (clj->js
+             {:iconUrl "/static/pic/plyr-sprite.svg"
+              :controls [:play :progress]
+              :fullscreen {:enabled false}})))}
+     (fn [data]
+       (let [background (string/replace (:artwork_url @data)
+                                        #"-large.jpg"
+                                        "-t500x500.jpg")
+             audio-src  (sc-add-client-id (:stream_url @data))]
+         [:div.plyr
+          {:style {:background-image (str "url(" background ")")}}
+          [:audio {:src audio-src}]]))
+
+     data
+     (r/atom nil)
+     _
+     (go (let [response (<! (sc-api "/tracks/" (:track thing)))]
+           (reset! data (:body response))))]
+
+    [:div.thingy.soundcloud
+     (when @data [plyr-view data])]))
 
 (defn text-thumbnail-view [thing]
   [:div.thingy.text (:title thing)])
 
 (def thumbnail-view-map
-  {"soundcloud" soundcloud-thumbnail-view
+  {"soundcloud" plyr-sc-thumbnail-view
    "text"       text-thumbnail-view})
 
 (defn think-view [sin think]
-  (r/with-let [_ (go (let [response (<! (http/get "/data/think.json"))
+  (r/with-let [_ (js/plyr.setup)
+               _ (go (let [response (<! (http/get "/data/think.json"))
                            entries  (map #(assoc % :slug (util/to-slug (:title %)))
                                          (:body response))]
                        (swap! think assoc-in [:entries] entries)))]
