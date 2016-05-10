@@ -71,7 +71,17 @@
                 border-color: red;
             }
 
+            &.plyr {
+                background-color: #333;
+                padding: 0px;
+                border: 0px;
+                .plyr__video-embed {
+                    opacity: 0;
+                }
+            }
+
             &.soundcloud {
+                background-size: cover;
                 padding: 0px;
                 border: 0px;
             }

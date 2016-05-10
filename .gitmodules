@@ -1,3 +1,6 @@
-[submodule "libs/fontfaceobserver"]
-	path = libs/fontfaceobserver
-	url = https://github.com/bramstein/fontfaceobserver
+[submodule "src/libs/plyr"]
+	path = src/libs/plyr
+	url = git@github.com:Selz/plyr.git
+[submodule "src/libs/fontfaceobserver"]
+	path = src/libs/fontfaceobserver
+	url = git@github.com:bramstein/fontfaceobserver.git
