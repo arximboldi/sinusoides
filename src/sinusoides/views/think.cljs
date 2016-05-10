@@ -17,15 +17,15 @@
 ;; <http://www.gnu.org/licenses/>.
 
 (ns sinusoides.views.think
-  (:require-macros [cljs.core.async.macros :refer [go]])
+  (:require-macros [cljs.core.async.macros :refer [go go-loop]])
   (:require [sinusoides.views.sinusoid :as sinusoid]
             [sinusoides.views.addons :refer [css-transitions]]
             [sinusoides.util :as util]
             [clojure.string :as string]
             [cljs-http.client :as http]
-            [cljs.core.async :refer [<! timeout]]
+            [cljs.core.async :as async :refer [<! >!]]
             [reagent.core :as r]
-            [plyr]))
+            [goog.events :as events]))
 
 (def sc-client-id
   "485230fd2a6e151244a57a584f904070")
@@ -39,45 +39,86 @@
                      (apply str command)
                      ".json"))))
 
-(defn plyr-sc-thumbnail-view [thing]
-  (r/with-let
-    [plyr-view
-     ^{:component-did-mount
+(defn audio-player-state [source]
+  {:source source
+   :current-time 0
+   :progress nil
+   :status nil})
+
+(defn audio-player [state command-ch]
+  (let [events (atom)
+        source (r/track #(:source @state))
+        ch     (->> (async/chan) (async/pipe command-ch))]
+    (r/create-class
+      {:component-did-mount
        (fn [this]
-         (js/plyr.setup
-           (r/dom-node this)
-           (clj->js
-             {:iconUrl "/static/pic/plyr-sprite.svg"
-              :controls [:play :progress]
-              :fullscreen {:enabled false}})))}
-     (fn [data]
-       (let [background (string/replace (:artwork_url @data)
-                                        #"-large.jpg"
-                                        "-t500x500.jpg")
-             audio-src  (sc-add-client-id (:stream_url @data))]
-         [:div.plyr
-          {:style {:background-image (str "url(" background ")")}}
-          [:audio {:src audio-src}]]))
+         (let [audio (r/dom-node this)]
+           (reset!
+             events
+             [(events/listen
+                audio "timeupdate"
+                #(swap! state assoc-in [:current-time] (.-currentTime audio)))
+              (events/listen
+                audio "play"
+                #(swap! state assoc-in [:status] :playing))
+              (events/listen
+                audio "pause"
+                #(swap! state assoc-in [:status] :paused))
+              (events/listen
+                audio "ended"
+                #(swap! state assoc-in [:status] :ended))
+              (events/listen
+                audio "error"
+                #(swap! state assoc-in [:status] :error))])
+           (go-loop []
+             (case (<! ch)
+               :play  (do (.play audio) (recur))
+               :pause (do (.pause audio) (recur))
+               nil))))
 
-     data
-     (r/atom nil)
-     _
-     (go (let [response (<! (sc-api "/tracks/" (:track thing)))]
-           (reset! data (:body response))))]
+       :component-will-unmount
+       (fn [this]
+         (async/close! ch)
+         (dorun (map events/unlistenByKey @events)))
 
-    [:div.thingy.soundcloud
-     (when @data [plyr-view data])]))
+       :reagent-render
+       (fn []
+         [:audio {:src @source}])})))
+
+(defn audio-player-view [source]
+  (r/with-let [command-ch (async/chan)
+               state      (r/atom (audio-player-state source))]
+    [:div.audio-player {:class (clj->js (:status @state))}
+     [:div.play-button
+      {:on-click #(go (>! command-ch
+                          (if (= (:status @state) :playing)
+                            :pause :play)))}]
+     [audio-player state command-ch]]))
+
+(defn soundcloud-thumbnail-view [thing]
+  (r/with-let
+    [data (r/atom nil)
+     _    (go (let [response (<! (sc-api "/tracks/" (:track thing)))]
+                (reset! data (:body response))))]
+    (if @data
+      (let [background (string/replace (:artwork_url @data)
+                                       #"-large.jpg"
+                                       "-t500x500.jpg")
+            audio-src  (sc-add-client-id (:stream_url @data))]
+        [:div.thingy.soundcloud
+         {:style {:background-image (str "url(" background ")")}}
+         [audio-player-view audio-src]])
+      [:div.thingy.soundcloud])))
 
 (defn text-thumbnail-view [thing]
   [:div.thingy.text (:title thing)])
 
 (def thumbnail-view-map
-  {"soundcloud" plyr-sc-thumbnail-view
+  {"soundcloud" soundcloud-thumbnail-view
    "text"       text-thumbnail-view})
 
 (defn think-view [sin think]
-  (r/with-let [_ (js/plyr.setup)
-               _ (go (let [response (<! (http/get "/data/think.json"))
+  (r/with-let [_ (go (let [response (<! (http/get "/data/think.json"))
                            entries  (map #(assoc % :slug (util/to-slug (:title %)))
                                          (:body response))]
                        (swap! think assoc-in [:entries] entries)))]

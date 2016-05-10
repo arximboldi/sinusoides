@@ -1,99 +1,5 @@
 @import '../global';
 
-$__plyr-range-track-height: 20px;
-
-.plyr {
-    width: 100%;
-    height: 100%;
-    background-color: #333;
-    background-size: cover;
-
-    .plyr__controls { opacity: 0; }
-    .plyr__controls:hover { opacity: 1; }
-    &.plyr--playing .plyr__controls { opacity: 1; }
-
-    .plyr__controls {
-        border: 0;
-        height: 100%;
-        width: 100%;
-        padding: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-
-        [data-plyr='play'],
-        [data-plyr='pause'],{
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-            width: 100%;
-            height: 100%;
-            border-radius: 0;
-            padding: 20px;
-            background-color: transparent;
-            opacity: 0.5;
-            transition: opacity 0.3s ease-in-out;
-            &:hover {
-                background-color: transparent;
-                opacity: 1;
-            }
-            svg {
-                width: 100%;
-                height: 100%;
-                color: white;
-                padding: 80px;
-            }
-        }
-
-        [data-plyr='seek'],{
-            height: 100%;
-        }
-
-        input[type='range'] {
-            display: block;
-            height: $__plyr-range-track-height;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            opacity: 0;
-        }
-
-        .plyr__progress {
-            position: absolute;
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            bottom: 0;
-            width: 100%;
-            opacity: 0.5;
-            &:hover { opacity: 1; }
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        progress {
-            margin: 0;
-            padding: 0;
-            top: 0;
-            height: $__plyr-range-track-height;
-            border-radius: 0px;
-            border: 0;
-            &.plyr__progress--played { color: red; }
-            &.plyr__progress--buffer { color: white; background: #444; }
-            &::-webkit-progress-bar { }
-            &::-webkit-progress-value {
-                border-radius: 0px;
-                min-width: 0;
-            }
-            &::-moz-progress-bar {
-                border-radius: 0px;
-                min-width: 0;
-            }
-            &::-ms-fill { border-radius: 0px; }
-        }
-    }
-}
-
 #think-page {
     @keyframes enter-title {
         from { transform: scale(1.3) translateY(130%); }
@@ -168,7 +74,33 @@ $__plyr-range-track-height: 20px;
             &.soundcloud {
                 padding: 0px;
                 border: 0px;
+                background-size: cover;
+                background-color: #333;
             }
+        }
+    }
+}
+
+.audio-player {
+    width: 100%;
+    height: 100%;
+
+    .play-button {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        border-radius: 100%;
+        width: 60px;
+        height: 60px;
+        margin: auto;
+        background-color: red;
+    }
+
+    &.playing {
+        .play-button {
+            background-color: blue;
         }
     }
 }
