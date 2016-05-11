@@ -81,7 +81,7 @@
              [(events/listen audio "durationchange" update-time)
               (events/listen audio "timeupdate" update-time)
               (events/listen audio "progress" update-progress)
-              (events/listen audio "play" #(update-status :playing))
+              (events/listen audio "play" #(update-status :play))
               (events/listen audio "playing" #(update-status :playing))
               (events/listen audio "pause" #(update-status :paused))
               (events/listen audio "ended" #(update-status :ended))
@@ -91,7 +91,11 @@
 
            (go-loop []
              (match [(<! ch)]
-                    [:play]        (do (.play audio) (recur))
+                    [:play]        (do (when (let [st (:status @state)]
+                                               (or (= st :error)
+                                                   (= st :aborted)))
+                                         (.load audio))
+                                       (.play audio) (recur))
                     [:pause]       (do (.pause audio) (recur))
                     [[:seek time]] (do (set! (.-currentTime audio) time) (recur))
                     :else nil))))
@@ -111,10 +115,14 @@
                mouse-time (r/atom 0)
                state      (r/atom (audio-player-state source))
 
+               is-playing
+               #(let [st (:status @state)]
+                  (or (= st :play)
+                      (= st :playing)
+                      (= st :stalled)))
+
                toggle-play
-               #(go (>! command-ch
-                        (if (= (:status @state) :playing)
-                          :pause :play)))
+               #(go (>! command-ch (if (is-playing) :pause :play)))
 
                update-mouse-time
                #(reset! mouse-time (-> (.-clientX %)
@@ -128,7 +136,8 @@
 
     [:div.audio-player {:class (clj->js (:status @state))}
      [:div.play-button
-      {:on-click toggle-play}]
+      {:class (when (is-playing) "is-playing")
+       :on-click toggle-play}]
 
      [:div.seek-bar
       {:on-click seek-time
