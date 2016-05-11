@@ -86,8 +86,7 @@
               (events/listen audio "pause" #(update-status :paused))
               (events/listen audio "ended" #(update-status :ended))
               (events/listen audio "error" #(update-status :error))
-              (events/listen audio "abort" #(update-status :aborted))
-              (events/listen audio "stalled" #(update-status :stalled))])
+              (events/listen audio "abort" #(update-status :aborted))])
 
            (go-loop []
              (match [(<! ch)]
@@ -120,8 +119,7 @@
                is-playing
                #(let [st (:status @state)]
                   (or (= st :play)
-                      (= st :playing)
-                      (= st :stalled)))
+                      (= st :playing)))
 
                is-started
                #(pos? (:current-time @state))
