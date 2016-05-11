@@ -147,14 +147,16 @@
 
 - name: sinusoides
   lang: Clojure
-  imgs: [ sinusoides-small.png, sinusoides.png ]
+  imgs: [ sinusoides-small.png, sinusoides.svg ]
   link:
     - name: Code (Github)
       href: https://github.com/arximboldi/sinusoides
   desc: |
-    At some point I decided to rewrite this site in ClojureScript to
-    play a bit with it.  The site is in an ethernal Work In Progress
-    state, but this might motivate me to put more work on it.
+    This website serves as portfolio and playground for
+    experimentation with web technologies.  It has survived several
+    rewrites since it was first published in 2011.  It is currently
+    built with [ClojureScript](http://clojurescript.net) and
+    [Reagent](https://github.com/reagent-project/reagent)
 
 - name: dotfiles
   lang: Bash

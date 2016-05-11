@@ -1,12 +1,13 @@
 sinusoid.es
 ===========
 
-[![screenshot](https://raw.githubusercontent.com/arximboldi/sinusoides/master/resources/static/screens/sinusoides.png)](http://sinusoid.es)
+[![screenshot](https://cdn.rawgit.com/arximboldi/sinusoides/master/resources/static/screens/sinusoides-thin.svg)](http://sinusoid.es)
 
-This is the code for [my personal webpage](http://sinusoid.es).  It is
-built using [ClojureScript](http://clojurescript.net/) and
-[Reagent](http://clojurescript.net/).  I know, it's kinda overkill,
-but it's kinda fun.
+This is the code for [my personal webpage](http://sinusoid.es) — my
+portfolio and playground for experimentation with web technologies. It
+has survived several rewrites since it was first published in 2011.
+It is currently built using [ClojureScript](http://clojurescript.net/)
+and [Reagent](http://clojurescript.net/).
 
 Development
 -----------
