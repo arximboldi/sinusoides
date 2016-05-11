@@ -208,14 +208,13 @@
 
 (def thumbnail-view-map
   {"soundcloud" soundcloud-thumbnail-view
-   "text"       text-thumbnail-view})
+   "markdown"   text-thumbnail-view})
 
 (defn think-view [sin think]
   (r/with-let [_ (go (let [response (<! (http/get "/data/think.json"))
                            entries  (map #(assoc % :slug (util/to-slug (:title %)))
-                                         (:body response))
-                           filtered (filter #(= "soundcloud" (:type %)) entries)]
-                       (swap! think assoc-in [:entries] filtered)))]
+                                         (:body response))]
+                       (swap! think assoc-in [:entries] entries)))]
     [:div#think-page.page
      [:div#title (sinusoid/hovered sin) "Think."]
      [:div#stuff

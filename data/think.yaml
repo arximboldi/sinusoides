@@ -1,63 +1,89 @@
-- title: "La condición de la rata"
-  type: text
-  link: rata.md
+- title: La condición de la rata
+  type: markdown
+  text: /static/think/rata.md
+  date: 13-03-2015
 
-- title: "Tu coño sabe a primavera"
+- title: Tu coño sabe a primavera
   type: soundcloud
   track: 174272069
+  date: 28-10-2014
 
-- title: "Capitalisme et Barbarie"
+- title: The Interview II
+  type: markdown
+  text: /static/think/interview2.md
+  date: 02-01-2015
+
+- title: Daisy, Daisy
+  type: markdown
+  text: /static/think/daisy.md
+  date: 09-01-2014
+
+- title: Capitalisme et Barbarie
   type: soundcloud
   track: 83707893
+  date: 17-03-2013
 
-- title: "Domingo por la tarde después de la revolución"
-  type: soundcloud
-  track: 75971046
-
-- title: "Daisy, daisy"
-  type: text
-  link: rata.md
-
-- title: "El Muerto - Mundo Cobarde (Remix)"
+- title: El Muerto - Mundo Cobarde (Remix)
   type: soundcloud
   track: 95776615
+  date: 06-06-2013
 
-- title: "Del diablo"
-  type: text
-  link: rata.md
-
-- title: "Del inodoro"
-  type: text
-  link: rata.md
-
-- title: "Esplendor Geométrico - Moscú está helado (Bootleg)"
+- title: Esplendor Geométrico - Moscú está helado (Bootleg)
   type: soundcloud
   track: 83813485
+  date: 15-03-2013
 
-- title: "Los pedócratas"
-  type: text
-  link: rata.md
-
-- title: "λx.xx4"
-  type: soundcloud
-  track: 71163085
-
-- title: "Nachessenjam"
+- title: Nachessenjam
   type: soundcloud
   track: 81061741
+  date: 27-02-2013
 
-- title: "Vals de la procastinación"
+- title: Domingo por la tarde después de la revolución
+  type: soundcloud
+  track: 75971046
+  date: 22-01-2013
+
+- title: Del inodoro
+  type: markdown
+  text: /static/think/inodoro.md
+  date: 11-01-2013
+
+- title: Sobre el diablo
+  type: markdown
+  text: /static/think/diablo.md
+  date: 05-01-2013
+
+- title: λx.xx4
+  type: soundcloud
+  track: 71163085
+  date: 14-12-2012
+
+- title: Vals de la procastinación
   type: soundcloud
   track: 71228250
+  date: 14-12-2012
 
-- title: "Fixed length"
-  type: soundcloud
-  track: 54404625
-
-- title: "Prixeuropa 2012 farewell song"
+- title: Prixeuropa 2012 farewell song
   type: soundcloud
   track: 65211929
+  date: 29-10-2012
 
-- title: "Viva Aurora"
+- title: Viva Aurora
   type: soundcloud
   track: 60357604
+  date: 18-09-2012
+
+- title: Fixed length
+  type: soundcloud
+  track: 54404625
+  date: 28-07-2012
+
+- title: De Freud y otras mariconadas
+  type: markdown
+  text: /static/think/freud.md
+  date: 11-10-2011
+
+- title: Sobre mierdas y perros
+  type: markdown
+  text: /static/think/mierda.md
+  date: 11-01-2009
