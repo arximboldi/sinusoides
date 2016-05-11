@@ -103,7 +103,8 @@
 
        :reagent-render
        (fn []
-         [:audio {:src @source}])})))
+         [:audio {:preload "none"
+                  :src @source}])})))
 
 (defn audio-player-view [source]
   (r/with-let [command-ch (async/chan)
