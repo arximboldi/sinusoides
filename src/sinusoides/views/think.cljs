@@ -43,7 +43,7 @@
   {:source source
    :duration 0
    :current-time 0
-   :progress nil
+   :progress 0
    :status nil})
 
 (defn audio-player [state command-ch]
@@ -60,6 +60,12 @@
                  (swap! state assoc-in [:duration] (.-duration audio))
                  (swap! state assoc-in [:current-time] (.-currentTime audio)))
 
+               update-progress
+               (fn []
+                 (swap! state assoc-in [:progress] (-> audio
+                                                       .-buffered
+                                                       (.end 0))))
+
                update-status
                (fn [status]
                  (swap! state assoc-in [:status] status))]
@@ -68,6 +74,7 @@
              events
              [(events/listen audio "durationchange" update-time)
               (events/listen audio "timeupdate" update-time)
+              (events/listen audio "progress" update-progress)
               (events/listen audio "play" #(update-status :playing))
               (events/listen audio "playing" #(update-status :playing))
               (events/listen audio "pause" #(update-status :paused))
@@ -98,6 +105,12 @@
                           (if (= (:status @state) :playing)
                             :pause :play)))}]
      [:div.seek-bar
+      (when (pos? (:progress @state))
+        [:div.seek-bar-loaded
+         {:style {:width (-> (:progress @state)
+                             (/ (:duration @state))
+                             (* 100)
+                             (str "%"))}}])
       (when (pos? (:duration @state))
         [:div.seek-bar-position
          {:style {:width (-> (:current-time @state)
