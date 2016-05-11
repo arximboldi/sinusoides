@@ -155,8 +155,8 @@
     }
     @keyframes think-sin-last-v {
         from { transform: translateX(115px) scale(1); }
-        80%  { transform: translateX(130vw) scale(0.1); }
-        to   { transform: translateX(130vw); }
+        80%  { transform: translateX(-20vw) scale(2.5); }
+        to   { transform: translateX(-20vw); }
     }
     @keyframes think-sin-last-vb {
         from { background-position: 0 0; }
