@@ -121,6 +121,9 @@
                       (= st :playing)
                       (= st :stalled)))
 
+               is-started
+               #(pos? (:current-time @state))
+
                toggle-play
                #(go (>! command-ch (if (is-playing) :pause :play)))
 
@@ -134,10 +137,11 @@
                seek-time
                #(go (>! command-ch [:seek @mouse-time]))]
 
-    [:div.audio-player {:class (clj->js (:status @state))}
+    [:div.audio-player {:class (str "state-" (clj->js (:status @state))
+                                    (when (is-playing) " is-playing")
+                                    (when (is-started) " is-started"))}
      [:div.play-button
-      {:class (when (is-playing) "is-playing")
-       :on-click toggle-play}]
+      {:on-click toggle-play}]
 
      [:div.seek-bar
       {:on-click seek-time
@@ -157,19 +161,20 @@
          (str (quot @mouse-time 60) ":"
               (int (rem @mouse-time 60)))])
 
-      (when (pos? (:progress @state))
-        [:div.seek-bar-loaded
-         {:style {:width (-> (:progress @state)
-                             (/ (:duration @state))
-                             (* 100)
-                             (str "%"))}}])
+      [:div.seek-bar-range
+       (when (pos? (:progress @state))
+         [:div.seek-bar-loaded
+          {:style {:width (-> (:progress @state)
+                              (/ (:duration @state))
+                              (* 100)
+                              (str "%"))}}])
 
-      (when (pos? (:duration @state))
-        [:div.seek-bar-position
-         {:style {:width (-> (:current-time @state)
-                             (/ (:duration @state))
-                             (* 100)
-                             (str "%"))}}])]
+       (when (pos? (:duration @state))
+         [:div.seek-bar-position
+          {:style {:width (-> (:current-time @state)
+                              (/ (:duration @state))
+                              (* 100)
+                              (str "%"))}}])]]
 
      [audio-player state command-ch]]))
 

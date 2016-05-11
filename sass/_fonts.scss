@@ -7,15 +7,13 @@
 }
 @font-face {
     font-family: "Arimo";
-    src: local("Arimo"),
-    /**/ local("Arimo-Bold"),
+    src: local("Arimo-Bold"),
     /**/ url(/static/files/Arimo-Bold.ttf);
     font-weight: bold;
 }
 @font-face {
     font-family: "Arimo";
-    src: local("Arimo"),
-    /**/ local("Arimo-Italic"),
+    src: local("Arimo-Italic"),
     /**/ url(/static/files/Arimo-Italic.ttf);
     font-style: italic;
 }
@@ -30,7 +28,6 @@
 @font-face {
     font-family: "Inconsolata";
     font-weight: bold;
-    src: local("Inconsolata"),
-    /**/ local("Inconsolata-Bold"),
+    src: local("Inconsolata-Bold"),
     /**/ url(/static/files/Inconsolata-Bold.ttf);
 }
