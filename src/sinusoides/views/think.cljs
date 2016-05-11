@@ -213,8 +213,9 @@
 (defn think-view [sin think]
   (r/with-let [_ (go (let [response (<! (http/get "/data/think.json"))
                            entries  (map #(assoc % :slug (util/to-slug (:title %)))
-                                         (:body response))]
-                       (swap! think assoc-in [:entries] entries)))]
+                                         (:body response))
+                           filtered (filter #(= "soundcloud" (:type %)) entries)]
+                       (swap! think assoc-in [:entries] filtered)))]
     [:div#think-page.page
      [:div#title (sinusoid/hovered sin) "Think."]
      [:div#stuff
