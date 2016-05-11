@@ -22,6 +22,8 @@
             [sinusoides.views.addons :refer [css-transitions]]
             [sinusoides.util :as util]
             [clojure.string :as string]
+            [clojure.string :as string]
+            [cljs.core.match :refer-macros [match]]
             [cljs-http.client :as http]
             [cljs.core.async :as async :refer [<! >!]]
             [reagent.core :as r]
@@ -62,12 +64,16 @@
 
                update-progress
                (fn []
-                 (swap! state assoc-in [:progress] (-> audio
-                                                       .-buffered
-                                                       (.end 0))))
+                 (when (-> audio .-buffered .-length pos?)
+                   (swap! state assoc-in [:progress] (-> audio
+                                                         .-buffered
+                                                         (.end 0)))))
 
                update-status
                (fn [status]
+                 (prn "status changed:")
+                 (prn "   - source: " @source)
+                 (prn "   - status: " status)
                  (swap! state assoc-in [:status] status))]
 
            (reset!
@@ -79,13 +85,16 @@
               (events/listen audio "playing" #(update-status :playing))
               (events/listen audio "pause" #(update-status :paused))
               (events/listen audio "ended" #(update-status :ended))
-              (events/listen audio "error" #(update-status :error))])
+              (events/listen audio "error" #(update-status :error))
+              (events/listen audio "abort" #(update-status :aborted))
+              (events/listen audio "stalled" #(update-status :stalled))])
 
            (go-loop []
-             (case (<! ch)
-               :play  (do (.play audio) (recur))
-               :pause (do (.pause audio) (recur))
-               nil))))
+             (match [(<! ch)]
+                    [:play]        (do (.play audio) (recur))
+                    [:pause]       (do (.pause audio) (recur))
+                    [[:seek time]] (do (set! (.-currentTime audio) time) (recur))
+                    :else nil))))
 
        :component-will-unmount
        (fn [this]
@@ -98,25 +107,60 @@
 
 (defn audio-player-view [source]
   (r/with-let [command-ch (async/chan)
-               state      (r/atom (audio-player-state source))]
+               mouse-time (r/atom 0)
+               state      (r/atom (audio-player-state source))
+
+               toggle-play
+               #(go (>! command-ch
+                        (if (= (:status @state) :playing)
+                          :pause :play)))
+
+               update-mouse-time
+               #(reset! mouse-time (-> (.-clientX %)
+                                       (- (.-left (.getBoundingClientRect (.-target %))))
+                                       (- (.-clientLeft (.-target %)))
+                                       (/ (.-offsetWidth (.-target %)))
+                                       (* (:duration @state))))
+
+               seek-time
+               #(go (>! command-ch [:seek @mouse-time]))]
+
     [:div.audio-player {:class (clj->js (:status @state))}
      [:div.play-button
-      {:on-click #(go (>! command-ch
-                          (if (= (:status @state) :playing)
-                            :pause :play)))}]
+      {:on-click toggle-play}]
+
      [:div.seek-bar
+      {:on-click seek-time
+       :on-mouse-move update-mouse-time}
+
+      (when (pos? @mouse-time)
+        [:div.seek-bar-tooltip
+         {:class
+          (cond
+            (> @mouse-time (:progress @state)) "unbuffered"
+            (> @mouse-time (:current-time @state)) "buffered"
+            :else "played")
+          :style {:left (-> @mouse-time
+                            (/ (:duration @state))
+                            (* 100)
+                            (str "%"))}}
+         (str (quot @mouse-time 60) ":"
+              (int (rem @mouse-time 60)))])
+
       (when (pos? (:progress @state))
         [:div.seek-bar-loaded
          {:style {:width (-> (:progress @state)
                              (/ (:duration @state))
                              (* 100)
                              (str "%"))}}])
+
       (when (pos? (:duration @state))
         [:div.seek-bar-position
          {:style {:width (-> (:current-time @state)
                              (/ (:duration @state))
                              (* 100)
                              (str "%"))}}])]
+
      [audio-player state command-ch]]))
 
 (defn soundcloud-thumbnail-view [thing]
