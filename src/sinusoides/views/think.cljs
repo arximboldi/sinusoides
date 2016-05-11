@@ -129,19 +129,22 @@
                toggle-play
                #(go (>! command-ch (if (is-playing) :pause :play)))
 
+               seek-time
+               #(go (>! command-ch [:seek @mouse-time]))
+
                update-mouse-time
-               #(reset! mouse-time (-> (.-clientX %)
-                                       (- (.-left (.getBoundingClientRect (.-target %))))
-                                       (- (.-clientLeft (.-target %)))
-                                       (/ (.-offsetWidth (.-target %)))
-                                       (* (:duration @state))))
+               (fn [ev]
+                 (reset! mouse-time
+                         (-> (.-clientX ev)
+                             (- (.-left (.getBoundingClientRect (.-target ev))))
+                             (- (.-clientLeft (.-target ev)))
+                             (/ (.-offsetWidth (.-target ev)))
+                             (* (:duration @state))))
+                 (when (pos? (.-buttons ev))
+                   (seek-time)))
 
                enable-preload
-               #(go (>! command-ch :preload))
-
-               seek-time
-               #(go (>! command-ch [:seek @mouse-time])
-                    (>! command-ch :play))]
+               #(go (>! command-ch :preload))]
 
     [:div.audio-player {:class (str "state-" (clj->js (:status @state))
                                     (when (is-playing) " is-playing")
@@ -150,7 +153,7 @@
       {:on-click toggle-play}]
 
      [:div.seek-bar
-      {:on-click seek-time
+      {:on-mouse-down seek-time
        :on-mouse-over enable-preload
        :on-mouse-move update-mouse-time}
 
