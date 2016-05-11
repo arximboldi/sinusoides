@@ -71,7 +71,7 @@
 
                update-status
                (fn [status]
-                 (prn "status changed:")
+                 (prn "audio player: status changed")
                  (prn "   - source: " @source)
                  (prn "   - status: " status)
                  (swap! state assoc-in [:status] status))]
@@ -97,8 +97,10 @@
                                          (.load audio))
                                        (.play audio) (recur))
                     [:pause]       (do (.pause audio) (recur))
+                    [:preload]     (do (set! (.-preload audio) true) (recur))
                     [[:seek time]] (do (set! (.-currentTime audio) time) (recur))
-                    :else nil))))
+                    [nil]          nil
+                    [bad-command]  (prn "audio player: bad command, " bad-command)))))
 
        :component-will-unmount
        (fn [this]
@@ -134,8 +136,12 @@
                                        (/ (.-offsetWidth (.-target %)))
                                        (* (:duration @state))))
 
+               enable-preload
+               #(go (>! command-ch :preload))
+
                seek-time
-               #(go (>! command-ch [:seek @mouse-time]))]
+               #(go (>! command-ch [:seek @mouse-time])
+                    (>! command-ch :play))]
 
     [:div.audio-player {:class (str "state-" (clj->js (:status @state))
                                     (when (is-playing) " is-playing")
@@ -145,6 +151,7 @@
 
      [:div.seek-bar
       {:on-click seek-time
+       :on-mouse-over enable-preload
        :on-mouse-move update-mouse-time}
 
       (when (pos? @mouse-time)
