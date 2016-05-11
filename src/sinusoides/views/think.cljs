@@ -41,6 +41,7 @@
 
 (defn audio-player-state [source]
   {:source source
+   :duration 0
    :current-time 0
    :progress nil
    :status nil})
@@ -52,24 +53,27 @@
     (r/create-class
       {:component-did-mount
        (fn [this]
-         (let [audio (r/dom-node this)]
+         (let [audio (r/dom-node this)
+
+               update-time
+               (fn []
+                 (swap! state assoc-in [:duration] (.-duration audio))
+                 (swap! state assoc-in [:current-time] (.-currentTime audio)))
+
+               update-status
+               (fn [status]
+                 (swap! state assoc-in [:status] status))]
+
            (reset!
              events
-             [(events/listen
-                audio "timeupdate"
-                #(swap! state assoc-in [:current-time] (.-currentTime audio)))
-              (events/listen
-                audio "play"
-                #(swap! state assoc-in [:status] :playing))
-              (events/listen
-                audio "pause"
-                #(swap! state assoc-in [:status] :paused))
-              (events/listen
-                audio "ended"
-                #(swap! state assoc-in [:status] :ended))
-              (events/listen
-                audio "error"
-                #(swap! state assoc-in [:status] :error))])
+             [(events/listen audio "durationchange" update-time)
+              (events/listen audio "timeupdate" update-time)
+              (events/listen audio "play" #(update-status :playing))
+              (events/listen audio "playing" #(update-status :playing))
+              (events/listen audio "pause" #(update-status :paused))
+              (events/listen audio "ended" #(update-status :ended))
+              (events/listen audio "error" #(update-status :error))])
+
            (go-loop []
              (case (<! ch)
                :play  (do (.play audio) (recur))
@@ -93,6 +97,13 @@
       {:on-click #(go (>! command-ch
                           (if (= (:status @state) :playing)
                             :pause :play)))}]
+     [:div.seek-bar
+      (when (pos? (:duration @state))
+        [:div.seek-bar-position
+         {:style {:width (-> (:current-time @state)
+                             (/ (:duration @state))
+                             (* 100)
+                             (str "%"))}}])]
      [audio-player state command-ch]]))
 
 (defn soundcloud-thumbnail-view [thing]

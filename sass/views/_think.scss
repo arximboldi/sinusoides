@@ -98,6 +98,15 @@
         background-color: red;
     }
 
+    .seek-bar {
+        width: 100%;
+        height: 20px;
+        background-color: white;
+        .seek-bar-position {
+            height: 100%;
+            background-color: red;
+        }
+    }
     &.playing {
         .play-button {
             background-color: blue;
