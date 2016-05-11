@@ -48,9 +48,10 @@
   (let [expand #(match %
                   [:am]     ["am-sin" (routes/main)]
                   [:do]     ["do-sin" (routes/main)]
-                  [:todo]   ["todo-sin" (routes/main)]
-                  [:main]   ["main-sin" (routes/not-found)]
                   [:init]   ["init-sin" (routes/not-found)]
+                  [:main]   ["main-sin" (routes/not-found)]
+                  [:think]  ["think-sin" (routes/main)]
+                  [:todo]   ["todo-sin" (routes/main)]
                   :else     ["not-found-sin" (routes/main)])
         [class1 _]    (expand (:last @app))
         [class2 href] (expand (:view @app))]

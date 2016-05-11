@@ -64,6 +64,10 @@
         40%  { transform: scale(2); }
         to   { transform: scale(1); }
     }
+    @keyframes think-sin {
+        from { transform: scale(1); }
+        50%  { transform: scale(2.5); }
+    }
     @keyframes not-found-sin {}
 
     &.main-sin {
@@ -83,6 +87,12 @@
         top: 100vh;
         margin-top: -194px;
         animation: am-sin $page-anim-full ease-in-out;
+    }
+    &.think-sin {
+        &::after { background-position: 100% 0; }
+        top: -100vh;
+        margin-top: -75px;
+        animation: think-sin $page-anim-full ease-in-out;
     }
     &.todo-sin {
         &::after { background-position: 100% 0; }
@@ -109,6 +119,7 @@
     height: 1000%;
     top: 0;
     transform-origin: 50% 0;
+    transform: translateX(-100vw);
 
     &::before {
         content: "";
@@ -133,6 +144,26 @@
         transition: background-position $page-anim-full ease-in-out;
     }
 
+    @keyframes think-sin-v {
+        40%  { transform: translateX(-10vw) scale(0.1); }
+        to   { transform: translateX(115px) scale(1); }
+    }
+    @keyframes think-sin-vb {
+        from { background-position: 0 80%; }
+        40%  { background-position: 0 80%; }
+        to   { background-position: 0 0; }
+    }
+    @keyframes think-sin-last-v {
+        from { transform: translateX(115px) scale(1); }
+        80%  { transform: translateX(-20vw) scale(2.5); }
+        to   { transform: translateX(-20vw); }
+    }
+    @keyframes think-sin-last-vb {
+        from { background-position: 0 0; }
+        80%  { background-position: 0 -80%; }
+        to   { background-position: 0 -80%; }
+    }
+
     @keyframes todo-sin-v {
         40%  { transform: translateX(-10vw) scale(0.1); }
         to   { transform: translateX(50vw) scale(1); }
@@ -153,8 +184,13 @@
         to   { background-position: 0 -30%; }
     }
 
-    & {
-        transform: translateX(-100vw);
+    &.think-sin-last {
+        animation: think-sin-last-v $page-anim-full forwards;
+        &::after { animation: think-sin-last-vb $page-anim-full forwards; }
+    }
+    &.think-sin {
+        animation: think-sin-v $page-anim-full forwards;
+        &::after { animation: think-sin-vb $page-anim-full forwards; }
     }
     &.todo-sin-last {
         animation: todo-sin-last-v $page-anim-full forwards;
