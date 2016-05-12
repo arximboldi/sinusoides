@@ -60,7 +60,7 @@
 (defn md->html [str]
   (let [Converter (.-converter js/Showdown)
         converter (Converter.)]
-    (.makeHtml converter str)))
+    (.makeHtml converter (str/replace str "--" "—"))))
 
 (defn trace [obj & more]
   (apply prn (if more more ["TRACE:"]))
