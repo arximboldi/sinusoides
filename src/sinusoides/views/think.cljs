@@ -29,6 +29,8 @@
             [reagent.core :as r]
             [goog.events :as events]))
 
+(def state {:entries []})
+
 (def sc-client-id
   "485230fd2a6e151244a57a584f904070")
 
@@ -63,7 +65,7 @@
   {"soundcloud" soundcloud-thumbnail-view
    "markdown"   text-thumbnail-view})
 
-(defn think-view [sin think]
+(defn view [sin think]
   (r/with-let [_ (go (let [response (<! (http/get "/data/think.json"))
                            entries  (map #(assoc % :slug (util/to-slug (:title %)))
                                          (:body response))]

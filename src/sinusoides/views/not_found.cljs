@@ -20,7 +20,7 @@
   (:require [sinusoides.routes :as routes]
             [sinusoides.views.sinusoid :as sinusoid]))
 
-(defn not-found-view [sin]
+(defn view [sin]
   [:div#not-found-page.fixed-page
    [:div#the-end (sinusoid/hovered sin)]
    [:a#dead-end {:href (routes/main)}

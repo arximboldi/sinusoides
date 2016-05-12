@@ -21,28 +21,17 @@
             [sinusoides.routes :as routes]
             [reagent.core :as r]))
 
-(defonce app-state
+(defonce state
   (r/atom
-    {:sinusoid {:hover #{}}
-     :view [:init]
-     :last [:init]
-     :loading true
-     :fonts #{}
-     :do {:entries []
-          :languages []
-          :filter {:languages #{}}
-          :detail nil
-          :last nil}
-     :think {:entries []}
-     :am []}))
+    components/state))
 
-(defn init-app! []
+(defn init! []
   (enable-console-print!)
-  (routes/init-router! app-state)
-  (components/init-components! app-state))
+  (routes/init! state)
+  (components/init! state))
 
 (defn on-figwheel-reload! []
   (prn "Figwheel reloaded...")
-  (swap! app-state update-in [:__figwheel_counter] inc))
+  (swap! state update-in [:__figwheel_counter] inc))
 
-(init-app!)
+(init!)

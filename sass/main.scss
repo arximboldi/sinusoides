@@ -1,11 +1,14 @@
 @import 'global';
 @import 'fonts';
 @import 'app';
+
+@import 'views/main';
 @import 'views/am';
 @import 'views/do';
-@import 'views/main';
 @import 'views/not-found';
 @import 'views/sinusoid';
 @import 'views/think';
 @import 'views/todo';
+
 @import 'views/audio-player';
+@import 'views/slideshow';

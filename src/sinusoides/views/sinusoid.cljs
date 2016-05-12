@@ -22,6 +22,8 @@
             [cljs.core.match]
             [reagent.core :as r]))
 
+(def state {:hover #{}})
+
 (defn hover-clear [sin tag]
   (swap! sin #(update-in % [:hover] disj tag)))
 
@@ -44,10 +46,10 @@
 (defn hovered [sin]
   {:class (when (hover? sin) "hovered")})
 
-(defn sinusoid-view [tag app sin]
+(defn view [tag app sin]
   (let [expand #(match %
                   [:am]     ["am-sin" (routes/main)]
-                  [:do]     ["do-sin" (routes/main)]
+                  [:do _]   ["do-sin" (routes/main)]
                   [:init]   ["init-sin" (routes/not-found)]
                   [:main]   ["main-sin" (routes/not-found)]
                   [:think]  ["think-sin" (routes/main)]

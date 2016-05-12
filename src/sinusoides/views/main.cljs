@@ -23,42 +23,43 @@
             [clojure.string :as s]
             [reagent.core :as r]))
 
-(defn main-view [sin]
-  (r/with-let [gens [#(rand-nth ["What "
-                                 "Who "
-                                 "Where "
-                                 "Why "])
-                     #(rand-nth [" I"
-                                 " you"
-                                 " they"])
-                     #(rand-nth [[" I " "am"]
-                                 [" you " "are"]
-                                 [" they " "are"]])]
+(defn view [sin]
+  (r/with-let
+    [gens [#(rand-nth ["What "
+                       "Who "
+                       "Where "
+                       "Why "])
+           #(rand-nth [" I"
+                       " you"
+                       " they"])
+           #(rand-nth [[" I " "am"]
+                       [" you " "are"]
+                       [" they " "are"]])]
 
-               parts (r/atom ;; ["What " " you" [" I " "am"]]
-                      (vec (map apply gens)))
+     parts (r/atom ;; ["What " " you" [" I " "am"]]
+             (vec (map apply gens)))
 
-               update-parts
-               (fn [parts]
-                 (let [[idx gen] (rand-nth (map-indexed vector gens))]
-                   (assoc parts idx (gen))))
+     update-parts
+     (fn [parts]
+       (let [[idx gen] (rand-nth (map-indexed vector gens))]
+         (assoc parts idx (gen))))
 
-               gen-new
-               (fn [gen elem]
-                 (first (first
-                   (drop-while (fn [[a b]] (= a b))
-                               (map vector (repeatedly gen) (repeat elem))))))
+     gen-new
+     (fn [gen elem]
+       (first (first
+                (drop-while (fn [[a b]] (= a b))
+                            (map vector (repeatedly gen) (repeat elem))))))
 
-               randomize
-               (fn []
-                 (let [[idx gen] (rand-nth (map-indexed vector gens))]
-                   (swap! parts #(gen-new (partial update-parts %) %))))
+     randomize-question
+     (fn []
+       (let [[idx gen] (rand-nth (map-indexed vector gens))]
+         (swap! parts #(gen-new (partial update-parts %) %))))
 
-               interval (.setInterval js/window randomize 6000)
+     interval   (.setInterval js/window randomize-question 6000)
 
-               transition {:transition-name "part"
-                           :transition-enter-timeout 2000
-                           :transition-leave-timeout 2000}]
+     transition {:transition-name "part"
+                 :transition-enter-timeout 2000
+                 :transition-leave-timeout 2000}]
 
     [:div#main-page.fixed-page
      [:div#barcode]

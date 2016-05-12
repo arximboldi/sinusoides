@@ -20,7 +20,7 @@
   (:require [sinusoides.routes :as routes]
             [sinusoides.views.sinusoid :as sinusoid]))
 
-(defn todo-view [sin]
+(defn view [sin]
   [:div#todo-page.fixed-page
    [:div#todo-block.links (sinusoid/hovered sin)
     "TO" [:a {:href (routes/do)} "DO."]]])

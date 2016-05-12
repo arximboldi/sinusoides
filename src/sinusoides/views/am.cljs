@@ -24,7 +24,9 @@
             [cljs.core.async :refer [<! timeout]]
             [reagent.core :as r]))
 
-(defn am-view [sin am]
+(def state [])
+
+(defn view [sin am]
   (r/with-let [updater (r/atom 1)
                should-add-children (r/atom false)
                _ (go (<! (timeout 2000))

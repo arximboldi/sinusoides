@@ -1,185 +1,5 @@
 @import '../global';
 
-#do-detail {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    box-sizing: border-box;
-
-    &.left-entry {
-        border-left: 100px solid red;
-    }
-    &.right-entry {
-        border-right: 100px solid blue;
-    }
-
-    @keyframes enter-detail {
-        from { background-color: transparent; }
-        to   { background-color: black; }
-    }
-    @keyframes leave-detail {
-        from { background-color: black; }
-        to   { background-color: transparent; }
-    }
-    @keyframes enter-left-side {
-        from { transform: translateX(-50vw); }
-        to   { transform: translateX(0); }
-    }
-    @keyframes leave-left-side {
-        from { transform: translateX(0); }
-        to   { transform: translateX(-50vw); }
-    }
-    @keyframes enter-right-side {
-        from { transform: translateX(50vw); }
-        to   { transform: translateX(0); }
-    }
-    @keyframes leave-right-side {
-        from { transform: translateX(0); }
-        to   { transform: translateX(50vw); }
-    }
-    @keyframes enter-right {
-        from { transform: translateX(50vw); }
-        to   { transform: translateX(0); }
-    }
-    @keyframes enter-left {
-        from { transform: translateX(-50vw); }
-        to   { transform: translateX(0); }
-    }
-    @keyframes leave-fade {
-        from { opacity: 1; }
-        to   { opacity: 0; }
-    }
-
-    &.do-detail-appear, &.do-detail-enter {
-        animation: enter-detail 1s forwards;
-        #left-side { animation: enter-left-side 1s forwards; }
-        #right-side { animation: enter-right-side 1s forwards; }
-    }
-
-    &.do-detail-leave {
-        animation: leave-detail 1s forwards;
-        #left-side { animation: leave-left-side 1s forwards; }
-        #right-side { animation: leave-right-side 1s forwards; }
-    }
-
-    #left-side {
-        overflow: hidden;
-        position: absolute;
-        left: 0;
-        width: 50%;
-        height: 100%;
-        background-color: black;
-    }
-
-    #right-side {
-        overflow: hidden;
-        position: absolute;
-        right: 0;
-        width: 50%;
-        height: 100%;
-        background-color: black;
-    }
-
-    #img {
-        position: absolute;
-        display: block;
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center center;
-        background-color: #333;
-        &.swipe-left-enter { animation: enter-left 500ms forwards; }
-        &.swipe-left-leave { animation: leave-fade 500ms forwards; }
-        &.swipe-right-enter { animation: enter-right 500ms forwards; }
-        &.swipe-right-leave { animation: leave-fade 500ms forwards; }
-    }
-
-    #content {
-        position: absolute;
-        width: 100%;
-        padding: 16%;
-        box-sizing: border-box;
-        background-color: black;
-        &.swipe-left-enter { animation: enter-left 500ms forwards; }
-        &.swipe-left-leave { animation: leave-fade 500ms forwards; }
-        &.swipe-right-enter { animation: enter-right 500ms forwards; }
-        &.swipe-right-leave { animation: leave-fade 500ms forwards; }
-    }
-
-    #header {
-        float: right;
-        display: inline-block;
-        background: white;
-        margin: -2% -2% 0 0;
-        padding: 10px;
-        text-transform: uppercase;
-        text-align: right;
-        font-size: 2em;
-        font-weight: bold;
-    }
-
-    #desc {
-        a {
-            color: white;
-            &:hover { color: red; }
-        }
-        color: #999999;
-        font-size: 1.5em;
-        float: right;
-        width: 100%;
-        padding: 20px 0 0 0;
-        box-sizing: border-box;
-        line-height: 1.25em;
-    }
-
-    a.link {
-        color: white;
-        border: 2px solid white;
-        margin-right: 10px;
-        margin-bottom: 10px;
-        display: block;
-        float: left;
-        padding: 10px;
-        font-weight: bold;
-        transition: border 0.2s ease-in-out,
-        /**/        background 0.2s ease-in-out,
-        /**/        color 0.2s ease-in-out;
-        &:hover {
-            color: black;
-            border: 2px solid red;
-            background: red;
-        }
-    }
-
-    #footer {
-        z-index: 1000;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        .prev, .next, .close {
-            display: block;
-            width: 30px;
-            height: 72px;
-            margin-right: 28px;
-            background-color: white;
-            background-size: cover;
-            background-position: center 0;
-            transition: background-color 300ms ease-in-out;
-            &:hover { background-color: red; }
-            &.disabled {
-                opacity: 0.25;
-                &:hover { background-color: white; }
-            }
-        }
-        .prev  { background-image: url(/static/pic/left-i.svg); }
-        .next  { background-image: url(/static/pic/right-i.svg); }
-        .close { background-image: url(/static/pic/close-i.svg); }
-    }
-}
-
 #do-page {
     @keyframes enter-presentation {
         from { transform: translateX(-700px); }
@@ -342,4 +162,157 @@
             }
         }
     }
+
+    .slideshow {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+
+        @keyframes enter-detail {
+            from { background-color: transparent; }
+            to   { background-color: black; }
+        }
+
+        @keyframes leave-detail {
+            from { background-color: black; }
+            to   { background-color: transparent; }
+        }
+
+        &.slideshow-appear, &.slideshow-enter {
+            animation: enter-detail 1s forwards;
+            .left-side { animation: enter-left 1s forwards; }
+            .right-side { animation: enter-right 1s forwards; }
+        }
+
+        &.slideshow-leave {
+            animation: leave-detail 1s forwards;
+            .left-side { animation: leave-left 1s forwards; }
+            .right-side { animation: leave-right 1s forwards; }
+        }
+
+        .slideshow-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+
+            .do-detail {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            }
+
+            @keyframes enter-right {
+                from { transform: translateX(50vw); }
+                to   { transform: translateX(0); }
+            }
+            @keyframes enter-left {
+                from { transform: translateX(-50vw); }
+                to   { transform: translateX(0); }
+            }
+            @keyframes leave-left {
+                from { transform: translateX(0); }
+                to   { transform: translateX(-50vw); }
+            }
+            @keyframes leave-right {
+                from { transform: translateX(0); }
+                to   { transform: translateX(50vw); }
+            }
+            @keyframes leave-fade {
+                from { opacity: 1; }
+                to   { opacity: 0; }
+            }
+
+            &.swipe-left-enter .img { animation: enter-left 500ms forwards; }
+            &.swipe-left-leave .img { animation: leave-fade 500ms forwards; }
+            &.swipe-right-enter .img { animation: enter-right 500ms forwards; }
+            &.swipe-right-leave .img { animation: leave-fade 500ms forwards; }
+
+            &.swipe-left-enter .content { animation: enter-left 500ms forwards; }
+            &.swipe-left-leave .content { animation: leave-fade 500ms forwards; }
+            &.swipe-right-enter .content { animation: enter-right 500ms forwards; }
+            &.swipe-right-leave .content { animation: leave-fade 500ms forwards; }
+
+            .left-side {
+                overflow: hidden;
+                position: absolute;
+                left: 0;
+                width: 50%;
+                height: 100%;
+            }
+
+            .right-side {
+                overflow: hidden;
+                position: absolute;
+                right: 0;
+                width: 50%;
+                height: 100%;
+            }
+
+            .img {
+                position: absolute;
+                display: block;
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                background-position: center center;
+                background-color: #333;
+            }
+
+            .content {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                padding: 16%;
+                box-sizing: border-box;
+                background-color: black;
+            }
+
+            .header {
+                float: right;
+                display: inline-block;
+                background: white;
+                margin: -2% -2% 0 0;
+                padding: 10px;
+                text-transform: uppercase;
+                text-align: right;
+                font-size: 2em;
+                font-weight: bold;
+            }
+
+            .desc {
+                a {
+                    color: white;
+                    &:hover { color: red; }
+                }
+                color: #999999;
+                font-size: 1.5em;
+                float: right;
+                width: 100%;
+                padding: 20px 0 0 0;
+                box-sizing: border-box;
+                line-height: 1.25em;
+            }
+
+            a.link {
+                color: white;
+                border: 2px solid white;
+                margin-right: 10px;
+                margin-bottom: 10px;
+                display: block;
+                float: left;
+                padding: 10px;
+                font-weight: bold;
+                transition: border 0.2s ease-in-out,
+                /**/        background 0.2s ease-in-out,
+                /**/        color 0.2s ease-in-out;
+                &:hover {
+                    color: black;
+                    border: 2px solid red;
+                    background: red;
+                }
+            }
+        }
+    }
+
 }
