@@ -16,8 +16,9 @@
 ;; License along with Sinusoid.es.  If not, see
 ;; <http://www.gnu.org/licenses/>.
 
-(ns sinusoides.views.addons
+(ns sinusoides.views.animate
   (:require [reagent.core :as r]))
 
-(def css-transitions
-  (r/adapt-react-class js/React.addons.CSSTransitionGroup))
+(def view
+  (r/adapt-react-class
+    js/React.addons.CSSTransitionGroup))

@@ -19,7 +19,7 @@
 (ns sinusoides.views.main
   (:require [sinusoides.routes :as routes]
             [sinusoides.views.sinusoid :as sinusoid]
-            [sinusoides.views.addons :refer [css-transitions]]
+            [sinusoides.views.animate :as animate]
             [clojure.string :as s]
             [reagent.core :as r]))
 
@@ -67,17 +67,17 @@
 
      [:div#main-text (sinusoid/hovered sin)
       [:div.parts
-       [css-transitions transition
+       [animate/view transition
         ^{:key (@parts 0)}
         [:div.part (@parts 0) " " [:a {:href (routes/do)} "do"]]]]
 
       [:div.parts
-       [css-transitions transition
+       [animate/view transition
         ^{:key (@parts 1)}
         [:div.part (@parts 1) " " [:a {:href (routes/think)} "think"]]]]
 
       [:div.parts
-       [css-transitions transition
+       [animate/view transition
         ^{:key (@parts 2)}
         [:div.part ((@parts 2) 0)
          " " [:a {:href (routes/am)} ((@parts 2) 1)]

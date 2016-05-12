@@ -21,7 +21,6 @@
   (:require [sinusoides.util :as util :refer-macros [match-get]]
             [sinusoides.routes :as routes]
             [sinusoides.views.sinusoid :as sinusoid]
-            [sinusoides.views.addons :refer [css-transitions]]
             [sinusoides.views.slideshow :as slideshow]
             [cljs-http.client :as http]
             [cljs.core.async :refer [<! timeout]]

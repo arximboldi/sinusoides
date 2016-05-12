@@ -20,7 +20,7 @@
   (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [sinusoides.util :as util]
             [sinusoides.routes :as routes]
-            [sinusoides.views.addons :refer [css-transitions]]
+            [sinusoides.views.animate :as animate]
             [goog.events :as events]
             [reagent.core :as r]))
 
@@ -61,11 +61,11 @@
 
      listener (events/listen js/document "keydown" handle-key)]
 
-    [css-transitions {:transition-name "slideshow"
-                      :transition-appear true
-                      :transition-appear-timeout 1000
-                      :transition-enter-timeout 1000
-                      :transition-leave-timeout 1000}
+    [animate/view {:transition-name "slideshow"
+                   :transition-appear true
+                   :transition-appear-timeout 1000
+                   :transition-enter-timeout 1000
+                   :transition-leave-timeout 1000}
      (when @entry
        (let [[idx        item]  @entry
              [last-idx   _]     (or @last-entry [-1 nil])
@@ -76,9 +76,9 @@
 
          ^{:key :slideshow}
          [:div.slideshow
-          [css-transitions {:transition-name transition
-                            :transition-enter-timeout 500
-                            :transition-leave-timeout 500}
+          [animate/view {:transition-name transition
+                         :transition-enter-timeout 500
+                         :transition-leave-timeout 500}
            ^{:key idx}
            [:div.slideshow-item {:style {:z-index z-idx}}
             [item-view item]]]

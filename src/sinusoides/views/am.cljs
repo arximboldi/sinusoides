@@ -19,7 +19,7 @@
 (ns sinusoides.views.am
   (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [sinusoides.views.sinusoid :as sinusoid]
-            [sinusoides.views.addons :refer [css-transitions]]
+            [sinusoides.views.animate :as animate]
             [cljs-http.client :as http]
             [cljs.core.async :refer [<! timeout]]
             [reagent.core :as r]))
@@ -42,10 +42,10 @@
       [:div#not [:p " not "]]]
      [:div#profiles.links
       (when (and @updater @should-add-children)
-        [css-transitions {:transition-name "profile"
-                          :transition-appear true
-                          :transition-appear-timeout 3000
-                          :transition-enter-timeout 3000}
+        [animate/view {:transition-name "profile"
+                       :transition-appear true
+                       :transition-appear-timeout 3000
+                       :transition-enter-timeout 3000}
          (for [{name :name url :url} @am]
            ^{:key name}
            [:a
