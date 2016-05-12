@@ -223,13 +223,18 @@
                 to   { opacity: 0; }
             }
 
-            &.swipe-left-enter .img { animation: enter-left 500ms forwards; }
-            &.swipe-left-leave .img { animation: leave-fade 500ms forwards; }
+            &.swipe-left-enter  { animation: none; }
+            &.swipe-left-leave  { animation: none; }
+            &.swipe-right-enter { animation: none; }
+            &.swipe-right-leave { animation: none; }
+
+            &.swipe-left-enter .img  { animation: enter-left 500ms forwards; }
+            &.swipe-left-leave .img  { animation: leave-fade 500ms forwards; }
             &.swipe-right-enter .img { animation: enter-right 500ms forwards; }
             &.swipe-right-leave .img { animation: leave-fade 500ms forwards; }
 
-            &.swipe-left-enter .content { animation: enter-left 500ms forwards; }
-            &.swipe-left-leave .content { animation: leave-fade 500ms forwards; }
+            &.swipe-left-enter .content  { animation: enter-left 500ms forwards; }
+            &.swipe-left-leave .content  { animation: leave-fade 500ms forwards; }
             &.swipe-right-enter .content { animation: enter-right 500ms forwards; }
             &.swipe-right-leave .content { animation: leave-fade 500ms forwards; }
 

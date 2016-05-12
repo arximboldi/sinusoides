@@ -62,10 +62,10 @@
                     :transition-leave-timeout 3000}
       (match [@view]
         [[:am]]    ^{:key :am-view}   [am/view sin am]
-        [[:do _]] ^{:key :do-view}   [do-/view sin do view last]
+        [[:do _]]  ^{:key :do-view}   [do-/view sin do view last]
         [[:init]]  ^{:key :init-view} [:div]
         [[:main]]  ^{:key :main-view} [main/view sin]
-        [[:think]] ^{:key :think-view} [think/view sin think]
+        [[:think _]] ^{:key :think-view} [think/view sin think view last]
         [[:todo]]  ^{:key :todo-view} [todo/view sin]
         :else      ^{:key :not-found-view} [not-found/view sin])]]))
 

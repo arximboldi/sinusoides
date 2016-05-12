@@ -38,7 +38,9 @@
   (defroute do- "/do/:id" [id]
     (goto! app [:do id]))
   (defroute think "/think" []
-    (goto! app [:think]))
+    (goto! app [:think nil]))
+  (defroute think- "/think/:id" [id]
+    (goto! app [:think id]))
   (defroute todo "/todo" []
     (goto! app [:todo]))
   (defroute main "/" []

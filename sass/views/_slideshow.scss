@@ -10,11 +10,40 @@
         to   { opacity: 1; }
     }
 
+    @keyframes slideshow-enter-right {
+        from { transform: translateX(100vw); }
+        to   { transform: translateX(0); }
+    }
+
+    @keyframes slideshow-enter-left {
+        from { transform: translateX(-50vw); }
+        to   { transform: translateX(0); }
+    }
+
+    @keyframes slideshow-enter-fade {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+
+    @keyframes slideshow-leave-fade {
+        from { opacity: 1; }
+        to   { opacity: 0; }
+    }
+
     &.slideshow-appear, &.slideshow-enter {
+        animation: slideshow-enter-fade 1s forwards;
         .slideshow-controls { animation: enter-slideshow-footer 1s forwards; }
     }
     &.slideshow-leave {
+        animation: slideshow-leave-fade 1s forwards;
         .slideshow-controls { animation: leave-slideshow-footer 1s forwards; }
+    }
+
+    .slideshow-item {
+        &.swipe-left-enter  { animation: slideshow-enter-left 500ms forwards; }
+        &.swipe-left-leave  { animation: slideshow-leave-fade 500ms forwards; }
+        &.swipe-right-enter { animation: slideshow-enter-right 500ms forwards; }
+        &.swipe-right-leave { animation: slideshow-leave-fade 500ms forwards; }
     }
 
     .slideshow-controls {

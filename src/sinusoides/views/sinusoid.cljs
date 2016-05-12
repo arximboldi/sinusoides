@@ -52,7 +52,7 @@
                   [:do _]   ["do-sin" (routes/main)]
                   [:init]   ["init-sin" (routes/not-found)]
                   [:main]   ["main-sin" (routes/not-found)]
-                  [:think]  ["think-sin" (routes/main)]
+                  [:think _]  ["think-sin" (routes/main)]
                   [:todo]   ["todo-sin" (routes/main)]
                   :else     ["not-found-sin" (routes/main)])
         [class1 _]    (expand (:last @app))
