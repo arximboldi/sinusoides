@@ -34,7 +34,8 @@
                   :output-dir "resources/js/debug/out"
                   :main sinusoides.core
                   :optimizations :none
-                  :source-map-timestamp true}}
+                  :source-map-timestamp true
+                  :parallel-build true}}
       {:id "release"
        :source-paths ["src"]
        :compiler {:asset-path "js/release/out"
@@ -42,7 +43,8 @@
                   :output-dir "resources/js/release/out"
                   :main sinusoides.core
                   :optimizations :advanced
-                  :pretty-print false}}]}
+                  :pretty-print false
+                  :parallel-build true}}]}
 
   :figwheel {:http-server-root ""
              :css-dirs ["resources/css"]
