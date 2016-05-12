@@ -19,6 +19,11 @@
 (ns sinusoides.util
   (:require [pl.danieljanus.tagsoup :as tagsoup]))
 
+(defmacro dbg [x]
+  `(let [x# ~x]
+     (println '~x "=" x#)
+     x#))
+
 (defmacro embed-svg [svg-file]
   (let [hiccup (tagsoup/parse-string (slurp svg-file))]
     `~hiccup))
