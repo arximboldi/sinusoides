@@ -30,15 +30,15 @@
             [reagent.core :as r]
             [goog.events :as events]))
 
-(def state {:entries []})
+(def state
+  {:entries []
+   :data {}})
 
 (def thumnail-views
   {"soundcloud"
-   (fn [thing]
+   (fn [thing data]
      (r/with-let
-       [data (r/atom nil)
-
-        client-id     "485230fd2a6e151244a57a584f904070"
+       [client-id     "485230fd2a6e151244a57a584f904070"
         add-client-id #(str % "?client_id=" client-id)
 
         api-get
@@ -66,19 +66,29 @@
      [:a.thingy.text {:href (routes/think- {:id (:slug thing)})}
       (:title thing)])})
 
-(defn thumbnail-view [thing]
-  [(get thumnail-views (:type thing)) thing])
+(defn thumbnail-view [think thing]
+  [(get thumnail-views (:type thing))
+   thing
+   (r/cursor think [:data (:slug thing)])])
 
 (def detail-views
   {"soundcloud"
    (fn [thing]
      [:div.detail.soundcloud "SOUNDCLOUD: " (:title thing)])
-   "markdown"
-   (fn [thing]
-     [:div.detail.text "MARKDOWN: " (:title thing)])})
 
-(defn detail-view [thing]
-  [(get detail-views (:type thing)) thing])
+   "markdown"
+   (fn [thing data]
+     (r/with-let [_ (go (reset! data (:body (<! (http/get (:text thing))))))]
+       [:div.detail.text
+        [:div.content
+         (when @data
+           {:dangerouslySetInnerHTML
+            {:__html (util/md->html @data)}})]]))})
+
+(defn detail-view [think thing]
+  [(get detail-views (:type thing))
+   thing
+   (r/cursor think [:data (:slug thing)])])
 
 (defn view [sin think view last]
   (r/with-let
@@ -100,5 +110,5 @@
      [:div#stuff
       (for [thing (:entries @think)]
         ^{:key (:slug thing)}
-        [thumbnail-view thing])]
-     [slideshow/view slideshow detail-view]]))
+        [thumbnail-view think thing])]
+     [slideshow/view slideshow #(detail-view think %)]]))
