@@ -13,6 +13,10 @@ $loading-size: 31px;
 $loading-border: 16px;
 $loading-color: red;
 
+tt {
+    font-family: $mono-font;
+}
+
 #loading {
     transition: opacity 0.5s ease-in-out;
     &.loaded { opacity: 0; }
@@ -100,6 +104,11 @@ a:focus {
     color: #444444;
     text-decoration: none;
     transition: color 0.2s ease-in-out;
+    &:hover { color: red; }
+}
+
+.linksinv a {
+    color: white;
     &:hover { color: red; }
 }
 

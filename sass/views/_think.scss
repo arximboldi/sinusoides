@@ -105,10 +105,28 @@
 
         &.text {
             .content {
-                font-size: 24px;
-                line-height: 1.5em;
+                @extend .linksinv;
                 margin: 60px auto;
+                padding: 0px 5%;
                 max-width: 700px;
+                font-family: "Linux Libertine";
+                font-size: 24px;
+                line-height: 1.5;
+                h1 {
+                    font-size: 2.5em;
+                    line-height: 1.2;
+                    margin-bottom: 60px;
+                    &::after {
+                        display: block;
+                        content: "";
+                        width: 40px;
+                        margin-top: 24px;
+                        border-bottom: 6px solid white;
+                    }
+                }
+                p {
+                    color: #ccc;
+                }
             }
         }
     }

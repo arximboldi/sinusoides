@@ -31,3 +31,32 @@
     src: local("Inconsolata-Bold"),
     /**/ url(/static/files/Inconsolata-Bold.ttf);
 }
+
+
+@font-face {
+    font-family: "Linux Libertine";
+    src: local("Linux Libertine"),
+    /**/ local("LinuxLibertine-Regular"),
+    /**/ url(/static/files/LinLibertine_R.ttf);
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Linux Libertine";
+    src: local("LinuxLibertine-Bold"),
+    /**/ url(/static/files/LinLibertine_RB.ttf);
+    font-weight: bold;
+}
+@font-face {
+    font-family: "Linux Libertine";
+    src: local("LinuxLibertine-Italic"),
+    /**/ url(/static/files/LinLibertine_I.ttf);
+    font-style: italic;
+}
+@font-face {
+    font-family: "Linux Libertine";
+    src: local("LinuxLibertine-BoldItalic"),
+    /**/ url(/static/files/LinLibertine_RBI.ttf);
+    font-weight: bold;
+    font-style: italic;
+}
