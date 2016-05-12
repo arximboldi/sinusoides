@@ -18,7 +18,7 @@
 
 (ns sinusoides.views.think
   (:require-macros [cljs.core.async.macros :refer [go go-loop]])
-  (:require [sinusoides.views.audio-player :refer [audio-player-view]]
+  (:require [sinusoides.views.audio-player :as audio-player]
             [sinusoides.views.sinusoid :as sinusoid]
             [sinusoides.views.addons :refer [css-transitions]]
             [sinusoides.util :as util]
@@ -55,7 +55,7 @@
             audio-src  (sc-add-client-id (:stream_url @data))]
         [:div.thingy.soundcloud
          {:style {:background-image (str "url(" background ")")}}
-         [audio-player-view audio-src]])
+         [audio-player/view audio-src]])
       [:div.thingy.soundcloud])))
 
 (defn text-thumbnail-view [thing]

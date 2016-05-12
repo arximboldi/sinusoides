@@ -25,14 +25,14 @@
             [reagent.core :as r]
             [goog.events :as events]))
 
-(defn audio-player-state [source]
-  {:source source
+(def state
+  {:source nil
    :duration 0
    :current-time 0
    :progress 0
    :status nil})
 
-(defn audio-player [state command-ch]
+(defn impl-view [state command-ch]
   (let [events (atom)
         source (r/track #(:source @state))
         ch     (->> (async/chan) (async/pipe command-ch))]
@@ -78,12 +78,18 @@
                                                (or (= st :error)
                                                    (= st :aborted)))
                                          (.load audio))
-                                       (.play audio) (recur))
-                    [:pause]       (do (.pause audio) (recur))
-                    [:preload]     (do (set! (.-preload audio) true) (recur))
-                    [[:seek time]] (do (set! (.-currentTime audio) time) (recur))
+                                       (.play audio)
+                                       (recur))
+                    [:pause]       (do (.pause audio)
+                                       (recur))
+                    [:preload]     (do (set! (.-preload audio) true)
+                                       (recur))
+                    [[:seek time]] (do (set! (.-currentTime audio) time)
+                                       (recur))
                     [nil]          nil
-                    [bad-command]  (prn "audio player: bad command, " bad-command)))))
+                    [bad-command]  (do (prn "audio player: bad command, "
+                                            bad-command)
+                                       (recur))))))
 
        :component-will-unmount
        (fn [this]
@@ -95,38 +101,39 @@
          [:audio {:preload "none"
                   :src @source}])})))
 
-(defn audio-player-view [source]
-  (r/with-let [command-ch (async/chan)
-               mouse-time (r/atom 0)
-               state      (r/atom (audio-player-state source))
+(defn view [source]
+  (r/with-let
+    [command-ch (async/chan)
+     mouse-time (r/atom 0)
+     state      (r/atom (merge state {:source source}))
 
-               is-playing
-               #(let [st (:status @state)]
-                  (or (= st :play)
-                      (= st :playing)))
+     is-playing
+     #(let [st (:status @state)]
+        (or (= st :play)
+            (= st :playing)))
 
-               is-started
-               #(pos? (:current-time @state))
+     is-started
+     #(pos? (:current-time @state))
 
-               toggle-play
-               #(go (>! command-ch (if (is-playing) :pause :play)))
+     toggle-play
+     #(go (>! command-ch (if (is-playing) :pause :play)))
 
-               seek-time
-               #(go (>! command-ch [:seek @mouse-time]))
+     seek-time
+     #(go (>! command-ch [:seek @mouse-time]))
 
-               update-mouse-time
-               (fn [ev]
-                 (reset! mouse-time
-                         (-> (.-clientX ev)
-                             (- (.-left (.getBoundingClientRect (.-target ev))))
-                             (- (.-clientLeft (.-target ev)))
-                             (/ (.-offsetWidth (.-target ev)))
-                             (* (:duration @state))))
-                 (when (pos? (.-buttons ev))
-                   (seek-time)))
+     update-mouse-time
+     (fn [ev]
+       (reset! mouse-time
+               (-> (.-clientX ev)
+                   (- (.-left (.getBoundingClientRect (.-target ev))))
+                   (- (.-clientLeft (.-target ev)))
+                   (/ (.-offsetWidth (.-target ev)))
+                   (* (:duration @state))))
+       (when (pos? (.-buttons ev))
+         (seek-time)))
 
-               enable-preload
-               #(go (>! command-ch :preload))]
+     enable-preload
+     #(go (>! command-ch :preload))]
 
     [:div.audio-player {:class (str "state-" (clj->js (:status @state))
                                     (when (is-playing) " is-playing")
@@ -168,4 +175,4 @@
                               (* 100)
                               (str "%"))}}])]]
 
-     [audio-player state command-ch]]))
+     [impl-view state command-ch]]))
