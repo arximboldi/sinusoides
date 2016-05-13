@@ -16,7 +16,7 @@
     }
 
     @keyframes slideshow-enter-left {
-        from { transform: translateX(-50vw); }
+        from { transform: translateX(-100vw); }
         to   { transform: translateX(0); }
     }
 
@@ -40,6 +40,9 @@
     }
 
     .slideshow-item {
+        position: absolute;
+        width: 100%;
+        height: 100%;
         &.swipe-left-enter  { animation: slideshow-enter-left 500ms forwards; }
         &.swipe-left-leave  { animation: slideshow-leave-fade 500ms forwards; }
         &.swipe-right-enter { animation: slideshow-enter-right 500ms forwards; }
@@ -48,7 +51,7 @@
 
     .slideshow-controls {
         z-index: 1000;
-        position: absolute;
+        position: fixed;
         bottom: 0;
         right: 0;
         .prev, .next, .close {

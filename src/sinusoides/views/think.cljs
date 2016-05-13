@@ -67,9 +67,8 @@
       (:title thing)])})
 
 (defn thumbnail-view [think thing]
-  [(get thumnail-views (:type thing))
-   thing
-   (r/cursor think [:data (:slug thing)])])
+  (r/with-let [data (r/cursor think [:data (:slug thing)])]
+    [(get thumnail-views (:type thing)) thing data]))
 
 (def detail-views
   {"soundcloud"
@@ -86,9 +85,8 @@
             {:__html (util/md->html @data)}})]]))})
 
 (defn detail-view [think thing]
-  [(get detail-views (:type thing))
-   thing
-   (r/cursor think [:data (:slug thing)])])
+  (r/with-let [data (r/cursor think [:data (:slug thing)])]
+    [(get detail-views (:type thing)) thing data]))
 
 (defn view [sin think view last]
   (r/with-let
