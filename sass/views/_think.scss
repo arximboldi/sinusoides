@@ -78,7 +78,6 @@
             &.soundcloud {
                 padding: 0px;
                 border: 0px;
-                background-size: cover;
                 background-color: #333;
             }
         }
@@ -94,16 +93,70 @@
     }
 
     .detail {
+        @extend .linksinv;
         position: absolute;
         background-color: black;
         width: 100%;
         height: 100%;
         color: white;
 
+
         &.soundcloud {
             box-sizing: border-box;
             padding: 40px;
-            font-size: 40px;
+
+            .left-side {
+                position: absolute;
+                width: 40vw;
+                height: 40vw;
+                right: 50%;
+                top: 0;
+                bottom: 0;
+                margin: auto 20px;
+
+                .audio-player {}
+            }
+
+            .right-side {
+                position: absolute;
+                box-sizing: border-box;
+                width: 40vw;
+                height: 40vw;
+                left: 50%;
+                top: 0;
+                bottom: 0;
+                margin: auto 0;
+                padding: 0 20px;
+
+                .title {
+                    font-size: 2em;
+                    margin: 0 -2% 30px 0;
+                    text-transform: uppercase;
+                    font-weight: bold;
+                }
+
+                .desc, .date {
+                    font-size: 1.2em;
+                    color: #ccc;
+                    font-family: $serif-font;
+                }
+
+                .footer {
+                    position: absolute;
+                    bottom: 0;
+                }
+
+                .tags {
+                    font-family: $mono-font;
+                    color: #777;
+                    margin-bottom: 10px;
+                }
+
+                .to-soundcloud {
+                    text-transform: uppercase;
+                    font-size: 0.75em;
+                }
+            }
         }
 
         &.text {
@@ -112,7 +165,7 @@
                 margin: 60px auto;
                 padding: 0px 5%;
                 max-width: 700px;
-                font-family: "Linux Libertine";
+                font-family: $serif-font;
                 font-size: 24px;
                 line-height: 1.5;
                 h1 {

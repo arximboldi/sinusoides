@@ -109,7 +109,7 @@
        (fn []
          [:audio {:preload "none"}])})))
 
-(defn view [src st]
+(defn view [props src st & children]
   (r/with-let
     [mouse-time (r/atom 0)
 
@@ -148,43 +148,47 @@
      enable-preload
      #(go (>! (:chan @st) [:preload src]))]
 
-    [:div.audio-player {:class (str "st-" (clj->js (:status @st))
-                                    (when (is-playing) " is-playing")
-                                    (when (is-started) " is-started"))}
-     [:div.play-button
-      {:on-click toggle-play}]
+    (into
+      [:div.audio-player (r/merge-props
+                           props
+                           {:class (str "status-" (clj->js (:status @st))
+                                        (when (is-playing) " is-playing")
+                                        (when (is-started) " is-started"))})
+       [:div.play-button
+        {:on-click toggle-play}]
 
-     [:div.seek-bar
-      {:on-mouse-down seek-time
-       :on-mouse-move update-mouse-time}
+       [:div.seek-bar
+        {:on-mouse-down seek-time
+         :on-mouse-move update-mouse-time}
 
-      (when (pos? @mouse-time)
-        [:div.seek-bar-tooltip
-         {:class
-          (cond
-            (> @mouse-time (:progress @st)) "unbuffered"
-            (> @mouse-time (:current-time @st)) "buffered"
-            :else "played")
-          :style {:left (-> @mouse-time
-                            (/ (:duration @st))
-                            (* 100)
-                            (str "%"))}}
-         (str (quot @mouse-time 60) ":"
-              (int (rem @mouse-time 60)))])
-
-      [:div.seek-bar-range
-       (when (pos? (:progress @st))
-         [:div.seek-bar-loaded
-          {:style {:width (-> (if (is-src?) (:progress @st) 0)
+        (when (pos? @mouse-time)
+          [:div.seek-bar-tooltip
+           {:class
+            (cond
+              (> @mouse-time (:progress @st)) "unbuffered"
+              (> @mouse-time (:current-time @st)) "buffered"
+              :else "played")
+            :style {:left (-> @mouse-time
                               (/ (:duration @st))
                               (* 100)
-                              (min 100)
-                              (str "%"))}}])
+                              (str "%"))}}
+           (str (quot @mouse-time 60) ":"
+                (int (rem @mouse-time 60)))])
 
-       (when (pos? (:duration @st))
-         [:div.seek-bar-position
-          {:style {:width (-> (if (is-src?) (:current-time @st) 0)
-                              (/ (:duration @st))
-                              (* 100)
-                              (min 100)
-                              (str "%"))}}])]]]))
+        [:div.seek-bar-range
+         (when (pos? (:progress @st))
+           [:div.seek-bar-loaded
+            {:style {:width (-> (if (is-src?) (:progress @st) 0)
+                                (/ (:duration @st))
+                                (* 100)
+                                (min 100)
+                                (str "%"))}}])
+
+         (when (pos? (:duration @st))
+           [:div.seek-bar-position
+            {:style {:width (-> (if (is-src?) (:current-time @st) 0)
+                                (/ (:duration @st))
+                                (* 100)
+                                (min 100)
+                                (str "%"))}}])]]]
+      children)))

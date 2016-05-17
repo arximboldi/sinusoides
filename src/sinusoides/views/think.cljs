@@ -21,6 +21,7 @@
   (:require [sinusoides.views.audio-player :as audio-player]
             [sinusoides.views.sinusoid :as sinusoid]
             [sinusoides.views.slideshow :as slideshow]
+            [cljs-time.format :as time]
             [sinusoides.routes :as routes]
             [sinusoides.util :as util :refer-macros [match-get]]
             [clojure.string :as string]
@@ -35,64 +36,87 @@
    :entries []
    :data {}})
 
-(def thumnail-views
-  {"soundcloud"
-   (fn [thing data player]
-     (r/with-let
-       [client-id     "485230fd2a6e151244a57a584f904070"
-        add-client-id #(str % "?client_id=" client-id)
+(defn soundcloud-player-view [thing data player & children]
+  (r/with-let
+    [client-id     "485230fd2a6e151244a57a584f904070"
+     add-client-id #(str % "?client_id=" client-id)
 
-        api-get
-        (fn [& command]
-          (http/jsonp (add-client-id (str "http://api.soundcloud.com"
-                                          (apply str command)
-                                          ".json"))))
+     api-get
+     (fn [& command]
+       (http/jsonp (add-client-id (str "http://api.soundcloud.com"
+                                       (apply str command)
+                                       ".json"))))
 
-        _
-        (go (let [response (<! (api-get "/tracks/" (:track thing)))]
-              (reset! data (:body response))))]
+     _
+     (go (let [response (<! (api-get "/tracks/" (:track thing)))]
+           (reset! data (:body response))))]
 
-       (if @data
-         (let [background (string/replace (:artwork_url @data)
-                                          #"-large.jpg"
-                                          "-t500x500.jpg")
-               audio-src  (add-client-id (:stream_url @data))]
-           [:div.thingy.soundcloud
-            {:style {:background-image (str "url(" background ")")}}
-            [audio-player/view audio-src player]])
-         [:div.thingy.soundcloud])))
+    (if @data
+      (let [background (string/replace (:artwork_url @data)
+                                       #"-large.jpg"
+                                       "-t500x500.jpg")
+            audio-src  (add-client-id (:stream_url @data))]
+        (into
+          [audio-player/view
+           {:style {:background-image (str "url(" background ")")}}
+           audio-src
+           player]
+          children))
+      [:span])))
 
-   "markdown"
-   (fn [thing]
-     [:a.thingy.text {:href (routes/think- {:id (:slug thing)})}
-      (:title thing)])})
+(defn soundcloud-thumbnail-view [thing data player]
+  [:div.thingy.soundcloud
+   [soundcloud-player-view thing data player]])
 
-(defn thumbnail-view [think thing]
+(defn markdown-thumbnail-view [thing]
+  [:a.thingy.text {:href (routes/think- {:id (:slug thing)})}
+   (:title thing)])
+
+(defn soundcloud-detail-view [thing data player]
+  (r/with-let [input-date-formatter  (time/formatter "yyyy/MM/dd hh:mm:ss Z")
+               output-date-formatter (time/formatter "MMMM YYYY")]
+    [:div.detail.soundcloud
+     [:div.left-side
+      [soundcloud-player-view thing data player]]
+
+     (when @data
+       [:div.right-side
+        [:div.title (:title @data)]
+        [:div.desc {:dangerouslySetInnerHTML
+                    {:__html (util/md->html (:description @data))}}]
+        [:div.date (time/unparse output-date-formatter
+                                 (time/parse input-date-formatter
+                                             (:created_at @data)))]
+        [:div.footer
+         [:div.tags
+          (string/join
+            " "
+            (map #(str "#" (string/lower-case %))
+                 (string/split (:tag_list @data) #" ")))]
+         [:a.to-soundcloud {:href (:permalink_url @data)}
+          "Go to SoundCloud"]]])]))
+
+(defn markdown-detail-view [thing data]
+  (r/with-let [_ (go (reset! data (:body (<! (http/get (:text thing))))))]
+    [:div.detail.text
+     [:div.content
+      (when @data
+        {:dangerouslySetInnerHTML
+         {:__html (util/md->html @data)}})]]))
+
+(defn dispatch-view [views think thing]
   (r/with-let [player (r/cursor think [:player])
-               data (r/cursor think [:data (:slug thing)])]
-    [(get thumnail-views (:type thing)) thing data player]))
-
-(def detail-views
-  {"soundcloud"
-   (fn [thing]
-     [:div.detail.soundcloud "SOUNDCLOUD: " (:title thing)])
-
-   "markdown"
-   (fn [thing data]
-     (r/with-let [_ (go (reset! data (:body (<! (http/get (:text thing))))))]
-       [:div.detail.text
-        [:div.content
-         (when @data
-           {:dangerouslySetInnerHTML
-            {:__html (util/md->html @data)}})]]))})
-
-(defn detail-view [think thing]
-  (r/with-let [data (r/cursor think [:data (:slug thing)])]
-    [(get detail-views (:type thing)) thing data]))
+               data   (r/cursor think [:data (:slug thing)])]
+    [(get views (:type thing)) thing data player]))
 
 (defn view [sin think view last]
   (r/with-let
-    [_ (go (let [response (<! (http/get "/data/think.json"))
+    [thumbnail-views {"markdown"   markdown-thumbnail-view
+                      "soundcloud" soundcloud-thumbnail-view}
+     detail-views    {"markdown"   markdown-detail-view
+                      "soundcloud" soundcloud-detail-view}
+
+     _ (go (let [response (<! (http/get "/data/think.json"))
                  entries  (map #(assoc % :slug (util/to-slug (:title %)))
                                (:body response))]
              (swap! think assoc-in [:entries] (vec entries))))
@@ -106,6 +130,8 @@
           :last (match-get @last [:think id])
           :entries (:entries @think)}))
 
+     slideshow-element #(dispatch-view detail-views think %)
+
      player (r/cursor think [:player])]
 
     [:div#think-page.page
@@ -113,6 +139,6 @@
      [:div#stuff
       (for [thing (:entries @think)]
         ^{:key (:slug thing)}
-        [thumbnail-view think thing])]
+        [dispatch-view thumbnail-views think thing])]
      [audio-player/object player]
-     [slideshow/view slideshow #(detail-view think %)]]))
+     [slideshow/view slideshow slideshow-element]]))
