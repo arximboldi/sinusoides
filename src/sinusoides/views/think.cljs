@@ -21,6 +21,7 @@
   (:require [sinusoides.views.audio-player :as audio-player]
             [sinusoides.views.sinusoid :as sinusoid]
             [sinusoides.views.slideshow :as slideshow]
+            [sinusoides.views.focused :as focused]
             [cljs-time.format :as time]
             [sinusoides.routes :as routes]
             [sinusoides.util :as util :refer-macros [match-get]]
@@ -102,11 +103,12 @@
 
 (defn markdown-detail-view [thing data]
   (r/with-let [_ (go (reset! data (:body (<! (http/get (:text thing))))))]
-    [:div.detail.text
-     [:div.content
-      (when @data
-        {:dangerouslySetInnerHTML
-         {:__html (util/md->html @data)}})]]))
+    [focused/view
+     [:div.detail.text {:tab-index 1}
+      [:div.content
+       (when @data
+         {:dangerouslySetInnerHTML
+          {:__html (util/md->html @data)}})]]]))
 
 (defn dispatch-view [views think thing]
   (r/with-let [player (r/cursor think [:player])

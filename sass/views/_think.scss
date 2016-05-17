@@ -97,8 +97,6 @@
         width: 100%;
         height: 100%;
         background-color: black;
-        overflow-y: scroll;
-        overflow-x: hidden;
     }
 
     .detail {
@@ -108,7 +106,6 @@
         width: 100%;
         height: 100%;
         color: white;
-
 
         &.soundcloud {
             box-sizing: border-box;
@@ -169,6 +166,11 @@
         }
 
         &.text {
+            overflow-y: scroll;
+            overflow-x: hidden;
+            background-color: black;
+            outline: none;
+
             .content {
                 @extend .linksinv;
                 margin: 60px auto;
@@ -196,4 +198,10 @@
         }
     }
 
+    .slideshow-item {
+        &.swipe-left-enter  .text { overflow-y: hidden; }
+        &.swipe-left-leave  .text { overflow-y: hidden; }
+        &.swipe-right-enter .text { overflow-y: hidden; }
+        &.swipe-right-leave .text { overflow-y: hidden; }
+    }
 }
