@@ -31,6 +31,10 @@
    :route-item (fn [slug])
    :route-back (fn [])})
 
+(def prev-svg (util/embed-svg "resources/static/pic/left.svg"))
+(def next-svg (util/embed-svg "resources/static/pic/right.svg"))
+(def close-svg (util/embed-svg "resources/static/pic/close2.svg"))
+
 (defn view [state item-view]
   (r/with-let
     [find-entry
@@ -85,12 +89,19 @@
             [item-view item]]]
 
           [:div.slideshow-controls
-           (if-let [slug (get-in @entries [(- idx 1) :slug])]
-             [:a.prev.enabled {:href (@route-item slug)}]
-             [:div.prev.disabled])
-           (if-let [slug (get-in @entries [(+ idx 1) :slug])]
-             [:a.next.enabled {:href (@route-item slug)}]
-             [:div.next.disabled])
-           [:a.close {:href (@route-back)}]]]))]
+           [:a.control.enabled
+            (if-let [slug (get-in @entries [(- idx 1) :slug])]
+              {:class "enabled"
+               :href (@route-item slug)}
+              {:class "disabled"})
+            prev-svg]
+           [:a.control.enabled
+            (if-let [slug (get-in @entries [(+ idx 1) :slug])]
+              {:class "enabled"
+               :href (@route-item slug)}
+              {:class "disabled"})
+            next-svg]
+           [:a.control.enabled {:href (@route-back)}
+            close-svg]]]))]
 
     (finally (events/unlistenByKey listener))))
