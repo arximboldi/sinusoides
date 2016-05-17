@@ -25,41 +25,48 @@
             [reagent.core :as r]
             [goog.events :as events]))
 
-(def state
-  {:source nil
+(defn state []
+  {:chan (async/chan)
+   :src nil
    :duration 0
    :current-time 0
    :progress 0
    :status nil})
 
-(defn impl-view [state command-ch]
-  (let [events (atom)
-        source (r/track #(:source @state))
-        ch     (->> (async/chan) (async/pipe command-ch))]
+(defn object [st]
+  (let [events (atom)]
     (r/create-class
       {:component-did-mount
        (fn [this]
          (let [audio (r/dom-node this)
 
+               ensure-src
+               #(when (not= % (.-src audio))
+                  (set! (.-src audio) %)
+                  (.load audio)
+                  (swap! st assoc-in [:src] (.-src audio))
+                  (swap! st assoc-in [:progress] 0))
+
                update-time
                (fn []
-                 (swap! state assoc-in [:duration] (.-duration audio))
-                 (swap! state assoc-in [:current-time] (.-currentTime audio)))
+                 (swap! st assoc-in [:duration] (.-duration audio))
+                 (swap! st assoc-in [:current-time] (.-currentTime audio)))
 
                update-progress
                (fn []
                  (when (-> audio .-buffered .-length pos?)
-                   (swap! state assoc-in [:progress] (-> audio
-                                                         .-buffered
-                                                         (.end 0)))))
+                   (swap! st assoc-in [:progress] (-> audio
+                                                      .-buffered
+                                                      (.end 0)))))
 
                update-status
                (fn [status]
                  (prn "audio player: status changed")
-                 (prn "   - source: " @source)
+                 (prn "   - source: " (:src @st))
                  (prn "   - status: " status)
-                 (swap! state assoc-in [:status] status))]
+                 (swap! st assoc-in [:status] status))]
 
+           (reset! st (state))
            (reset!
              events
              [(events/listen audio "durationchange" update-time)
@@ -73,17 +80,19 @@
               (events/listen audio "abort" #(update-status :aborted))])
 
            (go-loop []
-             (match [(<! ch)]
-                    [:play]        (do (when (let [st (:status @state)]
+             (match [(<! (:chan @st))]
+                    [:pause]       (do (.pause audio)
+                                       (recur))
+                    [[:play src]]  (do (ensure-src src)
+                                       (when (let [st (:status @st)]
                                                (or (= st :error)
                                                    (= st :aborted)))
                                          (.load audio))
                                        (.play audio)
                                        (recur))
-                    [:pause]       (do (.pause audio)
-                                       (recur))
-                    [:preload]     (do (set! (.-preload audio) true)
-                                       (recur))
+                    [[:preload src]] (do (ensure-src src)
+                                         (set! (.-preload audio) true)
+                                         (recur))
                     [[:seek time]] (do (set! (.-currentTime audio) time)
                                        (recur))
                     [nil]          nil
@@ -93,33 +102,37 @@
 
        :component-will-unmount
        (fn [this]
-         (async/close! ch)
+         (async/close! (:chan @st))
          (dorun (map events/unlistenByKey @events)))
 
        :reagent-render
        (fn []
-         [:audio {:preload "none"
-                  :src @source}])})))
+         [:audio {:preload "none"}])})))
 
-(defn view [source]
+(defn view [src st]
   (r/with-let
-    [command-ch (async/chan)
-     mouse-time (r/atom 0)
-     state      (r/atom (merge state {:source source}))
+    [mouse-time (r/atom 0)
+
+     is-src?
+     #(= (:src @st) src)
 
      is-playing
-     #(let [st (:status @state)]
-        (or (= st :play)
-            (= st :playing)))
+     #(let [status (:status @st)]
+        (and (is-src?)
+             (or (= status :play)
+                 (= status :playing))))
 
      is-started
-     #(pos? (:current-time @state))
+     #(and (is-src?)
+           (pos? (:current-time @st)))
 
      toggle-play
-     #(go (>! command-ch (if (is-playing) :pause :play)))
+     #(go (>! (:chan @st) (if (is-playing)
+                            :pause
+                            [:play src])))
 
      seek-time
-     #(go (>! command-ch [:seek @mouse-time]))
+     #(go (>! (:chan @st) [:seek @mouse-time]))
 
      update-mouse-time
      (fn [ev]
@@ -128,14 +141,14 @@
                    (- (.-left (.getBoundingClientRect (.-target ev))))
                    (- (.-clientLeft (.-target ev)))
                    (/ (.-offsetWidth (.-target ev)))
-                   (* (:duration @state))))
+                   (* (:duration @st))))
        (when (pos? (.-buttons ev))
          (seek-time)))
 
      enable-preload
-     #(go (>! command-ch :preload))]
+     #(go (>! (:chan @st) [:preload src]))]
 
-    [:div.audio-player {:class (str "state-" (clj->js (:status @state))
+    [:div.audio-player {:class (str "st-" (clj->js (:status @st))
                                     (when (is-playing) " is-playing")
                                     (when (is-started) " is-started"))}
      [:div.play-button
@@ -143,36 +156,35 @@
 
      [:div.seek-bar
       {:on-mouse-down seek-time
-       :on-mouse-over enable-preload
        :on-mouse-move update-mouse-time}
 
       (when (pos? @mouse-time)
         [:div.seek-bar-tooltip
          {:class
           (cond
-            (> @mouse-time (:progress @state)) "unbuffered"
-            (> @mouse-time (:current-time @state)) "buffered"
+            (> @mouse-time (:progress @st)) "unbuffered"
+            (> @mouse-time (:current-time @st)) "buffered"
             :else "played")
           :style {:left (-> @mouse-time
-                            (/ (:duration @state))
+                            (/ (:duration @st))
                             (* 100)
                             (str "%"))}}
          (str (quot @mouse-time 60) ":"
               (int (rem @mouse-time 60)))])
 
       [:div.seek-bar-range
-       (when (pos? (:progress @state))
+       (when (pos? (:progress @st))
          [:div.seek-bar-loaded
-          {:style {:width (-> (:progress @state)
-                              (/ (:duration @state))
+          {:style {:width (-> (if (is-src?) (:progress @st) 0)
+                              (/ (:duration @st))
                               (* 100)
+                              (min 100)
                               (str "%"))}}])
 
-       (when (pos? (:duration @state))
+       (when (pos? (:duration @st))
          [:div.seek-bar-position
-          {:style {:width (-> (:current-time @state)
-                              (/ (:duration @state))
+          {:style {:width (-> (if (is-src?) (:current-time @st) 0)
+                              (/ (:duration @st))
                               (* 100)
-                              (str "%"))}}])]]
-
-     [impl-view state command-ch]]))
+                              (min 100)
+                              (str "%"))}}])]]]))

@@ -70,7 +70,6 @@
             &.buffered { border-color: white; }
             &.unbuffered { border-color: #333; }
         }
-        &:hover .seek-bar-tooltip { opacity: 1; }
 
         .seek-bar-range {
             bottom: 0;
@@ -96,5 +95,6 @@
     }
 
     &.is-started .seek-bar .seek-bar-range { height: 5px; }
-    .seek-bar:hover .seek-bar-range {  height: 20px; }
+    &.is-started .seek-bar:hover .seek-bar-range { height: 20px; }
+    &.is-started .seek-bar:hover .seek-bar-tooltip { opacity: 1; }
 }

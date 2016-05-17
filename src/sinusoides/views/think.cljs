@@ -31,12 +31,13 @@
             [goog.events :as events]))
 
 (def state
-  {:entries []
+  {:player nil
+   :entries []
    :data {}})
 
 (def thumnail-views
   {"soundcloud"
-   (fn [thing data]
+   (fn [thing data player]
      (r/with-let
        [client-id     "485230fd2a6e151244a57a584f904070"
         add-client-id #(str % "?client_id=" client-id)
@@ -58,7 +59,7 @@
                audio-src  (add-client-id (:stream_url @data))]
            [:div.thingy.soundcloud
             {:style {:background-image (str "url(" background ")")}}
-            [audio-player/view audio-src]])
+            [audio-player/view audio-src player]])
          [:div.thingy.soundcloud])))
 
    "markdown"
@@ -67,8 +68,9 @@
       (:title thing)])})
 
 (defn thumbnail-view [think thing]
-  (r/with-let [data (r/cursor think [:data (:slug thing)])]
-    [(get thumnail-views (:type thing)) thing data]))
+  (r/with-let [player (r/cursor think [:player])
+               data (r/cursor think [:data (:slug thing)])]
+    [(get thumnail-views (:type thing)) thing data player]))
 
 (def detail-views
   {"soundcloud"
@@ -102,11 +104,15 @@
           :route-back #(routes/think)
           :curr (match-get @view [:think id])
           :last (match-get @last [:think id])
-          :entries (:entries @think)}))]
+          :entries (:entries @think)}))
+
+     player (r/cursor think [:player])]
+
     [:div#think-page.page
      [:div#title (sinusoid/hovered sin) "Think."]
      [:div#stuff
       (for [thing (:entries @think)]
         ^{:key (:slug thing)}
         [thumbnail-view think thing])]
+     [audio-player/object player]
      [slideshow/view slideshow #(detail-view think %)]]))
