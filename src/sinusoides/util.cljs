@@ -20,10 +20,10 @@
   (:require-macros [sinusoides.util]
                    [cljs.core.async.macros :refer [go]])
   (:require [cljs.core.async :as async :refer [>!]]
-            [cljsjs.showdown]
             [clojure.string :as str]
             [goog.events :as events]
-            [fontfaceobserver :as fonts]))
+            [showdown]
+            [fontfaceobserver]))
 
 (defn load-all [fn things]
   (async/into [] (async/merge (map fn things))))
@@ -58,8 +58,8 @@
      port)))
 
 (defn md->html [str]
-  (let [Converter (.-converter js/Showdown)
-        converter (Converter.)]
+  (let [converter (js/showdown.Converter.
+                    #js{"simplifiedAutoLink" true})]
     (.makeHtml converter (str/replace str "--" "—"))))
 
 (defn trace [obj & more]

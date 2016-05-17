@@ -5,7 +5,6 @@
   :dependencies [[clj-tagsoup "0.3.0"]
                  [cljs-http "0.1.40"]
                  [cljsjs/react-with-addons "0.14.3-0"]
-                 [cljsjs/showdown "0.4.0-1"]
                  [com.andrewmcveigh/cljs-time "0.4.0"]
                  [com.cemerick/piggieback "0.2.1"]
                  [kibu/pushy "0.3.6"]
