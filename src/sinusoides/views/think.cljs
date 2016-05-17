@@ -36,6 +36,8 @@
    :entries []
    :data {}})
 
+(def open-svg (util/embed-svg "resources/static/pic/open.svg"))
+
 (defn soundcloud-player-view [thing data player & children]
   (r/with-let
     [client-id     "485230fd2a6e151244a57a584f904070"
@@ -66,7 +68,9 @@
 
 (defn soundcloud-thumbnail-view [thing data player]
   [:div.thingy.soundcloud
-   [soundcloud-player-view thing data player]])
+   [soundcloud-player-view thing data player
+    [:a.control.open {:href (routes/think- {:id (:slug thing)})}
+     open-svg]]])
 
 (defn markdown-thumbnail-view [thing]
   [:a.thingy.text {:href (routes/think- {:id (:slug thing)})}

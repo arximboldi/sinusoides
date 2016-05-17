@@ -112,6 +112,16 @@ a:focus {
     &:hover { color: red; }
 }
 
+.control {
+    fill: white;
+    transition: fill 300ms ease-in-out;
+    &:hover { fill: red; }
+    &.disabled {
+        opacity: 0.25;
+        &:hover { fill: white; }
+    }
+}
+
 .clear {
     width: 100%;
     clear: both !important;
