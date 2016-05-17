@@ -72,7 +72,8 @@
              [transition z-idx]
              (cond
                (< idx last-idx) ["swipe-left"  (- (count @entries) idx)]
-               (> idx last-idx) ["swipe-right" idx])]
+               (> idx last-idx) ["swipe-right" idx]
+               true ["swipe" idx])]
 
          ^{:key :slideshow}
          [:div.slideshow
