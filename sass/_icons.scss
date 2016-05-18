@@ -1,0 +1,199 @@
+
+.icon {
+    overflow: hidden;
+    position: relative;
+    width: 32px;
+    height: 32px;
+    .segment {
+        position: absolute;
+        background-color: white;
+        transition: background-color 0.3s ease;
+    }
+    &.animatable:hover .segment { background-color: red; }
+}
+
+$segsize: 100.0% / 9.0;
+$segdur: 0.3s;
+$segease: linear;
+
+.icon-pic {
+    @extend .icon;
+    .segment {
+        &:nth-child(1) {
+            width: 100%;
+            height: $segsize;
+        }
+        &:nth-child(2) {
+            height: 100%;
+            width: $segsize;
+            right: 0;
+        }
+        &:nth-child(3) {
+            width: 100%;
+            height: $segsize;
+            bottom: 0;
+        }
+        &:nth-child(4) {
+            height: 100%;
+            width: $segsize;
+        }
+        &:nth-child(5) {
+            height: 110%;
+            width: $segsize;
+            transform-origin: 50% 50%;
+            transform: translateX(300%) rotate(80deg);
+        }
+    }
+    &.animatable:hover {
+        .segment {
+            &:nth-child(5) {
+                @keyframes icon-pic-5a {
+                    from { transform: translateX(300%) rotate(80deg); }
+                    to   { transform: translateX(300%) rotate(70deg); }
+                }
+                animation: icon-pic-5a $segdur 2 alternate $segease;
+            }
+        }
+    }
+}
+
+.icon-text {
+    @extend .icon;
+    .segment {
+        height: $segsize;
+        width: 100%;
+        transform-origin: 0 0;
+        &:nth-child(1) {
+            width: 80%;
+            top: $segsize * 0;
+        }
+        &:nth-child(2) {
+            width: 100%;
+            top: $segsize * 2;
+        }
+        &:nth-child(3) {
+            width: 70%;
+            top: $segsize * 4;
+        }
+        &:nth-child(4) {
+            width: 90%;
+            top: $segsize * 6;
+        }
+        &:nth-child(5) {
+            width: 30%;
+            top: $segsize * 8;
+        }
+    }
+
+    &.animatable:hover {
+        .segment {
+            &:nth-child(1) {
+                @keyframes icon-text-1a {
+                    from { transform: scale(1, 1); }
+                    to   { transform: scale(1.2, 1); }
+                }
+                animation: icon-text-1a $segdur 2 alternate $segease;
+            }
+            &:nth-child(2) {
+                @keyframes icon-text-2a {
+                    from { transform: scale(1, 1); }
+                    to   { transform: scale(0.8, 1); }
+                }
+                animation: icon-text-2a $segdur 2 alternate $segease;
+            }
+            &:nth-child(3) {
+                @keyframes icon-text-3a {
+                    from { transform: scale(1, 1); }
+                    to   { transform: scale(1.3, 1); }
+                }
+                animation: icon-text-3a $segdur 2 alternate $segease;
+            }
+            &:nth-child(4) {
+                @keyframes icon-text-4a {
+                    from { transform: scale(1, 1); }
+                    to   { transform: scale(0.7, 1); }
+                }
+                animation: icon-text-4a $segdur 2 alternate $segease;
+            }
+            &:nth-child(5) {
+                @keyframes icon-text-5a {
+                    from { transform: scale(1, 1); }
+                    to   { transform: scale(2, 1); }
+                }
+                animation: icon-text-5a $segdur 2 alternate $segease;
+            }
+        }
+    }
+}
+
+.icon-sound {
+    @extend .icon;
+    .segment {
+        width: $segsize;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+        transform-origin: 50% 50%;
+        &:nth-child(1) {
+            height: 100%;
+            left: $segsize * 0;
+        }
+        &:nth-child(2) {
+            height: 70%;
+            left: $segsize * 2;
+        }
+        &:nth-child(3) {
+            height: 40%;
+            left: $segsize * 4;
+        }
+        &:nth-child(4) {
+            height: 60%;
+            left: $segsize * 6;
+        }
+        &:nth-child(5) {
+            height: 20%;
+            left: $segsize * 8;
+        }
+    }
+
+    &.animatable:hover {
+        .segment {
+            &:nth-child(1) {
+                @keyframes icon-sound-1a {
+                    from { transform: scale(1, 1); }
+                    to   { transform: scale(1, 0.8); }
+                }
+                animation: icon-sound-1a $segdur 2 alternate $segease;
+            }
+            &:nth-child(2) {
+                @keyframes icon-sound-2a {
+                    from { transform: scale(1, 1); }
+                    to   { transform: scale(1, 1.2); }
+                }
+                animation: icon-sound-2a $segdur 2 alternate $segease;
+            }
+            &:nth-child(3) {
+                @keyframes icon-sound-3a {
+                    from { transform: scale(1, 1); }
+                    to   { transform: scale(1, 1.3); }
+                }
+                animation: icon-sound-3a $segdur 2 alternate $segease;
+            }
+            &:nth-child(4) {
+                @keyframes icon-sound-4a {
+                    from { transform: scale(1, 1); }
+                    to   { transform: scale(1, 0.7); }
+                }
+                animation: icon-sound-4a $segdur 2 alternate $segease;
+            }
+            &:nth-child(5) {
+                @keyframes icon-sound-5a {
+                    from { transform: scale(1, 1); }
+                    to   { transform: scale(1, 1.1); }
+                }
+                animation: icon-sound-5a $segdur 2 alternate $segease;
+            }
+        }
+    }
+}

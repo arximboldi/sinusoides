@@ -35,6 +35,7 @@
 (def state
   {:player nil
    :entries []
+   :type nil
    :data {}})
 
 (def open-svg (util/embed-svg "resources/static/pic/open.svg"))
@@ -67,20 +68,20 @@
           children))
       [:span])))
 
-(defn soundcloud-thumbnail-view [thing data player]
-  [:div.thingy.soundcloud
+(defn sound-thumbnail-view [thing data player]
+  [:div.thingy.sound
    [soundcloud-player-view thing data player
     [:a.control.open {:href (routes/think- {:id (:slug thing)})}
      open-svg]]])
 
-(defn markdown-thumbnail-view [thing]
+(defn text-thumbnail-view [thing]
   [:a.thingy.text {:href (routes/think- {:id (:slug thing)})}
    (:title thing)])
 
-(defn soundcloud-detail-view [thing data player]
+(defn sound-detail-view [thing data player]
   (r/with-let [input-date-formatter  (time/formatter "yyyy/MM/dd hh:mm:ss Z")
                output-date-formatter (time/formatter "MMMM YYYY")]
-    [:div.detail.soundcloud
+    [:div.detail.sound
      [:div.left-side
       [soundcloud-player-view thing data player]]
 
@@ -101,7 +102,7 @@
          [:a.to-soundcloud {:href (:permalink_url @data)}
           "Go to SoundCloud"]]])]))
 
-(defn markdown-detail-view [thing data]
+(defn text-detail-view [thing data]
   (r/with-let [_ (go (reset! data (:body (<! (http/get (:text thing))))))]
     [focused/view
      [:div.detail.text {:tab-index 1}
@@ -117,15 +118,23 @@
 
 (defn view [sin think view last]
   (r/with-let
-    [thumbnail-views {"markdown"   markdown-thumbnail-view
-                      "soundcloud" soundcloud-thumbnail-view}
-     detail-views    {"markdown"   markdown-detail-view
-                      "soundcloud" soundcloud-detail-view}
+    [thumbnail-views {"text"  text-thumbnail-view
+                      "sound" sound-thumbnail-view}
+     detail-views    {"text"  text-detail-view
+                      "sound" sound-detail-view}
 
      _ (go (let [response (<! (http/get "/data/think.json"))
                  entries  (map #(assoc % :slug (util/to-slug (:title %)))
                                (:body response))]
              (swap! think assoc-in [:entries] (vec entries))))
+
+     entries
+     (r/track
+       (fn []
+         (let [{:keys [type entries]} @think]
+           (if (nil? type)
+             entries
+             (vec (filter #(= type (:type %)) entries))))))
 
      slideshow
      (r/track
@@ -134,16 +143,30 @@
           :route-back #(routes/think)
           :curr (match-get @view [:think id])
           :last (match-get @last [:think id])
-          :entries (:entries @think)}))
+          :entries @entries}))
 
      slideshow-element #(dispatch-view detail-views think %)
 
-     player (r/cursor think [:player])]
+     player (r/cursor think [:player])
+
+     icon-view
+     (fn [think type]
+       [:div.filter-button
+        {:class (when (= type (:type @think)) "enabled")
+         :on-click (fn [] (swap! think update-in [:type]
+                                 #(if (= % type) nil type)))}
+        [:div
+         {:class (str "icon-" type)}
+         (map (fn [id] ^{:key id}[:div.segment]) (range 5))]])]
 
     [:div#think-page.page
      [:div#title (sinusoid/hovered sin) "Think."]
+     [:div#filters
+      [icon-view think "sound"]
+      [icon-view think "text"]
+      (when false [icon-view think "pic"])]
      [:div#stuff
-      (for [thing (:entries @think)]
+      (for [thing @entries]
         ^{:key (:slug thing)}
         [dispatch-view thumbnail-views think thing])]
      [audio-player/object player]

@@ -1,89 +1,89 @@
 - title: La condición de la rata
-  type: markdown
+  type: text
   text: /static/think/rata.md
   date: 13-03-2015
 
 - title: Tu coño sabe a primavera
-  type: soundcloud
+  type: sound
   track: 174272069
   date: 28-10-2014
 
 - title: The Interview II
-  type: markdown
+  type: text
   text: /static/think/interview2.md
   date: 02-01-2015
 
 - title: Daisy, Daisy
-  type: markdown
+  type: text
   text: /static/think/daisy.md
   date: 09-01-2014
 
 - title: Capitalisme et Barbarie
-  type: soundcloud
+  type: sound
   track: 83707893
   date: 17-03-2013
 
 - title: El Muerto - Mundo Cobarde (Remix)
-  type: soundcloud
+  type: sound
   track: 95776615
   date: 06-06-2013
 
 - title: Esplendor Geométrico - Moscú está helado (Bootleg)
-  type: soundcloud
+  type: sound
   track: 83813485
   date: 15-03-2013
 
 - title: Nachessenjam
-  type: soundcloud
+  type: sound
   track: 81061741
   date: 27-02-2013
 
 - title: Domingo por la tarde después de la revolución
-  type: soundcloud
+  type: sound
   track: 75971046
   date: 22-01-2013
 
 - title: Del inodoro
-  type: markdown
+  type: text
   text: /static/think/inodoro.md
   date: 11-01-2013
 
 - title: Sobre el diablo
-  type: markdown
+  type: text
   text: /static/think/diablo.md
   date: 05-01-2013
 
 - title: λx.xx4
-  type: soundcloud
+  type: sound
   track: 71163085
   date: 14-12-2012
 
 - title: Vals de la procastinación
-  type: soundcloud
+  type: sound
   track: 71228250
   date: 14-12-2012
 
 - title: Prixeuropa 2012 farewell song
-  type: soundcloud
+  type: sound
   track: 65211929
   date: 29-10-2012
 
 - title: Viva Aurora
-  type: soundcloud
+  type: sound
   track: 60357604
   date: 18-09-2012
 
 - title: Fixed length
-  type: soundcloud
+  type: sound
   track: 54404625
   date: 28-07-2012
 
 - title: De Freud y otras mariconadas
-  type: markdown
+  type: text
   text: /static/think/freud.md
   date: 11-10-2011
 
 - title: Sobre mierdas y perros
-  type: markdown
+  type: text
   text: /static/think/mierda.md
   date: 11-01-2009

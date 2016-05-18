@@ -11,26 +11,37 @@
         70%  { opacity: 0; }
         to   { opacity: 1; }
     }
+    @keyframes enter-filters {
+        from { opacity: 0; }
+        60%  { opacity: 0; }
+        to   { opacity: 1; }
+    }
 
     @keyframes leave-title {
         from { transform: translateY(0px); }
         20%  { transform: translateY(200%); }
         to   { transform: translateY(200%); }
     }
-
     @keyframes leave-stuff {
         from { opacity: 1; }
         40%  { opacity: 0; }
+        to   { opacity: 0; }
+    }
+    @keyframes leave-filters {
+        from { opacity: 1; }
+        30%  { opacity: 0; }
         to   { opacity: 0; }
     }
 
     &.page-appear, &.page-enter {
         #title { animation: enter-title $page-anim-full forwards; }
         #stuff { animation: enter-stuff $page-anim-full forwards; }
+        #filters { animation: enter-filters $page-anim-full forwards; }
     }
     &.page-leave {
         #title { animation: leave-title $page-anim-full forwards; }
         #stuff { animation: leave-stuff $page-anim-full forwards; }
+        #filters { animation: enter-filters $page-anim-full forwards; }
     }
 
     #title {
@@ -49,16 +60,35 @@
         &.hovered { border-top-color: red; }
     }
 
+    #filters {
+        padding: 20px 40px;
+        .filter-button {
+            float: right;
+            cursor: pointer;
+            margin: 6px;
+            padding: 8px;
+            border: 4px solid transparent;
+            transition: border-color 0.3s ease;
+            &.enabled {
+                border-color: white;
+            }
+            &:hover {
+                &.enabled { border-color: red; }
+                .segment { background-color: red; }
+            }
+        }
+    }
+
     #stuff {
-        padding: 30px;
-        position: absolute;
-        left: 240px;
+        clear: both;
+        margin-left: 270px;
+        margin-bottom: 40px;
         color: white;
         font-size: 1.7em;
 
         .thingy {
-            box-sizing: border-box;
             position: relative;
+            box-sizing: border-box;
             float: left;
             width: 260px;
             height: 260px;
@@ -75,7 +105,7 @@
                 border-color: red;
             }
 
-            &.soundcloud {
+            &.sound {
                 padding: 0px;
                 border: 0px;
                 background-color: #333;
@@ -94,6 +124,8 @@
 
     .slideshow {
         position: fixed;
+        left: 0;
+        top: 0;
         width: 100%;
         height: 100%;
         background-color: black;
@@ -107,7 +139,7 @@
         height: 100%;
         color: white;
 
-        &.soundcloud {
+        &.sound {
             box-sizing: border-box;
             padding: 40px;
 
