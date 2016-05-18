@@ -136,21 +136,6 @@
              entries
              (vec (filter #(= type (:type %)) entries))))))
 
-     stuff-view
-     (fn [entries sizes]
-       [:div#stuff
-        (let [width (:width @sizes)
-              cols  (max 1 (js/Math.round (/ width 260)))
-              size  (/ width cols)]
-          (for [thing @entries]
-            ^{:key (:slug thing)}
-            [:div {:style {:position "relative"
-                           :width size
-                           :height size
-                           :font-size (str (/ size 260) "em")
-                           :float "left"}}
-             [dispatch-view thumbnail-views think thing]]))])
-
      slideshow
      (r/track
        (fn []
@@ -180,6 +165,12 @@
       [icon-view think "sound"]
       [icon-view think "text"]
       (when false [icon-view think "pic"])]
-     [deco/sized [stuff-view entries]]
+
+     [deco/grid {:id "stuff"
+                 :grid-size 260}
+      (for [thing @entries]
+        ^{:key (:slug thing)}
+        [dispatch-view thumbnail-views think thing])]
+
      [audio-player/object player]
      [slideshow/view slideshow slideshow-element]]))

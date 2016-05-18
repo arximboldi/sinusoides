@@ -18,7 +18,8 @@
 
 (ns sinusoides.views.decorators
   (:require-macros [cljs.core.async.macros :refer [go]])
-  (:require [reagent.core :as r]
+  (:require [sinusoides.util :as util]
+            [reagent.core :as r]
             [goog.events :as events]))
 
 (defn focused [nested]
@@ -57,3 +58,23 @@
 
        :reagent-render
        #(conj % size)})))
+
+(defn grid-impl [props children sizes]
+  (let [grid-size (:grid-size props)
+        width     (:width @sizes)
+        cols      (max 1 (js/Math.round (/ width grid-size)))
+        size      (/ width cols)
+        size-px   (str size "px")
+        font-size (str (/ size grid-size) "em")]
+    [:div props
+     (for [child children]
+       ^{:key (:key (meta child))}
+       [:div {:style {:position "relative"
+                      :width size-px
+                      :height size-px
+                      :font-size font-size
+                      :float "left"}}
+        child])]))
+
+(defn grid [props children]
+  [sized [grid-impl props children]])

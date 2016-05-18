@@ -22,6 +22,7 @@
             [sinusoides.routes :as routes]
             [sinusoides.views.sinusoid :as sinusoid]
             [sinusoides.views.slideshow :as slideshow]
+            [sinusoides.views.decorators :as deco]
             [cljs-http.client :as http]
             [cljs.core.async :refer [<! timeout]]
             [goog.events :as events]
@@ -67,14 +68,17 @@
       "Clear"])])
 
 (defn programs-view [entries]
-  [:div.programs
+  [deco/grid {:class "programs"
+              :grid-size 170}
    (for [p @entries]
-     ^{:key (:slug p)}
-     [:a {:href (routes/do- {:id (:slug p)})
-          :style {:background-image
-                  (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}}
-      [:div]
-      [:span (:name p)]])])
+     (let [background-style
+           {:background-image
+            (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}]
+       ^{:key (:slug p)}
+       [:a {:href (routes/do- {:id (:slug p)})
+            :style background-style}
+        [:div {:style background-style}]
+        [:span {:dangerouslySetInnerHTML {:__html (:name p)}}]]))])
 
 (defn view [sin do view last]
   (r/with-let

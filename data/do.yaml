@@ -201,7 +201,7 @@
     stars.
   code: https://github.com/jmdrouin/incredible-art
 
-- name: C++ Template Metaprogramming
+- name: "C++ Template Meta&shy;programming"
   lang: [C++, Haskell]
   imgs: [ meta-small.png, meta.png ]
   link:

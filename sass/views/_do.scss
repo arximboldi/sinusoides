@@ -76,6 +76,7 @@
     #stuff {
         position: absolute;
         top: 260px;
+        width: 100%;
     }
 
     .programs {
@@ -85,45 +86,52 @@
             position: relative;
             float: left;
             margin: 6px;
-            background-size: contain;
             background-color: #333;
-            width: 125px;
-            height: 125px;
+            background-size: contain;
+            width: 90%;
+            height: 90%;
             border: 0px;
             overflow: hidden;
             text-decoration: none;
             border: 4px solid black;
             transition: border-color 0.2s ease-in-out;
             div {
-                position: relative;
-                margin: 0;
-                padding: 0;
-                width: 125px;
-                height: 125px;
-                background: black;
+                background-size: contain;
+                position: absolute;
+                width: 100%;
+                height: 100%;
                 opacity: 0;
-                transition: opacity 0.4s ease-in-out;
+                @include filter(grayscale(100%));
+                transition: opacity 0.5s ease;
             }
             span {
-                position: relative;
-                top: 0px;
-                left: 0px;
+                position: absolute;
+                box-sizing: border-box;
                 display: block;
-                padding: 10px;
-                margin: 0;
+                height: 100%;
+                width: 100%;
+                padding: 10%;
                 color: red;
                 text-decoration: none;
                 text-overflow: ellipsis;
                 font-weight: bold;
-                font-size: 1.3em;
-                word-break: normal;
+                font-size: 1.2em;
+                hyphens: manual;
                 display: block;
-                transition: transform 0.2s ease-in-out;
+                opacity: 0;
+                background-color: rgba(0, 0, 0, 0.8);
+                transform: scale(2, 2);
+                transition: opacity 0.2s ease, transform 0.2s ease-in-out;
             }
             &:hover {
                 border-color: red;
-                div { opacity: 0.7; }
-                span { transform: translate(0, -120px); }
+                div {
+                    opacity: 1;
+                }
+                span {
+                    opacity: 1;
+                    transform: scale(1, 1);
+                }
             }
         }
     }

@@ -24,3 +24,11 @@ $page-anim-full: 3000ms;
 $page-anim-half: 1500ms;
 $page-anim-third: 1000ms;
 $page-anim-two-third: 1000ms;
+
+@mixin filter($thefilter) {
+    filter: $thefilter;
+    -o-filter: $thefilter;
+    -ms-filter: $thefilter;
+    -moz-filter: $thefilter;
+    -webkit-filter: $thefilter;
+}
