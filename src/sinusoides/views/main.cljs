@@ -19,7 +19,7 @@
 (ns sinusoides.views.main
   (:require [sinusoides.routes :as routes]
             [sinusoides.views.sinusoid :as sinusoid]
-            [sinusoides.views.animate :as animate]
+            [sinusoides.views.decorators :as deco]
             [clojure.string :as s]
             [reagent.core :as r]))
 
@@ -67,17 +67,17 @@
 
      [:div#main-text (sinusoid/hovered sin)
       [:div.parts
-       [animate/view transition
+       [deco/animated transition
         ^{:key (@parts 0)}
         [:div.part (@parts 0) " " [:a {:href (routes/do)} "do"]]]]
 
       [:div.parts
-       [animate/view transition
+       [deco/animated transition
         ^{:key (@parts 1)}
         [:div.part (@parts 1) " " [:a {:href (routes/think)} "think"]]]]
 
       [:div.parts
-       [animate/view transition
+       [deco/animated transition
         ^{:key (@parts 2)}
         [:div.part ((@parts 2) 0)
          " " [:a {:href (routes/am)} ((@parts 2) 1)]
@@ -85,7 +85,7 @@
 
      [:div#fingerprint.links
       [:a {:href (str "mailto:"
-                   (s/reverse "gro.ung@vokinloksar"))}
+                      (s/reverse "gro.ung@vokinloksar"))}
        "CE3E CB30 6F40 3D98 DB2E" [:br]
        "B65C 529B A962 690A 70B1"]]]
 

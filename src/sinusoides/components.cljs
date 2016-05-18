@@ -18,7 +18,7 @@
 
 (ns sinusoides.components
   (:require-macros [cljs.core.async.macros :refer [go]])
-  (:require [sinusoides.views.animate :as animate]
+  (:require [sinusoides.views.decorators :as deco]
             [sinusoides.views.am :as am]
             [sinusoides.views.do- :as do-]
             [sinusoides.views.main :as main]
@@ -55,11 +55,11 @@
      {:class (str/join " " (map #(str (name %) "-font-loaded") @fonts))}
      [sinusoid/view :sinusoid-h app sin]
      [sinusoid/view :sinusoid-v app sin]
-     [animate/view {:transition-name "page"
-                    :transition-appear true
-                    :transition-appear-timeout 3000
-                    :transition-enter-timeout 3000
-                    :transition-leave-timeout 3000}
+     [deco/animated {:transition-name "page"
+                     :transition-appear true
+                     :transition-appear-timeout 3000
+                     :transition-enter-timeout 3000
+                     :transition-leave-timeout 3000}
       (match [@view]
         [[:am]]    ^{:key :am-view}   [am/view sin am]
         [[:do _]]  ^{:key :do-view}   [do-/view sin do view last]

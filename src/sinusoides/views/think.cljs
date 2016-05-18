@@ -21,7 +21,7 @@
   (:require [sinusoides.views.audio-player :as audio-player]
             [sinusoides.views.sinusoid :as sinusoid]
             [sinusoides.views.slideshow :as slideshow]
-            [sinusoides.views.focused :as focused]
+            [sinusoides.views.decorators :as deco]
             [cljs-time.format :as time]
             [sinusoides.routes :as routes]
             [sinusoides.util :as util :refer-macros [match-get]]
@@ -104,7 +104,7 @@
 
 (defn text-detail-view [thing data]
   (r/with-let [_ (go (reset! data (:body (<! (http/get (:text thing))))))]
-    [focused/view
+    [deco/focused
      [:div.detail.text {:tab-index 1}
       [:div.content
        (when @data

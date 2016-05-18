@@ -16,9 +16,15 @@
 ;; License along with Sinusoid.es.  If not, see
 ;; <http://www.gnu.org/licenses/>.
 
-(ns sinusoides.views.animate
+(ns sinusoides.views.decorators
+  (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [reagent.core :as r]))
 
-(def view
+(defn focused [nested]
+  (r/create-class
+    {:component-did-mount #(.focus (r/dom-node %))
+     :reagent-render      identity}))
+
+(def animated
   (r/adapt-react-class
     js/React.addons.CSSTransitionGroup))
