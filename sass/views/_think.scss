@@ -61,9 +61,10 @@
     }
 
     #filters {
-        padding: 20px 40px;
+        margin: 20px 34px 6px 0;
+        float: right;
         .filter-button {
-            float: right;
+            display: inline-block;
             cursor: pointer;
             margin: 6px;
             padding: 8px;
@@ -82,19 +83,19 @@
     #stuff {
         clear: both;
         margin-left: 270px;
+        margin-right: 40px;
         margin-bottom: 40px;
         color: white;
         font-size: 1.7em;
 
         .thingy {
-            position: relative;
+            position: absolute;
             box-sizing: border-box;
-            float: left;
-            width: 260px;
-            height: 260px;
+            width: 90%;
+            height: 90%;
+            right: 0;
             border: 4px solid white;
-            padding: 20px;
-            margin: 10px;
+            padding: 8%;
             transition: border-color 0.5s ease-in-out,
             /**/        color 0.5s ease-in-out;
             text-decoration: none;

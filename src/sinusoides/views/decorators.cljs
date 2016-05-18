@@ -18,7 +18,8 @@
 
 (ns sinusoides.views.decorators
   (:require-macros [cljs.core.async.macros :refer [go]])
-  (:require [reagent.core :as r]))
+  (:require [reagent.core :as r]
+            [goog.events :as events]))
 
 (defn focused [nested]
   (r/create-class
@@ -28,3 +29,31 @@
 (def animated
   (r/adapt-react-class
     js/React.addons.CSSTransitionGroup))
+
+(defn sized [nested]
+  (let [size
+        (r/atom {:width 0 :height 0})
+
+        update-size
+        (fn [this]
+          (let [node (r/dom-node this)]
+            (reset! size {:width  (.-offsetWidth node)
+                          :height (.-offsetHeight node)})))]
+
+    (r/create-class
+      {:component-will-mount
+       (fn [this]
+         (r/set-state
+           this
+           {:listener
+            (events/listen js/window "resize"
+                           #(update-size this))}))
+
+       :component-did-mount
+       update-size
+
+       :component-will-unmount
+       #(events/unlistenByKey (:listener (r/state %)))
+
+       :reagent-render
+       #(conj % size)})))
