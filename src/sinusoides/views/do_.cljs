@@ -122,19 +122,7 @@
 
     [:div#do-page.page
      [:div#presentation.links (sinusoid/hovered sin)
-      [:div.title "Do."]
-      [:div.intro
-       [:a {:href (routes/am)} "Being"]
-       " is doing. One thing that I do a lot is building and talking
-         about software. Most of it is "
-       [:a {:href "http://www.gnu.org/philosophy/free-sw.html"}
-        "libre software"]
-       ". Libre software is a nice "
-       [:a {:href (routes/think)} "thought"],
-       " that blurs the boundaries between consumers and producers of
-     software."
-       [:em " Blah blah."]
-       "You can taste a selection of my doing here."]]
+      [:div.title "Do."]]
 
      [:div#stuff
       [languages-view do]
