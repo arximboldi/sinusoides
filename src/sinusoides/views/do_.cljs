@@ -31,7 +31,9 @@
 (def state
   {:entries []
    :languages []
-   :filter {:languages #{}}})
+   :tags []
+   :filter {:languages #{}
+            :tags #{}}})
 
 (defn detail-view [item]
   [:div.do-detail.links
@@ -49,24 +51,46 @@
        ^{:key link}
        [:a.link {:href (:href link)} (:name link)])]]])
 
-(defn languages-view [do]
-  [:div#language-links
-   [:a.cv {:href "/static/files/resume-en.pdf"} "Résumé"]
-   (doall
-     (for [lang (:languages @do)]
-       ^{:key lang}
+(defn filters-view [do]
+  (r/with-let
+    [aliases {"CoffeeScript" "Coffee"}
+
+     clear-filters
+     (fn []
+       (swap! do assoc-in [:filter] {:languages #{}
+                                     :tags #{}}))
+     toggle-filter
+     (fn [type name]
+       (swap! do update-in [:filter type]
+              #(util/togglej % name)))
+
+     filter-view
+     (fn [type name]
        [:div.filter
-        {:class (if (contains? (get-in @do [:filter :languages]) lang)
-                  "on"
-                  "off")
-         :on-click
-         (fn [] (swap! do update-in [:filter :languages]
-                       #(util/togglej % lang)))}
-        lang]))
-   (when-not (empty? (get-in @do [:filter :languages]))
-     [:div.filter.clearf
-      {:on-click (fn [] (swap! do assoc-in [:filter :languages] #{}))}
-      "Clear"])])
+        {:class (if (contains? (get-in @do [:filter type]) name)
+                  "on" "off")
+         :on-click #(toggle-filter type name)}
+        (or (get aliases name) name)])]
+
+    [:div.filters
+     [:div.filter-group
+      [:div.header "//"]
+      [:a.cv {:href "/static/files/resume-en.pdf"} "Résumé"]
+      (when-not (= (get-in @do [:filter]) {:languages #{}
+                                           :tags #{}})
+        [:div.filter.clearf {:on-click clear-filters} "Clear"])]
+
+     [:div.filter-group
+      [:div.header "//"]
+      (for [tag (:tags @do)]
+        ^{:key tag}
+        [filter-view :tags tag])]
+
+     [:div.filter-group
+      [:div.header "//"]
+      (for [lang (:languages @do)]
+        ^{:key lang}
+        [filter-view :languages lang])]]))
 
 (defn programs-view [entries]
   [deco/grid {:class "programs"
@@ -84,20 +108,20 @@
 
 (defn view [sin do view last]
   (r/with-let
-    [get-langs
-     (fn [p]
-       (let [lang (:lang p)]
-         (if (vector? lang)
-           lang
-           [lang])))
+    [as-vec    #(if (vector? %) % [%])
+     get-langs #(as-vec (:lang %))
+     get-tags  #(as-vec (:tags %))
 
      _
      (go (let [entries   (map #(assoc % :slug (util/to-slug (:name %)))
                               (:body  (<! (http/get "/data/do.json"))))
                languages (apply sorted-set
-                                (filter identity (mapcat get-langs entries)))]
+                                (filter identity (mapcat get-langs entries)))
+               tags      (apply sorted-set
+                                (filter identity (mapcat get-tags entries)))]
            (swap! do assoc-in [:entries] entries)
-           (swap! do assoc-in [:languages] languages)))
+           (swap! do assoc-in [:languages] languages)
+           (swap! do assoc-in [:tags] tags)))
 
      contain-any?
      (fn [set v]
@@ -106,10 +130,15 @@
      entries
      (r/track
        (fn []
-         (let [lang-filters (get-in @do [:filter :languages])]
-           (vec (filter #(or (empty? lang-filters)
-                             (contain-any? lang-filters
-                                           (get-langs %)))
+         (let [lang-filters (get-in @do [:filter :languages])
+               tags-filters (get-in @do [:filter :tags])]
+           (vec (filter #(and
+                           (or (empty? tags-filters)
+                               (contain-any? tags-filters
+                                             (get-tags %)))
+                           (or (empty? lang-filters)
+                               (contain-any? lang-filters
+                                             (get-langs %))))
                         (:entries @do))))))
 
      slideshow
@@ -126,7 +155,7 @@
       [:div.title "Do."]]
 
      [:div#stuff
-      [languages-view do]
+      [filters-view do]
       [programs-view entries]]
 
      [slideshow/view slideshow detail-view]]))
