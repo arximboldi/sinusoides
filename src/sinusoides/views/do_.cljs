@@ -41,7 +41,8 @@
                      (str "url(/static/screens/" ((:imgs item) 1) ")")}}]]
    [:div.right-side
     [:div.content
-     [:div.header (:name item)]
+     [:div.header {:dangerouslySetInnerHTML
+                   {:__html (:name item)}}]
      [:div.desc {:dangerouslySetInnerHTML
                  {:__html (util/md->html (:desc item))}}]
      (for [link (:link item)]

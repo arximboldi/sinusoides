@@ -60,9 +60,9 @@
   desc: |
     I presented the work on [Atria](/do/atria) at
     [CppCon](http://cppcon.org/) in 2015.  The session describes the
-    transducers module and its implementation, which is somewhat
-    surprisingly, less stateful than the Clojure counterpart and very
-    performant.
+    transducers module and its implementation wich, somewhat
+    surprisingly, is very performant and less stateful than the
+    Clojure counterpart.
 
 - name: Atria
   lang: C++
@@ -84,7 +84,7 @@
       href: http://www.github.com/ableton/aqt-cassowary
   imgs: [ cassowary-small.png, cassowary.png ]
   desc: |
-    Developed at Ableton in 2015, this is plugin brings the power of
+    Developed at Ableton in 2015, this plugin brings the power of
     the [Cassowary constraint solver](http://overconstrained.io/) to
     QML, the Qt based JavaScript superset for declarative user
     interfaces.
@@ -113,9 +113,10 @@
       href: /talks/moderncpp
   desc: |
     I did this talk on modern C++ both in an *Ableton Dev Salon* and a
-    [Berlin C++ Meetup](http://www.meetup.com/berlincplusplus/) between 2014 and 15.  It
-    discusses value semantics and non-intrusive polymorphism through a
-    provocative fable, and introduces the [Atria](/do/atria) library.
+    [Berlin C++ Meetup](http://www.meetup.com/berlincplusplus/)
+    between 2014 and 2015.  Through a provocative fable, it discusses
+    value semantics and non-intrusive polymorphism and introduces the
+    [Atria](/do/atria) library.
 
 - name: Mixco
   lang: [CoffeeScript, JavaScript]
@@ -283,8 +284,8 @@
   desc: |
     A framework for the development of modular, interactive and
     collaborative synthesisers targeted at live music performance. It
-    won the Spanish Inter-University Free Software contest in
-    2008. Written in 2007 onwards.
+    won the Spanish Inter-University Free Software contest in 2008.
+    Written in 2007 onwards.
 
 - name: Mixxx
   lang: [C++, JavaScript]
@@ -295,7 +296,7 @@
   desc: |
     Mixxx is a professional DJ software. I am mostly a user, but since
     2010 I have made a couple of patches and maintain the
-    **JavaScript** MIDI mapping for the [M-Audio Xponent
+    JavaScript MIDI mapping for the [M-Audio Xponent
     controller](http://www.mixxx.org/wiki/doku.php/m-audio_xponent).
 
 - name: HCrypt
@@ -533,7 +534,7 @@
     - name: Source (tar.gz)
       href: /static/soft/plisc-0.1.2.tar.gz
   desc: |
-    Compiler of my own languge with C-like semantics but maybe
+    Compiler of my own language with C-like semantics but maybe
     shorter syntax. Written in 2007 as part of a course in
     computer organisation in the University of Granada.
 
@@ -568,7 +569,7 @@
       href: /static/soft/harmonic-03.01.2008.tar.gz
   imgs: [ harmonic-small.png, harmonic.png ]
   desc: |
-    A clone of the [http://www.last.fm](Last.fm) site. It uses
+    A clone of the [Last.fm](http://www.last.fm) site. It uses
     servlets and its own dispatching and DOM manipulation
     framework. The application itself was never fully finished.
 

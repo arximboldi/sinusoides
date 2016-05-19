@@ -265,7 +265,7 @@
                 display: inline-block;
                 background: white;
                 margin: -2% -2% 0 0;
-                padding: 10px;
+                padding: 10px 20px;
                 text-transform: uppercase;
                 text-align: right;
                 font-size: 2em;
@@ -277,13 +277,13 @@
                     color: white;
                     &:hover { color: red; }
                 }
-                color: #999999;
-                font-size: 1.5em;
+                color: #aaa;
+                font-size: 1.4em;
+                line-height: 1.4em;
                 float: right;
                 width: 100%;
                 padding: 20px 0 0 0;
                 box-sizing: border-box;
-                line-height: 1.25em;
             }
 
             a.link {
@@ -293,7 +293,7 @@
                 margin-bottom: 10px;
                 display: block;
                 float: left;
-                padding: 10px;
+                padding: 10px 14px;
                 font-weight: bold;
                 transition: border 0.2s ease-in-out,
                 /**/        background 0.2s ease-in-out,
