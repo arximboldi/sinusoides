@@ -60,21 +60,29 @@
        #(conj % size)})))
 
 (defn grid-impl [props children sizes]
-  (let [grid-size (:grid-size props)
-        width     (:width @sizes)
-        cols      (max 1 (js/Math.round (/ width grid-size)))
-        size      (/ width cols)
-        size-px   (str size "px")
-        font-size (str (/ size grid-size) "em")]
-    [:div props
-     (for [child children]
-       ^{:key (:key (meta child))}
-       [:div {:style {:position "relative"
-                      :width size-px
-                      :height size-px
-                      :font-size font-size
-                      :float "left"}}
-        child])]))
+  (let [grid-size   (:grid-size props)
+        grid-margin (:grid-margin props)
+        width       (:width @sizes)
+        cols        (max 1 (js/Math.round (/ width grid-size)))
+        ratio       (/ grid-margin grid-size)
+        size        (/ width (+ cols (* ratio (- cols 1))))
+        margin-px   (str (* ratio size) "px")
+        size-px     (str size "px")
+        font-size   (str (/ size grid-size) "em")
+        grid-item
+        (fn [idx child]
+          ^{:key (:key (meta child))}
+          [:div.grid-item
+           {:style {:position "relative"
+                    :float "left"
+                    :width size-px
+                    :height size-px
+                    :font-size font-size
+                    :margin-left (when (< 0 (rem idx cols)) margin-px)
+                    :margin-top  (when (< 0 (quot idx cols)) margin-px)}}
+           child])]
+    [:div.grid props
+     (map-indexed grid-item children)]))
 
 (defn grid [props children]
   [sized [grid-impl props children]])

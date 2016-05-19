@@ -81,6 +81,7 @@
     }
 
     #stuff {
+        @extend .clearfix;
         clear: both;
         margin-left: 270px;
         margin-right: 40px;
@@ -91,8 +92,8 @@
         .thingy {
             position: absolute;
             box-sizing: border-box;
-            width: 90%;
-            height: 90%;
+            width: 100%;
+            height: 100%;
             right: 0;
             border: 4px solid white;
             padding: 8%;

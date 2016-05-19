@@ -32,3 +32,9 @@ $page-anim-two-third: 1000ms;
     -moz-filter: $thefilter;
     -webkit-filter: $thefilter;
 }
+
+.clearfix::after {
+    content:"";
+    display:block;
+    clear:both;
+}

@@ -80,16 +80,17 @@
     }
 
     .programs {
-        margin: -10px 30px 0 30px;
+        margin: 0px 36px 0 36px;
+        @extend .clearfix;
         a {
             display: block;
+            box-sizing: border-box;
             position: relative;
             float: left;
-            margin: 6px;
             background-color: #333;
             background-size: contain;
-            width: 90%;
-            height: 90%;
+            width: 100%;
+            height: 100%;
             border: 0px;
             overflow: hidden;
             text-decoration: none;
@@ -137,7 +138,7 @@
     }
 
     #language-links {
-        margin: 40px 0 30px 40px;
+        margin: 40px 0 20px 40px;
         a, .filter {
             cursor: pointer;
             display: inline-block;
