@@ -101,14 +101,19 @@
 
     #profiles {
         position: absolute;
-        width: 70%;
+        width: 100%;
         top: 0;
         display: block;
-        padding: 1.875em 0 0 0;
+        padding-right: 1.875em;
 
         @include respond-to(mobile) {
-            padding: 0;
-            width: 100%;
+            padding-right: 0;
+        }
+        @include respond-to(landscape) {
+            width: 70%;
+            @include respond-to(mobile) {
+                width: 80%;
+            }
         }
 
         a {
