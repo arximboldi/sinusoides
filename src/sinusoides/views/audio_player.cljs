@@ -25,8 +25,8 @@
             [reagent.core :as r]
             [goog.events :as events]))
 
-(defn state []
-  {:chan (async/chan)
+(defn state [command]
+  {:command command
    :src nil
    :duration 0
    :current-time 0
@@ -64,9 +64,25 @@
                  (prn "audio player: status changed")
                  (prn "   - source: " (:src @st))
                  (prn "   - status: " status)
-                 (swap! st assoc-in [:status] status))]
+                 (swap! st assoc-in [:status] status))
 
-           (reset! st (state))
+               command-handler
+               (fn [command]
+                 (match [command]
+                    [:pause]         (do (.pause audio))
+                    [[:play src]]    (do (ensure-src src)
+                                         (when (let [st (:status @st)]
+                                                 (or (= st :error)
+                                                     (= st :aborted)))
+                                           (.load audio))
+                                         (.play audio))
+                    [[:preload src]] (do (ensure-src src)
+                                         (set! (.-preload audio) true))
+                    [[:seek time]]   (do (set! (.-currentTime audio) time))
+                    [bad-command]    (do (prn "audio player: bad command, "
+                                              bad-command))))]
+
+           (reset! st (state command-handler))
            (reset!
              events
              [(events/listen audio "durationchange" update-time)
@@ -77,32 +93,10 @@
               (events/listen audio "pause" #(update-status :paused))
               (events/listen audio "ended" #(update-status :ended))
               (events/listen audio "error" #(update-status :error))
-              (events/listen audio "abort" #(update-status :aborted))])
-
-           (go-loop []
-             (match [(<! (:chan @st))]
-                    [:pause]       (do (.pause audio)
-                                       (recur))
-                    [[:play src]]  (do (ensure-src src)
-                                       (when (let [st (:status @st)]
-                                               (or (= st :error)
-                                                   (= st :aborted)))
-                                         (.load audio))
-                                       (.play audio)
-                                       (recur))
-                    [[:preload src]] (do (ensure-src src)
-                                         (set! (.-preload audio) true)
-                                         (recur))
-                    [[:seek time]] (do (set! (.-currentTime audio) time)
-                                       (recur))
-                    [nil]          nil
-                    [bad-command]  (do (prn "audio player: bad command, "
-                                            bad-command)
-                                       (recur))))))
+              (events/listen audio "abort" #(update-status :aborted))])))
 
        :component-will-unmount
        (fn [this]
-         (async/close! (:chan @st))
          (dorun (map events/unlistenByKey @events)))
 
        :reagent-render
@@ -127,12 +121,12 @@
            (pos? (:current-time @st)))
 
      toggle-play
-     #(go (>! (:chan @st) (if (is-playing)
-                            :pause
-                            [:play src])))
+     #((:command @st) (if (is-playing)
+                        :pause
+                        [:play src]))
 
      seek-time
-     #(go (>! (:chan @st) [:seek @mouse-time]))
+     #((:command @st) [:seek @mouse-time])
 
      update-mouse-time
      (fn [ev]
@@ -146,7 +140,7 @@
          (seek-time)))
 
      enable-preload
-     #(go (>! (:chan @st) [:preload src]))]
+     #((:command @st) [:preload src])]
 
     (into
       [:div.audio-player (r/merge-props
