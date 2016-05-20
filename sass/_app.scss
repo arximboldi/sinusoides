@@ -7,6 +7,34 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
+
+    &.respond-to-tester::after {
+        color: black;
+        content: "";
+        position: fixed;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        background-color: grey;
+        color: white;
+        font-weight: bold;
+        font-family: $mono-font;
+        font-size: 2em;
+        @include respond-to(mobile) {
+            background-color: red;
+            content: "mobile";
+        }
+        @include respond-to(laptop) {
+            background-color: blue;
+            content: "laptop";
+        }
+        @include respond-to(desktop) {
+            background-color: green;
+            content: "desktop";
+        }
+    }
 }
 
 $loading-size: 31px;
