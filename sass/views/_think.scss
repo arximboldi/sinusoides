@@ -164,6 +164,14 @@
                 top: 0;
                 bottom: 0;
                 margin: auto 1.25em;
+
+                @include respond-to(portrait) {
+                    width: 80vw;
+                    height: 80vw;
+                    left: 10vw;
+                    top: 10vw;
+                    margin: 0;
+                }
             }
 
             .right-side {
@@ -177,11 +185,27 @@
                 margin: auto 0;
                 padding: 0 1.25em;
 
+                @include respond-to(portrait) {
+                    width: 80vw;
+                    height: auto;
+                    left: 10vw;
+                    top: 96vw;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                @include respond-to(mobile) {
+                    font-size: 0.94em;
+                }
+
                 .title {
                     font-size: 2em;
                     margin: 0 -2% 1em 0;
                     text-transform: uppercase;
                     font-weight: bold;
+                    @include respond-to(mobile) {
+                        font-size: 1.5em;
+                    }
                 }
 
                 .desc, .date {
@@ -193,6 +217,12 @@
                 .footer {
                     position: absolute;
                     bottom: 0;
+
+                    @include respond-to(portrait) {
+                        position: static;
+                        margin-top: 2em;
+                    }
+
                 }
 
                 .tags {
