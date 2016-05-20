@@ -26,8 +26,12 @@
      x#))
 
 (defmacro embed-svg [svg-file]
-  (let [hiccup (tagsoup/parse-string (slurp svg-file))]
-    `~hiccup))
+  (let [svg (tagsoup/parse-string (slurp svg-file))
+        fix (let [viewbox (:viewbox (svg 1))]
+              (if (nil? viewbox)
+                svg
+                (assoc-in svg [1 :viewBox] viewbox)))]
+    `~fix))
 
 ;; from clojure.core.incubator
 (defn seqable? [x]
