@@ -223,20 +223,20 @@
             }
 
             @keyframes enter-right {
-                from { transform: translateX(50vw); }
+                from { transform: translateX(100%); }
                 to   { transform: translateX(0); }
             }
             @keyframes enter-left {
-                from { transform: translateX(-50vw); }
+                from { transform: translateX(-100%); }
                 to   { transform: translateX(0); }
             }
             @keyframes leave-left {
                 from { transform: translateX(0); }
-                to   { transform: translateX(-50vw); }
+                to   { transform: translateX(-100%); }
             }
             @keyframes leave-right {
                 from { transform: translateX(0); }
-                to   { transform: translateX(50vw); }
+                to   { transform: translateX(100%); }
             }
             @keyframes leave-fade {
                 from { opacity: 1; }
@@ -260,18 +260,30 @@
 
             .left-side {
                 overflow: hidden;
-                position: absolute;
+                position: fixed;
                 left: 0;
                 width: 50%;
                 height: 100%;
+
+                @include respond-to(portrait) {
+                    position: absolute;
+                    width: 100vw;
+                    height: 61.80vw;
+                }
             }
 
             .right-side {
-                overflow: hidden;
                 position: absolute;
                 right: 0;
                 width: 50%;
                 height: 100%;
+
+                @include respond-to(portrait) {
+                    top: 0;
+                    left: 0;
+                    width: 100vw;
+                    height: 100%;
+                }
             }
 
             .img {
@@ -291,6 +303,16 @@
                 padding: 16%;
                 box-sizing: border-box;
                 background-color: black;
+
+                @include respond-to(mobile) {
+                    padding: 12%;
+                    @include respond-to(landscape) {
+                        font-size: 0.9em;
+                    }
+                }
+                @include respond-to(portrait) {
+                    background-color: transparent;
+                }
             }
 
             .header {
@@ -303,6 +325,13 @@
                 text-align: right;
                 font-size: 2em;
                 font-weight: bold;
+
+                @include respond-to(portrait) {
+                    position: absolute;
+                    right: 0;
+                    bottom: calc(100vh - 61.80vw);
+                    margin-bottom: 1em;
+                }
             }
 
             .desc {
@@ -314,14 +343,27 @@
                 font-size: 1.4em;
                 line-height: 1.4em;
                 float: right;
-                width: 100%;
                 padding: 1.25rem 0 0 0;
                 box-sizing: border-box;
+
+                @include respond-to(portrait) {
+                    position: absolute;
+                    top: 61.80vw;
+                    bottom: 0;
+                    left: 0;
+                    padding: 16%;
+                    background-color: black;
+                    opacity: 1;
+                    @include respond-to(mobile) {
+                        padding: 12%;
+                    }
+                }
             }
 
             a.link {
                 color: white;
                 border: 2px solid white;
+                font-size: 1rem;
                 margin-right: 0.7em;
                 margin-bottom: 0.7em;
                 display: block;

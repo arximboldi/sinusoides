@@ -239,8 +239,6 @@
         }
 
         &.text {
-            overflow-y: scroll;
-            overflow-x: hidden;
             background-color: black;
             outline: none;
 
@@ -272,9 +270,5 @@
     }
 
     .slideshow-item {
-        &.swipe-left-enter  .text { overflow-y: hidden; }
-        &.swipe-left-leave  .text { overflow-y: hidden; }
-        &.swipe-right-enter .text { overflow-y: hidden; }
-        &.swipe-right-leave .text { overflow-y: hidden; }
     }
 }

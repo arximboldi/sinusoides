@@ -104,12 +104,11 @@
 
 (defn text-detail-view [thing data]
   (r/with-let [_ (go (reset! data (:body (<! (http/get (:text thing))))))]
-    [deco/focused
-     [:div.detail.text {:tab-index 1}
-      [:div.content
-       (when @data
-         {:dangerouslySetInnerHTML
-          {:__html (util/md->html @data)}})]]]))
+    [:div.detail.text
+     [:div.content
+      (when @data
+        {:dangerouslySetInnerHTML
+         {:__html (util/md->html @data)}})]]))
 
 (defn dispatch-view [views think thing]
   (r/with-let [player (r/cursor think [:player])

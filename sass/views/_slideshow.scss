@@ -43,10 +43,18 @@
         position: absolute;
         width: 100%;
         height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        outline: none;
+
         &.swipe-left-enter  { animation: slideshow-enter-left 500ms forwards; }
         &.swipe-left-leave  { animation: slideshow-leave-fade 500ms forwards; }
         &.swipe-right-enter { animation: slideshow-enter-right 500ms forwards; }
         &.swipe-right-leave { animation: slideshow-leave-fade 500ms forwards; }
+        &.swipe-left-enter,
+        &.swipe-left-leave,
+        &.swipe-right-enter,
+        &.swipe-right-leave { overflow-y: hidden; }
     }
 
     .slideshow-controls {

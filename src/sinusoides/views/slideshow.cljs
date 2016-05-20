@@ -85,23 +85,18 @@
                           :transition-enter-timeout 500
                           :transition-leave-timeout 500}
            ^{:key idx}
-           [:div.slideshow-item {:style {:z-index z-idx}}
-            [item-view item]]]
+           [deco/focused
+            [:div.slideshow-item {:style {:z-index z-idx}
+                                  :tab-index 1}
+             [item-view item]]]]
 
           [:div.slideshow-controls
-           [:a.control.enabled
-            (if-let [slug (get-in @entries [(- idx 1) :slug])]
-              {:class "enabled"
-               :href (@route-item slug)}
-              {:class "disabled"})
-            prev-svg]
-           [:a.control.enabled
-            (if-let [slug (get-in @entries [(+ idx 1) :slug])]
-              {:class "enabled"
-               :href (@route-item slug)}
-              {:class "disabled"})
-            next-svg]
-           [:a.control.enabled {:href (@route-back)}
-            close-svg]]]))]
+           (if-let [slug (get-in @entries [(- idx 1) :slug])]
+             [:a.control.enabled {:href (@route-item slug)} prev-svg]
+             [:div.control.disabled prev-svg])
+           (if-let [slug (get-in @entries [(+ idx 1) :slug])]
+             [:a.control.enabled {:href (@route-item slug)} next-svg]
+             [:div.control.disabled next-svg])
+           [:a.control.enabled {:href (@route-back)} close-svg]]]))]
 
     (finally (events/unlistenByKey listener))))

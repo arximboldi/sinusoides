@@ -45,11 +45,12 @@
     [:div.content
      [:div.header {:dangerouslySetInnerHTML
                    {:__html (:name item)}}]
-     [:div.desc {:dangerouslySetInnerHTML
-                 {:__html (util/md->html (:desc item))}}]
-     (for [link (:link item)]
-       ^{:key link}
-       [:a.link {:href (:href link)} (:name link)])]]])
+     [:div.desc
+      [:div {:dangerouslySetInnerHTML
+             {:__html (util/md->html (:desc item))}}]
+      (for [link (:link item)]
+        ^{:key link}
+        [:a.link {:href (:href link)} (:name link)])]]]])
 
 (defn filters-view [do]
   (r/with-let
