@@ -40,7 +40,7 @@ $page-anim-two-third: 1000ms;
     clear:both;
 }
 
-$break-mobile: 450px;
+$break-mobile: 780px;
 $break-laptop: 1370px;
 
 @mixin respond-to($media) {

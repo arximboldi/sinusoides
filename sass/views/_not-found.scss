@@ -2,27 +2,31 @@
 
 #not-found-page {
     pointer-events: auto;
+    font-size: 8.75em;
+    @include respond-to(mobile) {
+        font-size: 5em;
+    }
 
     @keyframes enter-the-end {
         from { width: 0; height: 0; }
         30%  { width: 0; height: 0; }
-        50%  { width: 0; height: 150px; }
-        to   { width: 400px; height: 150px; }
+        50%  { width: 0; height: 1.07em; }
+        to   { width: 2.85em; height: 1.07em; }
     }
     @keyframes enter-dead-end {
         from { width: 0; }
         50%  { width: 0; }
-        to   { width: 400px; }
+        to   { width: 2.85em; }
     }
 
     @keyframes leave-the-end {
-        from { width: 400px; height: 150px; }
-        50%  { width: 0; height: 150px; }
+        from { width: 2.85em; height: 1.07em; }
+        50%  { width: 0; height: 1.07em; }
         70%  { width: 0; height: 0; }
         to   { width: 0; height: 0; }
     }
     @keyframes leave-dead-end {
-        from { width: 400px; }
+        from { width: 2.85em; }
         50%  { width: 0; }
         to   { width: 0; }
     }
@@ -38,8 +42,8 @@
 
     #the-end {
         position: absolute;
-        height: 150px;
-        width: 400px;
+        height: 1.07em;
+        width: 2.85em;
         top: 0;
         left: 0;
         bottom: 0;
@@ -47,13 +51,10 @@
         margin: auto;
         background-color: black;
         color: white;
-        border-left: 10px solid white;
-        border-right: 10px solid white;
+        border-left: 0.071em solid white;
+        border-right: 0.071em solid white;
         transition: border-color 0.5s ease-in-out;
-        &.hovered {
-            border-left: 10px solid red;
-            border-right: 10px solid red;
-        }
+        &.hovered { border-color: red; }
     }
 
     #dead-end {
@@ -65,15 +66,14 @@
         bottom: 0;
         right: 0;
         color: white;
-        height: 220px;
-        width: 400px;
+        height: 1.57em;
+        width: 2.85em;
         text-transform: uppercase;
         text-align: left;
-        line-height: 110px;
-        padding-left: 10px;
-        font-size: 140px;
+        line-height: 0.78em;
+        padding-left: 0.071em;
         text-decoration: none;
         span.first { letter-spacing: initial; }
-        span.second { letter-spacing: 46px; }
+        span.second { letter-spacing: 0.33em; }
     }
 }

@@ -4,17 +4,17 @@
     @keyframes enter-i {
         from { transform: translateX(150%); }
         60%  { transform: translateX(150%); }
-        100%   { transform: translateX(0px); }
+        100%   { transform: translateX(0); }
     }
     @keyframes enter-am {
         from { transform: translateX(150%); }
         50%  { transform: scale(1.5) translateX(150%); }
-        90%   { transform: translateX(0px); }
+        90%   { transform: translateX(0); }
     }
     @keyframes enter-not {
         from { transform: translateX(150%); }
         70%  { transform: scale(2) translateX(150%); }
-        100%   { transform: translateX(0px); }
+        100%   { transform: translateX(0); }
     }
     @keyframes enter-profile {
         from { opacity: 0; }
@@ -54,38 +54,48 @@
     }
 
     #am-block {
-        padding: 0px;
         position: absolute;
         pointer-events: none;
         right: 0;
         bottom: 0;
         width: 100%;
         margin: 0 0 0 0;
-        padding-bottom: 20px;
+        padding-bottom: 0.5rem;
+        padding-right: 0.29em;
         vertical-align: bottom;
         display: inline-block;
         text-align: right;
-        line-height: 200px;
+        font-size: 8.75rem;
+
+        @include respond-to(mobile) {
+            font-size: 5rem;
+        }
+
         div {
-            font-size: 140px;
+            line-height: 1.42em;
             font-weight: bold;
             box-sizing: border-box;
             display: inline-block;
             margin: 0;
             &#not {
-                margin-top: 10px;
-                font-size: 160px;
+                font-size: 1.14em;
             }
             p {
                 color: black;
                 background: white;
                 display: inline;
                 transition: box-shadow 0.5s ease-in-out;
-                border-right: 40px solid black;
+            }
+            &::after {
+                content: "";
+                background-color: black;
+                position: absolute;
+                height: 100%;
+                width: 1em;
             }
         }
         &.hovered {
-            p { box-shadow: inset 0 0 0 8px red; }
+            p { box-shadow: inset 0 0 0 0.5rem red; }
         }
     }
 
@@ -94,18 +104,28 @@
         width: 70%;
         top: 0;
         display: block;
-        padding: 30px 0px 0 0px;
+        padding: 1.875em 0 0 0;
+
+        @include respond-to(mobile) {
+            padding: 0;
+            width: 100%;
+        }
+
         a {
             transition: padding-top 0.5s ease-in-out, padding-left 0.5s ease-in-out;
-            font-size: 74px;
+            font-size: 4.625em;
             display: block;
             float: left;
             text-align: center;
             box-sizing: border-box;
-            height: 100px;
-            width: 160px;
-            border: 0px solid red;
-            margin: 0 0px 0 0px;
+            height: 1.35em;
+            width: 2.16em;
+            margin: 0;
+
+            @include respond-to(mobile) {
+                font-size: 4em;
+            }
+
             span {
                 text-shadow: 2px 2px #fff;
                 color: black;

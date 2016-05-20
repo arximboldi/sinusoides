@@ -33,7 +33,7 @@
                      (reset! should-add-children true))
                _ (go (let [response (<! (http/get "/data/am.json"))]
                        (reset! am (vec (shuffle (:body response))))))
-               rand-px #(str (rand 60) "px")
+               rand-px #(str (rand 0.8) "em")
                rand-ms #(str (rand %) "ms")]
     [:div#am-page.page
      [:div#am-block (sinusoid/hovered sin)
@@ -45,7 +45,8 @@
         [deco/animated {:transition-name "profile"
                         :transition-appear true
                         :transition-appear-timeout 3000
-                        :transition-enter-timeout 3000}
+                        :transition-enter-timeout 3000
+                        :transition-leave-timeout 3000}
          (for [{name :name url :url} @am]
            ^{:key name}
            [:a
