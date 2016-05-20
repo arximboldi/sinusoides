@@ -33,13 +33,19 @@
 
 (defn sized [nested]
   (let [size
-        (r/atom {:width 0 :height 0})
+        (r/atom {:width 0
+                 :height 0
+                 :font-size 0})
 
         update-size
         (fn [this]
           (let [node (r/dom-node this)]
-            (reset! size {:width  (.-offsetWidth node)
-                          :height (.-offsetHeight node)})))]
+            (reset! size {:width     (.-offsetWidth node)
+                          :height    (.-offsetHeight node)
+                          :font-size (-> node
+                                         js/window.getComputedStyle
+                                         (aget "font-size")
+                                         js/parseInt)})))]
 
     (r/create-class
       {:component-will-mount
@@ -60,8 +66,8 @@
        #(conj % size)})))
 
 (defn grid-impl [props children sizes]
-  (let [grid-size   (:grid-size props)
-        grid-margin (:grid-margin props)
+  (let [grid-size   (* (:grid-size-em props) (:font-size @sizes))
+        grid-margin (* (:grid-margin-em props) (:font-size @sizes))
         width       (:width @sizes)
         cols        (max 1 (js/Math.round (/ width grid-size)))
         ratio       (/ grid-margin grid-size)

@@ -167,8 +167,8 @@
       (when false [icon-view think "pic"])]
 
      [deco/grid {:id "stuff"
-                 :grid-size   260
-                 :grid-margin 20}
+                 :grid-size-em   16.25
+                 :grid-margin-em  1.25}
       (for [thing @entries]
         ^{:key (:slug thing)}
         [dispatch-view thumbnail-views think thing])]

@@ -94,8 +94,8 @@
 
 (defn programs-view [entries]
   [deco/grid {:class "programs"
-              :grid-size 164
-              :grid-margin 6}
+              :grid-size-em   10.25
+              :grid-margin-em  0.375}
    (for [p @entries]
      (let [background-style
            {:background-image
