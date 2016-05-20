@@ -57,4 +57,12 @@ $break-laptop: 1370px;
       @media only screen and (min-width: $break-laptop)
       { @content; }
   }
+  @else if $media == landscape {
+      @media only screen and (orientation: landscape)
+      { @content; }
+  }
+  @else if $media == portrait {
+      @media only screen and (orientation: portrait)
+      { @content; }
+  }
 }
