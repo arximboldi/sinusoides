@@ -40,6 +40,19 @@ $page-anim-two-third: 1000ms;
     clear:both;
 }
 
+.noselect {
+    &, * {
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+
 $break-mobile: 780px;
 $break-laptop: 1370px;
 

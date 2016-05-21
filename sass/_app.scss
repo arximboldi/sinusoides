@@ -1,7 +1,7 @@
 @import 'global';
 
 html {
-   font-size: 16px;
+    font-size: 16px;
     @include respond-to(mobile) {
         font-size: 13.6px;
     }
@@ -171,6 +171,7 @@ a:focus {
 }
 
 .control {
+    @extend .noselect;
     fill: white;
     transition: fill 300ms ease-in-out;
     &:hover { fill: red; }
@@ -184,4 +185,18 @@ a:focus {
     width: 100%;
     clear: both !important;
     display: block;
+}
+
+::-mox-selection {
+    background-color: transparent;
+    color: red;
+}
+
+::selection {
+    background-color: rgba(48, 48, 48, 0.5);
+    color: red;
+}
+
+.title {
+    @extend .noselect;
 }

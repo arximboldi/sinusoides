@@ -66,6 +66,7 @@
     }
 
     #main-text {
+        @extend .noselect;
         position: absolute;
         box-sizing: border-box;
         width: 6.7em;

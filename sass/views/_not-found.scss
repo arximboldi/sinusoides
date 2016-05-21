@@ -1,6 +1,8 @@
 @import '../global';
 
 #not-found-page {
+    @extend .noselect;
+
     pointer-events: auto;
     font-size: 8.75em;
     @include respond-to(mobile) {

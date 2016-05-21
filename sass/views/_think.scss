@@ -65,6 +65,7 @@
     }
 
     #filters {
+        @extend .noselect;
         margin: 1.25em 2.125em 0.375em 0;
         float: right;
         .filter-button {
@@ -97,6 +98,7 @@
         }
 
         .thingy {
+            @extend .noselect;
             position: absolute;
             box-sizing: border-box;
             width: 100%;
