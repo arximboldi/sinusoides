@@ -131,6 +131,11 @@
                     opacity: 0;
                 }
                 &:hover .open { opacity: 1; }
+                @include respond-to(mobile) {
+                    .open {
+                        opacity: 1;
+                    }
+                }
             }
         }
     }
@@ -224,8 +229,8 @@
                     @include respond-to(portrait) {
                         position: static;
                         margin-top: 2em;
+                        margin-bottom: 2em;
                     }
-
                 }
 
                 .tags {

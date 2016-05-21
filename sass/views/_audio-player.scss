@@ -39,6 +39,11 @@
     &:hover .play-button::after {
         transform: scale(1);
     }
+    @include respond-to(mobile) {
+        .play-button::after {
+            transform: scale(1);
+        }
+    }
     &.is-playing .play-button::after {
         transform: scale(1);
         background-color: red;
