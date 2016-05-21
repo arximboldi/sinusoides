@@ -78,7 +78,7 @@
             &.enabled {
                 border-color: white;
             }
-            &:hover {
+            @include hover-or-active {
                 &.enabled { border-color: red; }
                 .segment { background-color: red; }
             }
@@ -111,7 +111,7 @@
             text-decoration: none;
             color: white;
 
-            &:hover {
+            @include hover-or-active {
                 color: red;
                 border-color: red;
             }
@@ -133,7 +133,7 @@
                     opacity: 0;
                 }
                 &:hover .open { opacity: 1; }
-                @include respond-to(mobile) {
+                @include respond-to(touch) {
                     .open {
                         opacity: 1;
                     }

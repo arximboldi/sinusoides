@@ -162,22 +162,26 @@ a:focus {
     color: #444444;
     text-decoration: none;
     transition: color 0.2s ease-in-out;
-    &:hover { color: red; }
+    @include hover-or-active {
+        color: red;
+    }
 }
 
 .linksinv a {
     color: white;
-    &:hover { color: red; }
+    @include hover-or-active {
+        color: red;
+    }
 }
 
 .control {
     @extend .noselect;
     fill: white;
     transition: fill 300ms ease-in-out;
-    &:hover { fill: red; }
+    @include hover-or-active { fill: red; }
     &.disabled {
         opacity: 0.25;
-        &:hover { fill: white; }
+        @include hover-or-active { fill: white; }
     }
 }
 

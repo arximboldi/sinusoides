@@ -43,6 +43,12 @@
    :think think/state
    :am am/state})
 
+(defn get-touch-class []
+  (if (util/has-touch?) "has-touch" "no-touch"))
+
+(defn get-font-class [fonts]
+  (str/join " " (map #(str (name %) "-font-loaded") @fonts)))
+
 (defn view [app]
   (r/with-let [fonts (r/cursor app [:fonts])
                am    (r/cursor app [:am])
@@ -50,9 +56,10 @@
                sin   (r/cursor app [:sinusoid])
                think (r/cursor app [:think])
                view  (r/track #(:view @app))
-               last  (r/track #(:last @app))]
+               last  (r/track #(:last @app))
+               touch (get-touch-class)]
     [:div#sinusoides
-     {:class (str/join " " (map #(str (name %) "-font-loaded") @fonts))}
+     {:class (str/join " " [touch (get-font-class fonts)])}
      [sinusoid/view :sinusoid-h app sin]
      [sinusoid/view :sinusoid-v app sin]
      [deco/animated {:transition-name "page"

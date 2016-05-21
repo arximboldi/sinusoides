@@ -35,13 +35,15 @@
             /**/        transform 0.3s ease;
         }
     }
-    &:hover .play-button {
-        background-color: rgba(0, 0, 0, 0.6);
+    @include hover-or-active {
+        .play-button {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
     }
     &:hover .play-button::after {
         transform: scale(1);
     }
-    @include respond-to(mobile) {
+    @include respond-to(touch) {
         .play-button::after {
             transform: scale(1);
         }

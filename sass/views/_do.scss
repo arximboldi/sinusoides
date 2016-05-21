@@ -109,7 +109,9 @@
                 font-weight: bold;
                 color: red;
             }
-            &:hover {
+        }
+        a, .filter {
+            @include hover-or-active {
                 color: red;
                 &::after {
                     border-color: red;
@@ -173,11 +175,9 @@
                 transform: scale(2, 2);
                 transition: opacity 0.2s ease, transform 0.2s ease-in-out;
             }
-            &:hover {
+            @include hover-or-active {
                 border-color: red;
-                div {
-                    opacity: 1;
-                }
+                div { opacity: 1; }
                 span {
                     opacity: 1;
                     transform: scale(1, 1);
@@ -338,10 +338,7 @@
             }
 
             .desc {
-                a {
-                    color: white;
-                    &:hover { color: red; }
-                }
+                @extend .linksinv;
                 color: #aaa;
                 font-size: 1.4em;
                 line-height: 1.5em;
@@ -382,7 +379,7 @@
                 transition: border 0.2s ease-in-out,
                 /**/        background 0.2s ease-in-out,
                 /**/        color 0.2s ease-in-out;
-                &:hover {
+                @include hover-or-active {
                     color: black;
                     border: 2px solid red;
                     background: red;

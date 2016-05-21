@@ -25,6 +25,10 @@
             [showdown]
             [fontfaceobserver]))
 
+(defn has-touch? []
+  (or (js/window.hasOwnProperty "ontouchstart")
+      (pos? js/navigator.maxTouchPoints)))
+
 (defn load-all [fn things]
   (async/into [] (async/merge (map fn things))))
 

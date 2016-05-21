@@ -18,6 +18,7 @@
 
 (ns sinusoides.views.sinusoid
   (:require [sinusoides.routes :as routes]
+            [sinusoides.util :as util]
             [cljs.core.match :refer-macros [match]]
             [cljs.core.match]
             [reagent.core :as r]))
@@ -28,17 +29,23 @@
   (swap! sin #(update-in % [:hover] disj tag)))
 
 (defn hover-view [sin tag & keyvals]
-  (r/with-let []
+  (r/with-let
+    [add-hover (fn [] (println "add") (swap! sin #(update-in % [:hover] conj tag)))
+     del-hover (fn [] (println "remove")(swap! sin #(update-in % [:hover] disj tag)))]
     [:div
-     {:style {:width "100%"
-              :height "100%"
-              :position "absolute"
-              :cursor "pointer"}
-      :on-mouse-over
-      (fn [] (swap! sin #(update-in % [:hover] conj tag)))
-      :on-mouse-out
-      (fn [] (swap! sin #(update-in % [:hover] disj tag)))}]
-    (finally (swap! sin #(update-in % [:hover] disj tag)))))
+     (merge {:style {:width "100%"
+                     :height "100%"
+                     :position "absolute"
+                     :cursor "pointer"}}
+            (if (util/has-touch?)
+              {:on-touch-start add-hover
+               :on-touch-end   del-hover}
+              {:on-mouse-down  add-hover
+               :on-mouse-up    del-hover
+               :on-mouse-over  add-hover
+               :on-mouse-out   del-hover}))]
+    (finally
+      (del-hover))))
 
 (defn hover? [sin]
   (-> @sin :hover empty? not))

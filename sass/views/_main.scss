@@ -125,7 +125,10 @@
             border-bottom: 0.2rem solid white;
             transition: color 0.3s ease-in-out,
             /**/        border-color 0.3s ease-in-out;
-            &:hover { color: red; border-bottom-color: red; }
+            @include hover-or-active {
+                color: red;
+                border-bottom-color: red;
+            }
         }
     }
 
@@ -144,16 +147,16 @@
         line-height: 1.12em;
         border-left: black;
 
+        font-family: $mono-font-stack;
+        @at-root .mono-font-loaded & { font-family: $mono-font; }
+
         @include respond-to(mobile) {
             font-size: 1.3em;
         }
 
         a {
             color: black;
-            &:hover { color: red; }
+            @include hover-or-active { color: red; }
         }
     }
 }
-
-.fingerprint { font-family: $mono-font-stack; }
-.mono-font-loaded .fingerprint { font-family: $mono-font; }

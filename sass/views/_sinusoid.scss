@@ -35,7 +35,7 @@
         background-color: white;
         transition: background-color 500ms ease-in-out;
     }
-    &:hover::before, &.hovered::before { background-color: red; }
+    &.hovered::before { background-color: red; }
 
     &::after {
         content: "";
@@ -146,7 +146,7 @@
         background-color: white;
         transition: background-color 500ms ease-in-out;
     }
-    &:hover::before, &.hovered::before { background-color: red; }
+    &.hovered::before { background-color: red; }
 
     &::after {
         content: "";
