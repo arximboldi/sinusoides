@@ -14,17 +14,13 @@
     }
 
     &.page-appear, &.page-enter {
-        #sinusoid-todo { animation: enter-sinusoid $page-anim-full forwards; }
-        #sinusoid-todo::before { animation: enter-sinusoid-after $page-anim-full forwards; }
-        #todo-block { animation: enter-todo-block $page-anim-full forwards; }
+        .todo-block { animation: enter-todo-block $page-anim-full forwards; }
     }
     &.page-leave {
-        #sinusoid-todo { animation: leave-sinusoid $page-anim-full forwards; }
-        #sinusoid-todo::before { animation: leave-sinusoid-after $page-anim-full forwards; }
-        #todo-block { animation: leave-todo-block $page-anim-full forwards; }
+        .todo-block { animation: leave-todo-block $page-anim-full forwards; }
     }
 
-    #todo-block {
+    .todo-block {
         position: absolute;
         left: 0;
         right: 0;

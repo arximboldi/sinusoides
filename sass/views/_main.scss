@@ -34,17 +34,17 @@
     }
 
     &.page-appear, &.page-enter {
-        #barcode, #barcode2 { animation: enter-barcode $page-anim-full forwards; }
-        #main-text { animation: enter-main-text $page-anim-full forwards; }
-        #fingerprint { animation: enter-fingerprint $page-anim-full forwards; }
+        .barcode, .barcode2 { animation: enter-barcode $page-anim-full forwards; }
+        .main-text { animation: enter-main-text $page-anim-full forwards; }
+        .fingerprint { animation: enter-fingerprint $page-anim-full forwards; }
     }
     &.page-leave {
-        #barcode, #barcode2 { animation: leave-barcode $page-anim-full forwards; }
-        #main-text { animation: leave-main-text $page-anim-full forwards; }
-        #fingerprint { animation: leave-fingerprint $page-anim-full forwards; }
+        .barcode, .barcode2 { animation: leave-barcode $page-anim-full forwards; }
+        .main-text { animation: leave-main-text $page-anim-full forwards; }
+        .fingerprint { animation: leave-fingerprint $page-anim-full forwards; }
     }
 
-    #barcode, #barcode2 {
+    .barcode, .barcode2 {
         position: absolute;
         width: 37.5em;
         height: 50%;
@@ -59,13 +59,13 @@
             font-size: 0.45em;
         }
     }
-    #barcode2 {
+    .barcode2 {
         top: 50%;
         transition: background-position 0.3s ease-in-out;
         &:hover { background-position: center 100.5%; }
     }
 
-    #main-text {
+    .main-text {
         @extend .noselect;
         position: absolute;
         box-sizing: border-box;
@@ -129,7 +129,7 @@
         }
     }
 
-    #fingerprint {
+    .fingerprint {
         background-color: white;
         border-right: black;
         position: absolute;
@@ -155,5 +155,5 @@
     }
 }
 
-#fingerprint { font-family: $mono-font-stack; }
-.mono-font-loaded #fingerprint { font-family: $mono-font; }
+.fingerprint { font-family: $mono-font-stack; }
+.mono-font-loaded .fingerprint { font-family: $mono-font; }

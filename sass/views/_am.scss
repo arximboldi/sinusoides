@@ -42,18 +42,18 @@
     }
 
     &.page-appear, &.page-enter {
-        div#i { animation: enter-i $page-anim-full forwards; }
-        div#am { animation: enter-am $page-anim-full forwards; }
-        div#not { animation: enter-not $page-anim-full forwards; }
+        div.i { animation: enter-i $page-anim-full forwards; }
+        div.am { animation: enter-am $page-anim-full forwards; }
+        div.not { animation: enter-not $page-anim-full forwards; }
     }
     &.page-leave {
-        div#i { animation: leave-i $page-anim-full forwards; }
-        div#am { animation: leave-am $page-anim-full forwards; }
-        div#not { animation: leave-not $page-anim-full forwards; }
-        #profiles a { animation: leave-profile forwards; }
+        div.i { animation: leave-i $page-anim-full forwards; }
+        div.am { animation: leave-am $page-anim-full forwards; }
+        div.not { animation: leave-not $page-anim-full forwards; }
+        .profiles a { animation: leave-profile forwards; }
     }
 
-    #am-block {
+    .am-block {
         position: absolute;
         pointer-events: none;
         right: 0;
@@ -77,7 +77,7 @@
             box-sizing: border-box;
             display: inline-block;
             margin: 0;
-            &#not {
+            &.not {
                 font-size: 1.14em;
             }
             p {
@@ -99,7 +99,7 @@
         }
     }
 
-    #profiles {
+    .profiles {
         position: absolute;
         width: 100%;
         top: 0;

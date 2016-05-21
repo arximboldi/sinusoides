@@ -22,5 +22,5 @@
 
 (defn view [sin]
   [:div#todo-page.fixed-page
-   [:div#todo-block.links (sinusoid/hovered sin)
+   [:div.todo-block.links (sinusoid/hovered sin)
     "TO" [:a {:href (routes/do)} "DO."]]])

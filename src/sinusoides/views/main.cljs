@@ -62,10 +62,10 @@
                  :transition-leave-timeout 2000}]
 
     [:div#main-page.fixed-page
-     [:div#barcode]
-     [:a#barcode2 {:href (routes/todo)}]
+     [:div.barcode]
+     [:a.barcode2 {:href (routes/todo)}]
 
-     [:div#main-text (sinusoid/hovered sin)
+     [:div.main-text (sinusoid/hovered sin)
       [:div.parts
        [deco/animated transition
         ^{:key (@parts 0)}
@@ -83,7 +83,7 @@
          " " [:a {:href (routes/am)} ((@parts 2) 1)]
          [:span.questionmark "?"]]]]]
 
-     [:div#fingerprint.links
+     [:div.fingerprint.links
       [:a {:href (str "mailto:"
                       (s/reverse "gro.ung@vokinloksar"))}
        "CE3E CB30 6F40 3D98 DB2E" [:br]

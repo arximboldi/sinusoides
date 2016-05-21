@@ -22,8 +22,8 @@
 
 (defn view [sin]
   [:div#not-found-page.fixed-page
-   [:div#the-end (sinusoid/hovered sin)]
-   [:a#dead-end {:href (routes/main)}
+   [:div.the-end (sinusoid/hovered sin)]
+   [:a.dead-end {:href (routes/main)}
     [sinusoid/hover-view sin :not-found]
     [:span.first "Dead"] [:br]
     [:span.second "end"]]])

@@ -24,15 +24,15 @@
     }
 
     &.page-appear, &.page-enter {
-        #presentation { animation: enter-presentation $page-anim-full forwards; }
-        #stuff { animation: enter-stuff $page-anim-full forwards; }
+        .presentation { animation: enter-presentation $page-anim-full forwards; }
+        .stuff { animation: enter-stuff $page-anim-full forwards; }
     }
     &.page-leave {
-        #presentation { animation: leave-presentation $page-anim-full forwards; }
-        #stuff { animation: leave-stuff $page-anim-full forwards; }
+        .presentation { animation: leave-presentation $page-anim-full forwards; }
+        .stuff { animation: leave-stuff $page-anim-full forwards; }
     }
 
-    #presentation {
+    .presentation {
         position: absolute;
         font-size: 9.4em;
         top: 2.62rem;
@@ -52,7 +52,7 @@
         }
     }
 
-    #stuff {
+    .stuff {
         position: absolute;
         top: 13.75em;
         width: 100%;

@@ -152,10 +152,10 @@
           :entries @entries}))]
 
     [:div#do-page.page
-     [:div#presentation.links (sinusoid/hovered sin)
+     [:div.presentation.links (sinusoid/hovered sin)
       [:div.title "Do."]]
 
-     [:div#stuff
+     [:div.stuff
       [filters-view do]
       [programs-view entries]]
 

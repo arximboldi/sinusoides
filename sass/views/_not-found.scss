@@ -34,15 +34,15 @@
     }
 
     &.page-appear, &.page-enter {
-        #the-end { animation: enter-the-end $page-anim-full forwards; }
-        #dead-end { animation: enter-dead-end $page-anim-full forwards; }
+        .the-end { animation: enter-the-end $page-anim-full forwards; }
+        .dead-end { animation: enter-dead-end $page-anim-full forwards; }
     }
     &.page-leave {
-        #the-end { animation: leave-the-end $page-anim-full forwards; }
-        #dead-end { animation: leave-dead-end $page-anim-full forwards; }
+        .the-end { animation: leave-the-end $page-anim-full forwards; }
+        .dead-end { animation: leave-dead-end $page-anim-full forwards; }
     }
 
-    #the-end {
+    .the-end {
         position: absolute;
         height: 1.07em;
         width: 2.85em;
@@ -59,7 +59,7 @@
         &.hovered { border-color: red; }
     }
 
-    #dead-end {
+    .dead-end {
         position: absolute;
         overflow: hidden;
         margin: auto;

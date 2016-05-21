@@ -87,7 +87,7 @@
 
      (when @data
        [:div.right-side
-        [:div.title (:title @data)]
+        [:div.name (:title @data)]
         [:div.desc {:dangerouslySetInnerHTML
                     {:__html (util/md->html (:description @data))}}]
         [:div.date (time/unparse output-date-formatter
@@ -159,13 +159,13 @@
          (map (fn [id] ^{:key id}[:div.segment]) (range 5))]])]
 
     [:div#think-page.page
-     [:div#title (sinusoid/hovered sin) "Think."]
-     [:div#filters
+     [:div.title (sinusoid/hovered sin) "Think."]
+     [:div.filters
       [icon-view think "sound"]
       [icon-view think "text"]
       (when false [icon-view think "pic"])]
 
-     [deco/grid {:id "stuff"
+     [deco/grid {:class "stuff"
                  :grid-size-em   16.25
                  :grid-margin-em  1.25}
       (for [thing @entries]

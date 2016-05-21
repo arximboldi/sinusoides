@@ -34,17 +34,17 @@
     }
 
     &.page-appear, &.page-enter {
-        #title { animation: enter-title $page-anim-full forwards; }
-        #stuff { animation: enter-stuff $page-anim-full forwards; }
-        #filters { animation: enter-filters $page-anim-full forwards; }
+        .title { animation: enter-title $page-anim-full forwards; }
+        .stuff { animation: enter-stuff $page-anim-full forwards; }
+        .filters { animation: enter-filters $page-anim-full forwards; }
     }
     &.page-leave {
-        #title { animation: leave-title $page-anim-full forwards; }
-        #stuff { animation: leave-stuff $page-anim-full forwards; }
-        #filters { animation: enter-filters $page-anim-full forwards; }
+        .title { animation: leave-title $page-anim-full forwards; }
+        .stuff { animation: leave-stuff $page-anim-full forwards; }
+        .filters { animation: enter-filters $page-anim-full forwards; }
     }
 
-    #title {
+    .title {
         position: fixed;
         bottom: 0;
         left: 2.5rem;
@@ -64,7 +64,7 @@
         }
     }
 
-    #filters {
+    .filters {
         @extend .noselect;
         margin: 1.25em 2.125em 0.375em 0;
         float: right;
@@ -85,7 +85,7 @@
         }
     }
 
-    #stuff {
+    .stuff {
         @extend .clearfix;
         clear: both;
         margin-left: 16.875rem;
@@ -207,7 +207,7 @@
                     font-size: 0.94em;
                 }
 
-                .title {
+                .name {
                     font-size: 2em;
                     margin: 0 -2% 1em 0;
                     text-transform: uppercase;

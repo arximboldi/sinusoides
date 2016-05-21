@@ -36,11 +36,11 @@
                rand-px #(str (rand 0.8) "em")
                rand-ms #(str (rand %) "ms")]
     [:div#am-page.page
-     [:div#am-block (sinusoid/hovered sin)
-      [:div#i [:p " I " ]] [:br]
-      [:div#am [:p" am "]] [:br]
-      [:div#not [:p " not "]]]
-     [:div#profiles.links
+     [:div.am-block (sinusoid/hovered sin)
+      [:div.i [:p " I " ]] [:br]
+      [:div.am [:p" am "]] [:br]
+      [:div.not [:p " not "]]]
+     [:div.profiles.links
       (when (and @updater @should-add-children)
         [deco/animated {:transition-name "profile"
                         :transition-appear true
