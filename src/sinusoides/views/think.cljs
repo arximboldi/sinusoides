@@ -18,10 +18,13 @@
 
 (ns sinusoides.views.think
   (:require-macros [cljs.core.async.macros :refer [go go-loop]])
-  (:require [sinusoides.views.sinusoid :as sinusoid]
-            [sinusoides.views.addons :refer [css-transitions]]
-            [sinusoides.util :as util]
-            [clojure.string :as string]
+  (:require [sinusoides.views.audio-player :as audio-player]
+            [sinusoides.views.sinusoid :as sinusoid]
+            [sinusoides.views.slideshow :as slideshow]
+            [sinusoides.views.decorators :as deco]
+            [cljs-time.format :as time]
+            [sinusoides.routes :as routes]
+            [sinusoides.util :as util :refer-macros [match-get]]
             [clojure.string :as string]
             [cljs.core.match :refer-macros [match]]
             [cljs-http.client :as http]
@@ -29,196 +32,145 @@
             [reagent.core :as r]
             [goog.events :as events]))
 
-(def sc-client-id
-  "485230fd2a6e151244a57a584f904070")
+(def state
+  {:player nil
+   :entries []
+   :type nil
+   :data {}})
 
-(defn sc-add-client-id [api-call]
-  (str api-call "?client_id=" sc-client-id))
+(def open-svg (util/embed-svg "resources/static/pic/open.svg"))
 
-(defn sc-api [& command]
-  (http/jsonp (sc-add-client-id
-                (str "http://api.soundcloud.com"
-                     (apply str command)
-                     ".json"))))
-
-(defn audio-player-state [source]
-  {:source source
-   :duration 0
-   :current-time 0
-   :progress 0
-   :status nil})
-
-(defn audio-player [state command-ch]
-  (let [events (atom)
-        source (r/track #(:source @state))
-        ch     (->> (async/chan) (async/pipe command-ch))]
-    (r/create-class
-      {:component-did-mount
-       (fn [this]
-         (let [audio (r/dom-node this)
-
-               update-time
-               (fn []
-                 (swap! state assoc-in [:duration] (.-duration audio))
-                 (swap! state assoc-in [:current-time] (.-currentTime audio)))
-
-               update-progress
-               (fn []
-                 (when (-> audio .-buffered .-length pos?)
-                   (swap! state assoc-in [:progress] (-> audio
-                                                         .-buffered
-                                                         (.end 0)))))
-
-               update-status
-               (fn [status]
-                 (prn "audio player: status changed")
-                 (prn "   - source: " @source)
-                 (prn "   - status: " status)
-                 (swap! state assoc-in [:status] status))]
-
-           (reset!
-             events
-             [(events/listen audio "durationchange" update-time)
-              (events/listen audio "timeupdate" update-time)
-              (events/listen audio "progress" update-progress)
-              (events/listen audio "play" #(update-status :play))
-              (events/listen audio "playing" #(update-status :playing))
-              (events/listen audio "pause" #(update-status :paused))
-              (events/listen audio "ended" #(update-status :ended))
-              (events/listen audio "error" #(update-status :error))
-              (events/listen audio "abort" #(update-status :aborted))
-              (events/listen audio "stalled" #(update-status :stalled))])
-
-           (go-loop []
-             (match [(<! ch)]
-                    [:play]        (do (when (let [st (:status @state)]
-                                               (or (= st :error)
-                                                   (= st :aborted)))
-                                         (.load audio))
-                                       (.play audio) (recur))
-                    [:pause]       (do (.pause audio) (recur))
-                    [:preload]     (do (set! (.-preload audio) true) (recur))
-                    [[:seek time]] (do (set! (.-currentTime audio) time) (recur))
-                    [nil]          nil
-                    [bad-command]  (prn "audio player: bad command, " bad-command)))))
-
-       :component-will-unmount
-       (fn [this]
-         (async/close! ch)
-         (dorun (map events/unlistenByKey @events)))
-
-       :reagent-render
-       (fn []
-         [:audio {:preload "none"
-                  :src @source}])})))
-
-(defn audio-player-view [source]
-  (r/with-let [command-ch (async/chan)
-               mouse-time (r/atom 0)
-               state      (r/atom (audio-player-state source))
-
-               is-playing
-               #(let [st (:status @state)]
-                  (or (= st :play)
-                      (= st :playing)
-                      (= st :stalled)))
-
-               is-started
-               #(pos? (:current-time @state))
-
-               toggle-play
-               #(go (>! command-ch (if (is-playing) :pause :play)))
-
-               seek-time
-               #(go (>! command-ch [:seek @mouse-time]))
-
-               update-mouse-time
-               (fn [ev]
-                 (reset! mouse-time
-                         (-> (.-clientX ev)
-                             (- (.-left (.getBoundingClientRect (.-target ev))))
-                             (- (.-clientLeft (.-target ev)))
-                             (/ (.-offsetWidth (.-target ev)))
-                             (* (:duration @state))))
-                 (when (pos? (.-buttons ev))
-                   (seek-time)))
-
-               enable-preload
-               #(go (>! command-ch :preload))]
-
-    [:div.audio-player {:class (str "state-" (clj->js (:status @state))
-                                    (when (is-playing) " is-playing")
-                                    (when (is-started) " is-started"))}
-     [:div.play-button
-      {:on-click toggle-play}]
-
-     [:div.seek-bar
-      {:on-mouse-down seek-time
-       :on-mouse-over enable-preload
-       :on-mouse-move update-mouse-time}
-
-      (when (pos? @mouse-time)
-        [:div.seek-bar-tooltip
-         {:class
-          (cond
-            (> @mouse-time (:progress @state)) "unbuffered"
-            (> @mouse-time (:current-time @state)) "buffered"
-            :else "played")
-          :style {:left (-> @mouse-time
-                            (/ (:duration @state))
-                            (* 100)
-                            (str "%"))}}
-         (str (quot @mouse-time 60) ":"
-              (int (rem @mouse-time 60)))])
-
-      [:div.seek-bar-range
-       (when (pos? (:progress @state))
-         [:div.seek-bar-loaded
-          {:style {:width (-> (:progress @state)
-                              (/ (:duration @state))
-                              (* 100)
-                              (str "%"))}}])
-
-       (when (pos? (:duration @state))
-         [:div.seek-bar-position
-          {:style {:width (-> (:current-time @state)
-                              (/ (:duration @state))
-                              (* 100)
-                              (str "%"))}}])]]
-
-     [audio-player state command-ch]]))
-
-(defn soundcloud-thumbnail-view [thing]
+(defn soundcloud-player-view [thing data player & children]
   (r/with-let
-    [data (r/atom nil)
-     _    (go (let [response (<! (sc-api "/tracks/" (:track thing)))]
-                (reset! data (:body response))))]
+    [client-id     "485230fd2a6e151244a57a584f904070"
+     add-client-id #(str % "?client_id=" client-id)
+
+     api-get
+     (fn [& command]
+       (http/jsonp (add-client-id (str "http://api.soundcloud.com"
+                                       (apply str command)
+                                       ".json"))))
+
+     _
+     (go (let [response (<! (api-get "/tracks/" (:track thing)))]
+           (reset! data (:body response))))]
+
     (if @data
       (let [background (string/replace (:artwork_url @data)
                                        #"-large.jpg"
                                        "-t500x500.jpg")
-            audio-src  (sc-add-client-id (:stream_url @data))]
-        [:div.thingy.soundcloud
-         {:style {:background-image (str "url(" background ")")}}
-         [audio-player-view audio-src]])
-      [:div.thingy.soundcloud])))
+            audio-src  (add-client-id (:stream_url @data))]
+        (into
+          [audio-player/view
+           {:style {:background-image (str "url(" background ")")}}
+           audio-src
+           player]
+          children))
+      [:span])))
+
+(defn sound-thumbnail-view [thing data player]
+  [:div.thingy.sound
+   [soundcloud-player-view thing data player
+    [:a.control.open {:href (routes/think- {:id (:slug thing)})}
+     open-svg]]])
 
 (defn text-thumbnail-view [thing]
-  [:div.thingy.text (:title thing)])
+  [:a.thingy.text {:href (routes/think- {:id (:slug thing)})}
+   (:title thing)])
 
-(def thumbnail-view-map
-  {"soundcloud" soundcloud-thumbnail-view
-   "text"       text-thumbnail-view})
+(defn sound-detail-view [thing data player]
+  (r/with-let [input-date-formatter  (time/formatter "yyyy/MM/dd hh:mm:ss Z")
+               output-date-formatter (time/formatter "MMMM YYYY")]
+    [:div.detail.sound
+     [:div.left-side
+      [soundcloud-player-view thing data player]]
 
-(defn think-view [sin think]
-  (r/with-let [_ (go (let [response (<! (http/get "/data/think.json"))
-                           entries  (map #(assoc % :slug (util/to-slug (:title %)))
-                                         (:body response))
-                           filtered (filter #(= "soundcloud" (:type %)) entries)]
-                       (swap! think assoc-in [:entries] filtered)))]
+     (when @data
+       [:div.right-side
+        [:div.name (:title @data)]
+        [:div.desc {:dangerouslySetInnerHTML
+                    {:__html (util/md->html (:description @data))}}]
+        [:div.date (time/unparse output-date-formatter
+                                 (time/parse input-date-formatter
+                                             (:created_at @data)))]
+        [:div.footer
+         [:div.tags
+          (string/join
+            " "
+            (map #(str "#" (string/lower-case %))
+                 (string/split (:tag_list @data) #" ")))]
+         [:a.to-soundcloud {:href (:permalink_url @data)}
+          "Go to SoundCloud"]]])]))
+
+(defn text-detail-view [thing data]
+  (r/with-let [_ (go (reset! data (:body (<! (http/get (:text thing))))))]
+    [:div.detail.text
+     [:div.content
+      (when @data
+        {:dangerouslySetInnerHTML
+         {:__html (util/md->html @data)}})]]))
+
+(defn dispatch-view [views think thing]
+  (r/with-let [player (r/cursor think [:player])
+               data   (r/cursor think [:data (:slug thing)])]
+    [(get views (:type thing)) thing data player]))
+
+(defn view [sin think view last]
+  (r/with-let
+    [thumbnail-views {"text"  text-thumbnail-view
+                      "sound" sound-thumbnail-view}
+     detail-views    {"text"  text-detail-view
+                      "sound" sound-detail-view}
+
+     _ (go (let [response (<! (http/get "/data/think.json"))
+                 entries  (map #(assoc % :slug (util/to-slug (:title %)))
+                               (:body response))]
+             (swap! think assoc-in [:entries] (vec entries))))
+
+     entries
+     (r/track
+       (fn []
+         (let [{:keys [type entries]} @think]
+           (if (nil? type)
+             entries
+             (vec (filter #(= type (:type %)) entries))))))
+
+     slideshow
+     (r/track
+       (fn []
+         {:route-item #(routes/think- {:id %})
+          :route-back #(routes/think)
+          :curr (match-get @view [:think id])
+          :last (match-get @last [:think id])
+          :entries @entries}))
+
+     slideshow-element #(dispatch-view detail-views think %)
+
+     player (r/cursor think [:player])
+
+     icon-view
+     (fn [think type]
+       [:div.filter-button
+        {:class (when (= type (:type @think)) "enabled")
+         :on-click (fn [] (swap! think update-in [:type]
+                                 #(if (= % type) nil type)))}
+        [:div
+         {:class (str "icon-" type)}
+         (map (fn [id] ^{:key id}[:div.segment]) (range 5))]])]
+
     [:div#think-page.page
-     [:div#title (sinusoid/hovered sin) "Think."]
-     [:div#stuff
-      (for [thing (:entries @think)]
+     [:div.title (sinusoid/hovered sin) "Think."]
+     [:div.filters
+      [icon-view think "sound"]
+      [icon-view think "text"]
+      (when false [icon-view think "pic"])]
+
+     [deco/grid {:class "stuff"
+                 :grid-size-em   16.25
+                 :grid-margin-em  1.25}
+      (for [thing @entries]
         ^{:key (:slug thing)}
-        [(get thumbnail-view-map (:type thing)) thing])]]))
+        [dispatch-view thumbnail-views think thing])]
+
+     [audio-player/object player]
+     [slideshow/view slideshow slideshow-element]]))

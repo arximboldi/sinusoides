@@ -19,31 +19,34 @@
 (ns sinusoides.views.am
   (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [sinusoides.views.sinusoid :as sinusoid]
-            [sinusoides.views.addons :refer [css-transitions]]
+            [sinusoides.views.decorators :as deco]
             [cljs-http.client :as http]
             [cljs.core.async :refer [<! timeout]]
             [reagent.core :as r]))
 
-(defn am-view [sin am]
+(def state [])
+
+(defn view [sin am]
   (r/with-let [updater (r/atom 1)
                should-add-children (r/atom false)
                _ (go (<! (timeout 2000))
                      (reset! should-add-children true))
                _ (go (let [response (<! (http/get "/data/am.json"))]
                        (reset! am (vec (shuffle (:body response))))))
-               rand-px #(str (rand 60) "px")
+               rand-px #(str (rand 0.8) "em")
                rand-ms #(str (rand %) "ms")]
     [:div#am-page.page
-     [:div#am-block (sinusoid/hovered sin)
-      [:div#i [:p " I " ]] [:br]
-      [:div#am [:p" am "]] [:br]
-      [:div#not [:p " not "]]]
-     [:div#profiles.links
+     [:div.am-block (sinusoid/hovered sin)
+      [:div.i [:p " I " ]] [:br]
+      [:div.am [:p" am "]] [:br]
+      [:div.not [:p " not "]]]
+     [:div.profiles.links
       (when (and @updater @should-add-children)
-        [css-transitions {:transition-name "profile"
-                          :transition-appear true
-                          :transition-appear-timeout 3000
-                          :transition-enter-timeout 3000}
+        [deco/animated {:transition-name "profile"
+                        :transition-appear true
+                        :transition-appear-timeout 3000
+                        :transition-enter-timeout 3000
+                        :transition-leave-timeout 3000}
          (for [{name :name url :url} @am]
            ^{:key name}
            [:a

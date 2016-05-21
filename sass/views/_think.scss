@@ -2,183 +2,296 @@
 
 #think-page {
     @keyframes enter-title {
-        from { transform: scale(1.5) translateX(-40px) translateY(130%); }
-        60%  { transform: scale(1.5) translateX(-40px) translateY(130%); }
-        to   { transform: scale(1) translateY(0px); }
+        from { transform: scale(1.5) translateX(-100%) translateY(130%); }
+        60%  { transform: scale(1.5) translateX(-100%) translateY(130%); }
+        to   { transform: scale(1) translateY(0); }
     }
     @keyframes enter-stuff {
         from { opacity: 0; }
         70%  { opacity: 0; }
         to   { opacity: 1; }
     }
+    @keyframes enter-filters {
+        from { opacity: 0; }
+        60%  { opacity: 0; }
+        to   { opacity: 1; }
+    }
 
     @keyframes leave-title {
-        from { transform: translateY(0px); }
+        from { transform: translateY(0); }
         20%  { transform: translateY(200%); }
         to   { transform: translateY(200%); }
     }
-
     @keyframes leave-stuff {
         from { opacity: 1; }
         40%  { opacity: 0; }
         to   { opacity: 0; }
     }
+    @keyframes leave-filters {
+        from { opacity: 1; }
+        30%  { opacity: 0; }
+        to   { opacity: 0; }
+    }
 
     &.page-appear, &.page-enter {
-        #title { animation: enter-title $page-anim-full forwards; }
-        #stuff { animation: enter-stuff $page-anim-full forwards; }
+        .title { animation: enter-title $page-anim-full forwards; }
+        .stuff { animation: enter-stuff $page-anim-full forwards; }
+        .filters { animation: enter-filters $page-anim-full forwards; }
     }
     &.page-leave {
-        #title { animation: leave-title $page-anim-full forwards; }
-        #stuff { animation: leave-stuff $page-anim-full forwards; }
+        .title { animation: leave-title $page-anim-full forwards; }
+        .stuff { animation: leave-stuff $page-anim-full forwards; }
+        .filters { animation: enter-filters $page-anim-full forwards; }
     }
 
-    #title {
+    .title {
         position: fixed;
         bottom: 0;
-        left: 40px;
-        width: 150px;
+        left: 2.5rem;
+        width: 2.5em;
         color: white;
-        padding-bottom: 20px;
-        padding-top: 4px;
+        padding-bottom: 1.25rem;
+        padding-top: 0.25rem;
         background-color: black;
-        font-size: 60px;
+        font-size: 3.75em;
         text-transform: uppercase;
-        border-top: 8px solid white;
+        border-top: 0.13em solid white;
         transition: border-top-color 0.5s ease-in-out;
         &.hovered { border-top-color: red; }
+
+        @include respond-to(mobile) {
+            font-size: 2em;
+        }
     }
 
-    #stuff {
-        padding: 30px;
-        position: absolute;
-        left: 240px;
+    .filters {
+        @extend .noselect;
+        margin: 1.25em 2.125em 0.375em 0;
+        float: right;
+        .filter-button {
+            display: inline-block;
+            cursor: pointer;
+            margin: 0.375em;
+            padding: 0.5em;
+            border: 0.25em solid transparent;
+            transition: border-color 0.3s ease;
+            &.enabled {
+                border-color: white;
+            }
+            @include hover-or-active {
+                &.enabled { border-color: red; }
+                .segment { background-color: red; }
+            }
+        }
+    }
+
+    .stuff {
+        @extend .clearfix;
+        clear: both;
+        margin-left: 16.875rem;
+        margin-right: 2.5rem;
+        margin-bottom: 2.5rem;
         color: white;
-        font-size: 1.7em;
+
+        @include respond-to(mobile) {
+            margin-left: 10.5rem;
+        }
 
         .thingy {
+            @extend .noselect;
+            position: absolute;
             box-sizing: border-box;
-            position: relative;
-            float: left;
-            width: 260px;
-            height: 260px;
+            width: 100%;
+            height: 100%;
+            right: 0;
             border: 4px solid white;
-            padding: 20px;
-            margin: 10px;
+            padding: 8%;
             transition: border-color 0.5s ease-in-out,
             /**/        color 0.5s ease-in-out;
+            text-decoration: none;
+            color: white;
 
-            &:hover {
+            @include hover-or-active {
                 color: red;
                 border-color: red;
             }
 
-            &.soundcloud {
-                padding: 0px;
-                border: 0px;
-                background-size: cover;
+            &.text {
+                font-size: 1.7em;
+            }
+
+            &.sound {
+                padding: 0;
+                border: 0;
                 background-color: #333;
+                .open {
+                    position: absolute;
+                    padding: 10px;
+                    top: 0;
+                    right: 0;
+                    transition: fill 0.3s ease, opacity 0.5s ease;
+                    opacity: 0;
+                }
+                &:hover .open { opacity: 1; }
+                @include respond-to(touch) {
+                    .open {
+                        opacity: 1;
+                    }
+                }
             }
         }
     }
-}
 
-.audio-player {
-    width: 100%;
-    height: 100%;
-
-    .play-button {
-        cursor: pointer;
-        position: absolute;
+    .slideshow {
+        position: fixed;
+        left: 0;
+        top: 0;
         width: 100%;
         height: 100%;
-        transition: background-color 0.5s ease;
-        &::after {
-            position: absolute;
-            content: "";
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            border-radius: 100%;
-            width: 80px;
-            height: 80px;
-            margin: auto;
-            background-image: url(/static/pic/play.svg);
-            background-color: white;
-            background-image: center;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 60px;
-            transform: scale(0);
-            transition: background-color 0.5s ease,
-            /**/        transform 0.3s ease;
-        }
-    }
-    &:hover .play-button {
-        background-color: rgba(0, 0, 0, 0.6);
-    }
-    &:hover .play-button::after {
-        transform: scale(1);
-    }
-    &.is-playing .play-button::after {
-        transform: scale(1);
-        background-color: red;
-        background-image: url(/static/pic/pause-w.svg);
+        background-color: black;
     }
 
-    .seek-bar {
+    .detail {
+        @extend .linksinv;
         position: absolute;
-        bottom: 0;
+        background-color: black;
         width: 100%;
-        height: 32px;
-        & * { pointer-events: none; }
+        height: 100%;
+        color: white;
 
-        .seek-bar-tooltip {
-            position: absolute;
-            pointer-events: none;
+        &.sound {
             box-sizing: border-box;
-            z-index: 2;
-            opacity: 0;
-            font-family: $mono-font;
-            font-size: 20px;
-            font-weight: bold;
-            padding: 8px 14px;
-            border: 2px solid;
-            transform: translateY(-100%) translateX(-50%);
-            color: white;
+            padding: 2.5em;
+
+            .left-side {
+                position: absolute;
+                width: 40vw;
+                height: 40vw;
+                right: 50%;
+                top: 0;
+                bottom: 0;
+                margin: auto 1.25em;
+
+                @include respond-to(portrait) {
+                    width: 80vw;
+                    height: 80vw;
+                    left: 10vw;
+                    top: 10vw;
+                    margin: 0;
+                }
+            }
+
+            .right-side {
+                position: absolute;
+                overflow: hidden;
+                box-sizing: border-box;
+                width: 40vw;
+                height: 40vw;
+                left: 50%;
+                top: 0;
+                bottom: 0;
+                margin: auto 0;
+                padding: 0 1.25em;
+
+                @include respond-to(portrait) {
+                    width: 80vw;
+                    height: auto;
+                    left: 10vw;
+                    top: 96vw;
+                    margin: 0;
+                    padding: 0;
+                    overflow: visible;
+                }
+
+                @include respond-to(mobile) {
+                    font-size: 0.94em;
+                }
+
+                .name {
+                    font-size: 2em;
+                    margin: 0 -2% 1em 0;
+                    text-transform: uppercase;
+                    font-weight: bold;
+                    @include respond-to(mobile) {
+                        font-size: 1.5em;
+                    }
+                }
+
+                .desc, .date {
+                    font-size: 1.2em;
+                    color: #ccc;
+                    font-family: $serif-font;
+                }
+
+                .footer {
+                    position: absolute;
+                    bottom: 0;
+                    background-color: black;
+
+                    @include respond-to(portrait) {
+                        position: static;
+                        margin-top: 2em;
+                        margin-bottom: 2em;
+                    }
+                }
+
+                .tags {
+                    font-family: $mono-font;
+                    color: #777;
+                    margin-bottom: 0.625em;
+                }
+
+                .to-soundcloud {
+                    text-transform: uppercase;
+                    font-size: 0.75em;
+                }
+            }
+        }
+
+        &.text {
             background-color: black;
-            transition: border-color 0.5s ease,
-            /**/        opacity 0.3s ease;
-            &.played { border-color: red; }
-            &.buffered { border-color: white; }
-            &.unbuffered { border-color: #333; }
-        }
-        &:hover .seek-bar-tooltip { opacity: 1; }
+            outline: none;
 
-        .seek-bar-range {
-            bottom: 0;
-            position: absolute;
-            width: 100%;
-            height: 0px;
-            background-color: #333;
-            transition: height 0.2s ease;
-        }
-
-        .seek-bar-loaded {
-            position: absolute;
-            height: 100%;
-            background-color: white;
-            transition: width 1s ease;
-        }
-
-        .seek-bar-position {
-            position: absolute;
-            height: 100%;
-            background-color: red;
+            .content {
+                @extend .linksinv;
+                margin: 3.75em auto;
+                padding: 0 5%;
+                max-width: 29em;
+                font-family: $serif-font;
+                font-size: 1.46em;
+                line-height: 1.55;
+                h1 {
+                    margin-top: 2em;
+                    margin-bottom: 1.6em;
+                    text-align: center;
+                    font-size: 2.5em;
+                    font-weight: bold;
+                    line-height: 1.2;
+                    font-family: $mono-font;
+                    text-transform: lowercase;
+                    @include respond-to(landscape) {
+                        margin-left: -0.5em;
+                    }
+                    &::after {
+                        position: absolute;
+                        display: block;
+                        margin: 0.5em auto;
+                        content: "";
+                        width: 1.9em;
+                        left: 0;
+                        right: 0;
+                        background-image: url(/static/pic/sinusoid-b.svg);
+                        background-size: contain;
+                        height: 0.4em;
+                    }
+                }
+                p {
+                    color: #ccc;
+                }
+            }
         }
     }
-    &.is-started .seek-bar .seek-bar-range { height: 5px; }
-    .seek-bar:hover .seek-bar-range {  height: 20px; }
 
+    .slideshow-item {
+    }
 }

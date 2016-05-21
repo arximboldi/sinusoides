@@ -3,6 +3,7 @@
 
 - name: Mittagessen
   lang: Clojure
+  tags: [ Web ]
   link:
     - name: Website
       href: http://sinusoid.es/mittagessen
@@ -17,6 +18,7 @@
 
 - name: ZBeats
   lang: JavaScript
+  tags: [Web, Music]
   link:
     - name: Website
       href: http://kostspielig.github.io/zbeats
@@ -31,6 +33,7 @@
     WebAudio, synchronization and React.js stuff.
 
 - name: "Share the code: open source music tech"
+  tags: [Talk, Work, Music]
   link:
     - name: Website
       href: https://loop.ableton.com/program/state-open-source
@@ -49,6 +52,7 @@
 
 - name: "Transducers: from Clojure to C++"
   lang: [C++, Clojure]
+  tags: [Talk, Work]
   link:
     - name: Slides (HTML)
       href: /talks/transducers-cppcon15
@@ -60,12 +64,13 @@
   desc: |
     I presented the work on [Atria](/do/atria) at
     [CppCon](http://cppcon.org/) in 2015.  The session describes the
-    transducers module and its implementation, which is somewhat
-    surprisingly, less stateful than the Clojure counterpart and very
-    performant.
+    transducers module and its implementation wich, somewhat
+    surprisingly, is very performant and less stateful than the
+    Clojure counterpart.
 
 - name: Atria
   lang: C++
+  tags: [Library, Work]
   link:
     - name: Code (Github)
       href: http://www.github.com/ableton/atria
@@ -79,18 +84,20 @@
 
 - name: Aqt Cassowary
   lang: [C++, QML]
+  tags: [Library, Work, Graphics]
   link:
     - name: Code (Github)
       href: http://www.github.com/ableton/aqt-cassowary
   imgs: [ cassowary-small.png, cassowary.png ]
   desc: |
-    Developed at Ableton in 2015, this is plugin brings the power of
+    Developed at Ableton in 2015, this plugin brings the power of
     the [Cassowary constraint solver](http://overconstrained.io/) to
     QML, the Qt based JavaScript superset for declarative user
     interfaces.
 
 - name: Cooper
   lang: Python
+  tags: [Library]
   imgs: [ cooper-small.png, cooper.jpg ]
   link:
     - name: Code (Github)
@@ -107,17 +114,20 @@
 
 - name: Modernize Your C++
   lang: C++
+  tags: [Talk, Work]
   imgs: [ modernize-small.png, modernize.png ]
   link:
     - name: Slides (HTML)
       href: /talks/moderncpp
   desc: |
     I did this talk on modern C++ both in an *Ableton Dev Salon* and a
-    [Berlin C++ Meetup](http://www.meetup.com/berlincplusplus/) between 2014 and 15.  It
-    discusses value semantics and non-intrusive polymorphism through a
-    provocative fable, and introduces the [Atria](/do/atria) library.
+    [Berlin C++ Meetup](http://www.meetup.com/berlincplusplus/)
+    between 2014 and 2015.  Through a provocative fable, it discusses
+    value semantics and non-intrusive polymorphism and introduces the
+    [Atria](/do/atria) library.
 
 - name: Mixco
+  tags: [Library, Music]
   lang: [CoffeeScript, JavaScript]
   link:
     - name: Website
@@ -133,6 +143,7 @@
     all the fancy technologies of the time (Gulp, NodeJS, etc.).
 
 - name: Heterarchy
+  tags: [Library]
   lang: [CoffeeScript, JavaScript]
   link:
     - name: Website
@@ -147,6 +158,7 @@
 
 - name: sinusoides
   lang: Clojure
+  tags: [Web]
   imgs: [ sinusoides-small.png, sinusoides.svg ]
   link:
     - name: Code (Github)
@@ -172,6 +184,7 @@
 
 - name: Eat Out Berlin
   lang: [CoffeeScript, JavaScript]
+  tags: [Web]
   link:
     - name: Website
       href: http://www.eatoutberlin.com
@@ -185,6 +198,7 @@
 
 - name: Black Hole
   lang: [CoffeeScript, JavaScript]
+  tags: [Web, Graphics]
   link:
     - name: Website
       href: http://www.arthackday.net/projects/juan-pedro-bolivar-puente-jerome-morin-drouin-black-hole
@@ -201,7 +215,8 @@
     stars.
   code: https://github.com/jmdrouin/incredible-art
 
-- name: C++ Template Metaprogramming
+- name: "C++ Template Meta&shy;programming"
+  tags: [Talk, Work]
   lang: [C++, Haskell]
   imgs: [ meta-small.png, meta.png ]
   link:
@@ -218,6 +233,7 @@
     techniques for C++14 and beyond.
 
 - name: jpblib
+  tags: Library
   lang: Python
   link:
     - name: Website
@@ -234,6 +250,7 @@
 
 - name: Ableton
   lang: C++
+  tags: [Work, Music]
   link:
     - name: Website
       href: http://www.ableton.com
@@ -248,6 +265,7 @@
 
 - name: Advanced Python Course
   lang: Python
+  tags: [Talk, Work]
   link:
     - name: Website
       href: http://sinusoid.es/python-avanzado
@@ -260,6 +278,7 @@
 
 - name: CVG Moodle plug-ins
   lang: PHP
+  tags: [Work, Uni, Web]
   link:
     - name: Website
       href: http://www.nongnu.org/cvg-moodle
@@ -274,6 +293,7 @@
 
 - name: GNU Psychosynth
   lang: C++
+  tags: [Uni, Library, Music, Graphics]
   link:
     - name: Website
       href: http://www.psychosynth.com
@@ -283,11 +303,12 @@
   desc: |
     A framework for the development of modular, interactive and
     collaborative synthesisers targeted at live music performance. It
-    won the Spanish Inter-University Free Software contest in
-    2008. Written in 2007 onwards.
+    won the Spanish Inter-University Free Software contest in 2008.
+    Written in 2007 onwards.
 
 - name: Mixxx
   lang: [C++, JavaScript]
+  tags: [Music]
   link:
     - name: Website
       href: http://www.mixxx.org
@@ -295,11 +316,12 @@
   desc: |
     Mixxx is a professional DJ software. I am mostly a user, but since
     2010 I have made a couple of patches and maintain the
-    **JavaScript** MIDI mapping for the [M-Audio Xponent
+    JavaScript MIDI mapping for the [M-Audio Xponent
     controller](http://www.mixxx.org/wiki/doku.php/m-audio_xponent).
 
 - name: HCrypt
   lang: Haskell
+  tags: Uni
   link:
     - name: Source (tar.gz)
       href: /static/soft/hcryp-10.07.2011.tar.gz
@@ -312,6 +334,7 @@
 
 - name: Artificial vision toolkit
   lang: Matlab
+  tags: [Uni, Graphics]
   link:
     - name: Source (tar.gz)
       href: /static/soft/mia-18.02.2011.tar.gz
@@ -324,6 +347,7 @@
 
 - name: MPI algorithms
   lang: C++
+  tags: [Library, Uni]
   link:
     - name: Source (tar.gz)
       href: /static/soft/pdp-27.01.2011.tar.gz
@@ -337,6 +361,7 @@
 
 - name: Desarrollo rápido de videojuegos con el panda y la pitón
   lang: Python
+  tags: [Talk, Uni, Graphics]
   link:
     - name: Slides (PDF)
       href: /talks/charla-juegos.pdf
@@ -353,6 +378,7 @@
 
 - name: Noxim 3D
   lang: C++
+  tags: Uni
   link:
     - name: Code (Launchpad)
       href: https://launchpad.net/noxim-utu
@@ -366,6 +392,7 @@
 
 - name: Pigeoncide
   lang: Python
+  tags: [Uni, Game, Graphics]
   link:
     - name: Code (Savannah)
       href: https://savannah.nongnu.org/projects/pigeoncide
@@ -381,6 +408,7 @@
 
 - name: Yet Another Auction System
   lang: Python
+  tags: [Uni, Web]
   imgs: [ yaas-small.png, yaas.png ]
   link:
     - name: Source (tar.gz)
@@ -396,6 +424,7 @@
 
 - name: Code of Greed
   lang: Python
+  tags: [Uni, Game, Graphics]
   link:
     - name: Code (Savannah)
       href: https://savannah.nongnu.org/projects/jagsat
@@ -412,6 +441,7 @@
 
 - name: Overdose
   lang: C++
+  tags: [Uni, Game, Graphics]
   link:
     - name: Source (tar.gz)
       href: /static/soft/overdose-0.1.2.tar.gz
@@ -424,6 +454,7 @@
 
 - name: HMech
   lang: Haskell
+  tags: [Uni, Game]
   link:
     - name: Source (tar.gz)
       href: /static/soft/hmech-24.06.2010.tar.gz
@@ -437,6 +468,7 @@
 
 - name: HForm
   lang: Haskell
+  tags: [Uni]
   link:
     - name: Source (tar.gz)
       href: /static/soft/hform-0.1.tar.gz
@@ -448,6 +480,7 @@
 
 - name: Concurrent traffic simulator
   lang: Java
+  tags: [Uni]
   link:
     - name: Source (tar.gz)
       href: /static/soft/pc-27.05.2009.tar.gz
@@ -460,6 +493,7 @@
 
 - name: JPoker
   lang: Java
+  tags: [Uni, Game]
   link:
     - name: Source (tar.gz)
       href: /static/soft/jpoker-23.01.2009.tar.gz
@@ -471,6 +505,7 @@
 
 - name: ANSI C Modular
   lang: C
+  tags: [Talk, Uni]
   imgs: [ cmodular-small.png, cmodular.png ]
   link:
     - name: Slides (PDF)
@@ -503,6 +538,7 @@
 
 - name: ASM Paint
   lang: ASM
+  tags: [Uni, Graphics]
   link:
     - name: Source (tar.gz)
       href: /static/soft/asmpaint-09.01.2008.tar.gz
@@ -515,6 +551,7 @@
 
 - name: PC speaker player
   lang: C
+  tags: [Uni, Music]
   link:
     - name: Source (tar.gz)
       href: /static/soft/ec2-24.06.2008.tar.gz
@@ -528,17 +565,19 @@
 
 - name: PLIS compiler
   lang: C++
+  tags: [Uni]
   imgs: [ plisc-small.png, plisc.png ]
   link:
     - name: Source (tar.gz)
       href: /static/soft/plisc-0.1.2.tar.gz
   desc: |
-    Compiler of my own languge with C-like semantics but maybe
+    Compiler of my own language with C-like semantics but maybe
     shorter syntax. Written in 2007 as part of a course in
     computer organisation in the University of Granada.
 
 - name: Mail Crawl
   lang: C
+  tags: [Uni]
   link:
     - name: Source (tar.gz)
       href: /static/soft/mailcrawl-0.2.0.tar.gz
@@ -551,6 +590,7 @@
 
 - name: Yet Another Neural Network
   lang: C++
+  tags: [Uni]
   imgs: [ yann-small.png, yann.png ]
   link:
     - name: Source (tar.gz)
@@ -563,17 +603,19 @@
 
 - name: Harmonic
   lang: Java
+  tags: [Uni, Web]
   link:
     - name: Source (tar.gz)
       href: /static/soft/harmonic-03.01.2008.tar.gz
   imgs: [ harmonic-small.png, harmonic.png ]
   desc: |
-    A clone of the [http://www.last.fm](Last.fm) site. It uses
+    A clone of the [Last.fm](http://www.last.fm) site. It uses
     servlets and its own dispatching and DOM manipulation
     framework. The application itself was never fully finished.
 
 - name: Member Manager
   lang: Python
+  tags: [Uni]
   link:
     - name: Source (tar.gz)
       href: /static/soft/member-28.10.2008.tar.gz
@@ -585,6 +627,7 @@
 
 - name: GL Morph
   lang: C
+  tags: [Uni, Graphics]
   link:
     - name: Source (tar.gz)
       href: /static/soft/glmorph-12.05.2008.tar.gz
@@ -599,6 +642,7 @@
 
 - name: GNU PDF
   lang: C
+  tags: [Library]
   link:
     - name: Website
       href: http://www.gnupdf.org
@@ -613,6 +657,7 @@
 
 - name: GNU Jump
   lang: C
+  tags: [Game, Graphics]
   link:
     - name: Website
       href: http://gnujump.es.gnu.org
@@ -626,6 +671,7 @@
 
 - name: Luciferino
   lang: C
+  tags: [Game]
   link:
     - name: Website
       href: http://luciferino.sourceforge.net

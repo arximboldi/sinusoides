@@ -18,157 +18,145 @@
 
 (ns sinusoides.views.do-
   (:require-macros [cljs.core.async.macros :refer [go]])
-  (:require [sinusoides.util :as util]
+  (:require [sinusoides.util :as util :refer-macros [match-get]]
             [sinusoides.routes :as routes]
             [sinusoides.views.sinusoid :as sinusoid]
-            [sinusoides.views.addons :refer [css-transitions]]
+            [sinusoides.views.slideshow :as slideshow]
+            [sinusoides.views.decorators :as deco]
             [cljs-http.client :as http]
             [cljs.core.async :refer [<! timeout]]
             [goog.events :as events]
             [reagent.core :as r]))
 
-(defn do-detail-view [entries entry last-entry]
-  (letfn
-      [(nav-arrow! [diff]
-         (when-let [[idx _] @entry]
-           (when-let [next (get-in @entries [(+ idx diff) :slug])]
-             (routes/nav! (routes/do- {:id next})))))
+(def state
+  {:entries []
+   :languages []
+   :tags []
+   :filter {:languages #{}
+            :tags #{}}})
 
-       (handle-key [event]
-         (case (.-keyCode event)
-           37 (nav-arrow! -1)
-           39 (nav-arrow! +1)
-           27 (routes/nav! (routes/do))
-           nil))]
+(defn detail-view [item]
+  [:div.do-detail.links
+   [:div.left-side
+    [:a.img {:href (str "/static/screens/" ((:imgs item) 1))
+             :style {:background-image
+                     (str "url(/static/screens/" ((:imgs item) 1) ")")}}]]
+   [:div.right-side
+    [:div.content
+     [:div.header {:dangerouslySetInnerHTML
+                   {:__html (:name item)}}]
+     [:div.desc
+      [:div {:dangerouslySetInnerHTML
+             {:__html (util/md->html (:desc item))}}]
+      (for [link (:link item)]
+        ^{:key link}
+        [:a.link {:href (:href link)} (:name link)])]]]])
 
-    (r/with-let [listener (events/listen js/document "keydown" handle-key)]
-      [css-transitions {:transition-name "do-detail"
-                        :transition-appear true
-                        :transition-appear-timeout 1000
-                        :transition-enter-timeout 1000
-                        :transition-leave-timeout 1000}
-       (when @entry
-         (let [[idx p] @entry
-               last-idx (if @last-entry (@last-entry 0) -1)
-               [transition-name z-index]
-               (cond
-                 (< idx last-idx) ["swipe-left"  (- (count @entries) idx)]
-                 (> idx last-idx) ["swipe-right" idx])]
-           ^{:key :do-detail}
-           [:div#do-detail.links
-            [:div#left-side
-             [css-transitions {:transition-name transition-name
-                               :transition-enter-timeout 500
-                               :transition-leave-timeout 500}
-              ^{:key idx}
-              [:a#img {:href (str "/static/screens/" ((:imgs p) 1))
-                       :style {:z-index z-index
-                               :background-image
-                               (str "url(/static/screens/" ((:imgs p) 1) ")")}}]]]
-            [:div#right-side
-             [css-transitions {:transition-name transition-name
-                               :transition-enter-timeout 500
-                               :transition-leave-timeout 500}
-              ^{:key idx}
-              [:div#content {:style {:z-index z-index}}
-               [:div#header (:name p)]
-               [:div#desc {:dangerouslySetInnerHTML
-                           {:__html (util/md->html (:desc p))}}]
-               (for [link (:link p)]
-                 ^{:key link}
-                 [:a.link {:href (:href link)} (:name link)])]]
-             [:div#footer
-              (if-let [id (get-in @entries [(- idx 1) :slug])]
-                [:a.prev.enabled {:href (routes/do- {:id id})}]
-                [:div.prev.disabled])
-              (if-let [id (get-in @entries [(+ idx 1) :slug])]
-                [:a.next.enabled {:href (routes/do- {:id id})}]
-                [:div.next.disabled])
-              [:a.close {:href (routes/do)}]]]]))]
-      (finally (events/unlistenByKey listener)))))
+(defn filters-view [do]
+  (r/with-let
+    [aliases {"CoffeeScript" "Coffee"}
 
-(defn do-view- [sin do entries & children]
-  [:div#do-page.page
-   [:div#presentation.links (sinusoid/hovered sin)
-    [:div.title "Do."]
-    [:div.intro
-     [:a {:href (routes/am)} "Being"]
-     " is doing. One thing that I do a lot is building and talking
-         about software. Most of it is "
-     [:a {:href "http://www.gnu.org/philosophy/free-sw.html"}
-      "libre software"]
-     ". Libre software is a nice "
-     [:a {:href (routes/think)} "thought"],
-     " that blurs the boundaries between consumers and producers of
-     software."
-     [:em " Blah blah."]
-     "You can taste a selection of my doing here."]]
+     clear-filters
+     (fn []
+       (swap! do assoc-in [:filter] {:languages #{}
+                                     :tags #{}}))
+     toggle-filter
+     (fn [type name]
+       (swap! do update-in [:filter type]
+              #(util/togglej % name)))
 
-   [:div#stuff
-    [:div#language-links
-     [:a.cv {:href "/static/files/resume-en.pdf"} "Résumé"]
-     (doall
-       (for [lang (:languages @do)]
-         ^{:key lang}
-         [:div.filter
-          {:class (if (contains? (get-in @do [:filter :languages]) lang)
-                    "on"
-                    "off")
-           :on-click
-           (fn [] (swap! do update-in [:filter :languages]
-                    #(util/togglej % lang)))}
-          lang]))
-     (when-not (empty? (get-in @do [:filter :languages]))
-       [:div.filter.clearf
-        {:on-click (fn [] (swap! do assoc-in [:filter :languages] #{}))}
-        "Clear"])]
+     filter-view
+     (fn [type name]
+       [:div.filter
+        {:class (if (contains? (get-in @do [:filter type]) name)
+                  "on" "off")
+         :on-click #(toggle-filter type name)}
+        (or (get aliases name) name)])]
 
-    [:div.programs
-     (for [p @entries]
+    [:div.filters
+     [:div.filter-group
+      [:div.header "//"]
+      [:a.cv {:href "/static/files/resume-en.pdf"} "Résumé"]
+      (when-not (= (get-in @do [:filter]) {:languages #{}
+                                           :tags #{}})
+        [:div.filter.clearf {:on-click clear-filters} "Clear"])]
+
+     [:div.filter-group
+      [:div.header "//"]
+      (for [tag (:tags @do)]
+        ^{:key tag}
+        [filter-view :tags tag])]
+
+     [:div.filter-group
+      [:div.header "//"]
+      (for [lang (:languages @do)]
+        ^{:key lang}
+        [filter-view :languages lang])]]))
+
+(defn programs-view [entries]
+  [deco/grid {:class "programs"
+              :grid-size-em   10.25
+              :grid-margin-em  0.375}
+   (for [p @entries]
+     (let [background-style
+           {:background-image
+            (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}]
        ^{:key (:slug p)}
        [:a {:href (routes/do- {:id (:slug p)})
-            :style {:background-image
-                    (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}}
-        [:div]
-        [:span (:name p)]])]]
+            :style background-style}
+        [:div {:style background-style}]
+        [:span {:dangerouslySetInnerHTML {:__html (:name p)}}]]))])
 
-   (first children)
-   (rest children)])
+(defn view [sin do view last]
+  (r/with-let
+    [as-vec    #(if (vector? %) % [%])
+     get-langs #(as-vec (:lang %))
+     get-tags  #(as-vec (:tags %))
 
-(defn do-view [sin do]
-  (letfn
-      [(get-langs [p]
-         (let [lang (:lang p)]
-           (if (vector? lang)
-             lang
-             [lang])))
+     _
+     (go (let [entries   (map #(assoc % :slug (util/to-slug (:name %)))
+                              (:body  (<! (http/get "/data/do.json"))))
+               languages (apply sorted-set
+                                (filter identity (mapcat get-langs entries)))
+               tags      (apply sorted-set
+                                (filter identity (mapcat get-tags entries)))]
+           (swap! do assoc-in [:entries] entries)
+           (swap! do assoc-in [:languages] languages)
+           (swap! do assoc-in [:tags] tags)))
 
-       (contain-any? [set v]
-         (some #(contains? set %) v))
+     contain-any?
+     (fn [set v]
+       (some #(contains? set %) v))
 
-       (filter-entries []
-         (let [lang-filters (get-in @do [:filter :languages])]
-           (vec (filter #(or (empty? lang-filters)
-                             (contain-any? lang-filters
-                                           (get-langs %)))
-                  (:entries @do)))))
+     entries
+     (r/track
+       (fn []
+         (let [lang-filters (get-in @do [:filter :languages])
+               tags-filters (get-in @do [:filter :tags])]
+           (vec (filter #(and
+                           (or (empty? tags-filters)
+                               (contain-any? tags-filters
+                                             (get-tags %)))
+                           (or (empty? lang-filters)
+                               (contain-any? lang-filters
+                                             (get-langs %))))
+                        (:entries @do))))))
 
-       (find-entry [entries id]
-         (when id
-           (first (filter #(= id (:slug (% 1)))
-                    (map-indexed vector entries)))))
+     slideshow
+     (r/track
+       (fn []
+         {:route-item #(routes/do- {:id %})
+          :route-back #(routes/do)
+          :curr (match-get @view [:do id])
+          :last (match-get @last [:do id])
+          :entries @entries}))]
 
-       (fetch-data []
-         (go (let [entries   (map #(assoc % :slug (util/to-slug (:name %)))
-                               (:body  (<! (http/get "/data/do.json"))))
-                   languages (apply sorted-set
-                               (filter identity (mapcat get-langs entries)))]
-               (swap! do assoc-in [:entries] entries)
-               (swap! do assoc-in [:languages] languages))))]
+    [:div#do-page.page
+     [:div.presentation.links (sinusoid/hovered sin)
+      [:div.title "Do."]]
 
-    (fetch-data)
-    (r/with-let [entries    (r/track filter-entries)
-                 entry      (r/track #(find-entry @entries (:detail @do)))
-                 last-entry (r/track #(find-entry @entries (:last @do)))]
-      [do-view- sin do entries
-       [do-detail-view entries entry last-entry]])))
+     [:div.stuff
+      [filters-view do]
+      [programs-view entries]]
+
+     [slideshow/view slideshow detail-view]]))

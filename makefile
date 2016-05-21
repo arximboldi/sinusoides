@@ -20,7 +20,8 @@ resources/%.json: %.yaml
 data: $(DATA)
 
 sass:
-	compass compile
+	touch sass/main.scss
+	compass compile --output-style compressed
 
 cljs:
 	lein cljsbuild once

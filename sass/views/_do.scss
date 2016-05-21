@@ -1,345 +1,391 @@
 @import '../global';
 
-#do-detail {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    box-sizing: border-box;
-
-    &.left-entry {
-        border-left: 100px solid red;
-    }
-    &.right-entry {
-        border-right: 100px solid blue;
-    }
-
-    @keyframes enter-detail {
-        from { background-color: transparent; }
-        to   { background-color: black; }
-    }
-    @keyframes leave-detail {
-        from { background-color: black; }
-        to   { background-color: transparent; }
-    }
-    @keyframes enter-left-side {
-        from { transform: translateX(-50vw); }
-        to   { transform: translateX(0); }
-    }
-    @keyframes leave-left-side {
-        from { transform: translateX(0); }
-        to   { transform: translateX(-50vw); }
-    }
-    @keyframes enter-right-side {
-        from { transform: translateX(50vw); }
-        to   { transform: translateX(0); }
-    }
-    @keyframes leave-right-side {
-        from { transform: translateX(0); }
-        to   { transform: translateX(50vw); }
-    }
-    @keyframes enter-right {
-        from { transform: translateX(50vw); }
-        to   { transform: translateX(0); }
-    }
-    @keyframes enter-left {
-        from { transform: translateX(-50vw); }
-        to   { transform: translateX(0); }
-    }
-    @keyframes leave-fade {
-        from { opacity: 1; }
-        to   { opacity: 0; }
-    }
-
-    &.do-detail-appear, &.do-detail-enter {
-        animation: enter-detail 1s forwards;
-        #left-side { animation: enter-left-side 1s forwards; }
-        #right-side { animation: enter-right-side 1s forwards; }
-    }
-
-    &.do-detail-leave {
-        animation: leave-detail 1s forwards;
-        #left-side { animation: leave-left-side 1s forwards; }
-        #right-side { animation: leave-right-side 1s forwards; }
-    }
-
-    #left-side {
-        overflow: hidden;
-        position: absolute;
-        left: 0;
-        width: 50%;
-        height: 100%;
-        background-color: black;
-    }
-
-    #right-side {
-        overflow: hidden;
-        position: absolute;
-        right: 0;
-        width: 50%;
-        height: 100%;
-        background-color: black;
-    }
-
-    #img {
-        position: absolute;
-        display: block;
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center center;
-        background-color: #333;
-        &.swipe-left-enter { animation: enter-left 500ms forwards; }
-        &.swipe-left-leave { animation: leave-fade 500ms forwards; }
-        &.swipe-right-enter { animation: enter-right 500ms forwards; }
-        &.swipe-right-leave { animation: leave-fade 500ms forwards; }
-    }
-
-    #content {
-        position: absolute;
-        width: 100%;
-        padding: 16%;
-        box-sizing: border-box;
-        background-color: black;
-        &.swipe-left-enter { animation: enter-left 500ms forwards; }
-        &.swipe-left-leave { animation: leave-fade 500ms forwards; }
-        &.swipe-right-enter { animation: enter-right 500ms forwards; }
-        &.swipe-right-leave { animation: leave-fade 500ms forwards; }
-    }
-
-    #header {
-        float: right;
-        display: inline-block;
-        background: white;
-        margin: -2% -2% 0 0;
-        padding: 10px;
-        text-transform: uppercase;
-        text-align: right;
-        font-size: 2em;
-        font-weight: bold;
-    }
-
-    #desc {
-        a {
-            color: white;
-            &:hover { color: red; }
-        }
-        color: #999999;
-        font-size: 1.5em;
-        float: right;
-        width: 100%;
-        padding: 20px 0 0 0;
-        box-sizing: border-box;
-        line-height: 1.25em;
-    }
-
-    a.link {
-        color: white;
-        border: 2px solid white;
-        margin-right: 10px;
-        margin-bottom: 10px;
-        display: block;
-        float: left;
-        padding: 10px;
-        font-weight: bold;
-        transition: border 0.2s ease-in-out,
-        /**/        background 0.2s ease-in-out,
-        /**/        color 0.2s ease-in-out;
-        &:hover {
-            color: black;
-            border: 2px solid red;
-            background: red;
-        }
-    }
-
-    #footer {
-        z-index: 1000;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        .prev, .next, .close {
-            display: block;
-            width: 30px;
-            height: 72px;
-            margin-right: 28px;
-            background-color: white;
-            background-size: cover;
-            background-position: center 0;
-            transition: background-color 300ms ease-in-out;
-            &:hover { background-color: red; }
-            &.disabled {
-                opacity: 0.25;
-                &:hover { background-color: white; }
-            }
-        }
-        .prev  { background-image: url(/static/pic/left-i.svg); }
-        .next  { background-image: url(/static/pic/right-i.svg); }
-        .close { background-image: url(/static/pic/close-i.svg); }
-    }
-}
-
 #do-page {
     @keyframes enter-presentation {
-        from { transform: translateX(-700px); }
-        40%  { transform: scale(1.3) translateX(-700px); }
-        to   { transform: scale(1) translateX(0px); }
+        from { transform: translateX(-120%); }
+        40%  { transform: scale(2) translateX(-120%); }
+        to   { transform: scale(1) translateX(0); }
     }
     @keyframes enter-stuff {
         from { transform: translateX(-100%); }
         70%  { transform: translateX(-100%); }
-        to   { transform: translateX(0px); }
+        to   { transform: translateX(0); }
     }
 
     @keyframes leave-presentation {
-        from { transform: translateX(0px); }
-        50%  { transform: translateX(-700px); }
-        to   { transform: translateX(-700px); }
+        from { transform: translateX(0); }
+        50%  { transform: translateX(-130%); }
+        to   { transform: translateX(-130%); }
     }
     @keyframes leave-stuff {
-        from { transform: translateX(0px); }
-        40%  { transform: translateX(-100%); }
-        to   { transform: translateX(-100%); }
+        from { transform: translateX(0); }
+        40%  { transform: translateX(-130%); }
+        to   { transform: translateX(-130%); }
     }
 
     &.page-appear, &.page-enter {
-        #presentation { animation: enter-presentation $page-anim-full forwards; }
-        #stuff { animation: enter-stuff $page-anim-full forwards; }
+        .presentation { animation: enter-presentation $page-anim-full forwards; }
+        .stuff { animation: enter-stuff $page-anim-full forwards; }
     }
     &.page-leave {
-        #presentation { animation: leave-presentation $page-anim-full forwards; }
-        #stuff { animation: leave-stuff $page-anim-full forwards; }
+        .presentation { animation: leave-presentation $page-anim-full forwards; }
+        .stuff { animation: leave-stuff $page-anim-full forwards; }
     }
 
-    #presentation {
+    .presentation {
         position: absolute;
-        top: 40px;
-        left: 40px;
-        width: 500px;
-        height: 150px;
-        background: white;
-        padding: 24px;
-        padding-bottom: 18px;
-        border: 8px solid white;
+        font-size: 9.4em;
+        top: 2.62rem;
+        height: 1em;
+        left: 0;
+        background: black;
+        color: white;
+        border-right: 0.5rem solid white;
         transition: border-color 0.5s ease-in-out;
         &.hovered { border-color: red; }
-        &::before {
-            position: absolute;
-            top: -8px;
-            left: -48px;
-            display: block;
-            content: "";
-            width: 40px;
-            height: 208px;
-            background-color: black;
-        }
         .title {
-            font-size: 140px;
-            float: left;
-            font-weight: bold;
-            margin-right: 20px;
-            margin-top: 4px;
-            padding-top: 4px;
-            line-height: 140px;
+            line-height: 1.4em;
+            font-size: 0.75em;
+            margin-left: 0.28em;
+            margin-right: 0.26em;
             display: block;
-            border-top: 8px solid white;
-        }
-        .intro {
-            font-size: 14px;
-            text-align: right;
-            color: #888888;
-            line-height: 20px;
         }
     }
 
-    #stuff {
+    .stuff {
         position: absolute;
-        top: 260px;
+        top: 13.75em;
+        width: 100%;
     }
 
-    .programs {
-        margin: -10px 30px 0 30px;
-        a {
-            display: block;
+    .filters {
+        position: relative;
+        font-family: $mono-font;
+        font-size: 1.1em;
+
+        .filter-group {
+            clear: both;
+            text-align: left;
             position: relative;
-            float: left;
-            margin: 6px;
-            background-size: contain;
-            background-color: #333;
-            width: 125px;
-            height: 125px;
-            border: 0px;
-            overflow: hidden;
-            text-decoration: none;
-            border: 4px solid black;
-            transition: border-color 0.2s ease-in-out;
-            div {
-                position: relative;
-                margin: 0;
-                padding: 0;
-                width: 125px;
-                height: 125px;
-                background: black;
-                opacity: 0;
-                transition: opacity 0.4s ease-in-out;
-            }
-            span {
-                position: relative;
-                top: 0px;
-                left: 0px;
-                display: block;
-                padding: 10px;
-                margin: 0;
-                color: red;
-                text-decoration: none;
-                text-overflow: ellipsis;
-                font-weight: bold;
-                font-size: 1.3em;
-                word-break: normal;
-                display: block;
-                transition: transform 0.2s ease-in-out;
-            }
-            &:hover {
-                border-color: red;
-                div { opacity: 0.7; }
-                span { transform: translate(0, -120px); }
-            }
+            padding-left: 2.27em;
+            margin: 0.57em 0;
         }
-    }
 
-    #language-links {
-        margin: 40px 0 30px 40px;
-        a, .filter {
-            cursor: pointer;
+        a, .header, .filter {
+            @extend .noselect;
+            position: relative;
             display: inline-block;
             text-decoration: none;
-            color: #777777;
-            padding: 10px;
-            margin-right: 0px;
-            margin-top: 2px;
-            font-weight: bold;
+            color: #888;
+            margin: 0.23em 0.56em;
+            text-transform: lowercase;
             transition: border-color 0.2s ease-in-out, background 0.2s ease-in-out, color 0.2s ease-in-out;
+            &.header {
+                position: absolute;
+                margin-left: -1.8em;
+                color: white;
+                font-weight: bold;
+            }
+            &.filter {
+                cursor: pointer;
+            }
             &.on {
-                border-bottom: 2px solid red;
-                margin-bottom: -2px;
+                color: white;
+                &::after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    margin-top: 0.22em;
+                    border-bottom: 2px solid white;
+                    transition: border-color 0.2s ease;
+                    width: 100%;
+                }
             }
             &.cv {
+                font-weight: bold;
                 color: white;
-                border-right: 1px solid #777777;
             }
             &.clearf {
+                font-weight: bold;
                 color: red;
-                border-left: 1px solid red;
             }
-            &:hover {
-                background: red;
-                color: white;
-                &.on {
-                    border-bottom: 2px solid white;
-                    margin-bottom: -2px;
+        }
+        a, .filter {
+            @include hover-or-active {
+                color: red;
+                &::after {
+                    border-color: red;
                 }
             }
         }
     }
+
+    .filters {
+        box-sizing: border-box;
+        text-align: left;
+        width: 100%;
+        padding: 0 1.7em 0.57em 1.7em;
+    }
+
+    .programs {
+        @extend .clearfix;
+        @extend .noselect;
+        display: block;
+        box-sizing: border-box;
+        margin: 0 2.25rem 2.25rem 2.25rem;
+        a {
+            display: block;
+            box-sizing: border-box;
+            position: relative;
+            float: left;
+            background-color: #333;
+            background-size: contain;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            overflow: hidden;
+            text-decoration: none;
+            border: 0.25rem solid black;
+            transition: border-color 0.2s ease-in-out;
+            div {
+                background-size: contain;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                @include filter(grayscale(100%));
+                transition: opacity 0.5s ease;
+            }
+            span {
+                position: absolute;
+                box-sizing: border-box;
+                display: block;
+                height: 100%;
+                width: 100%;
+                padding: 10%;
+                color: red;
+                text-decoration: none;
+                text-overflow: ellipsis;
+                font-weight: bold;
+                font-size: 1.2em;
+                hyphens: manual;
+                display: block;
+                opacity: 0;
+                background-color: rgba(0, 0, 0, 0.8);
+                transform: scale(2, 2);
+                transition: opacity 0.2s ease, transform 0.2s ease-in-out;
+            }
+            @include hover-or-active {
+                border-color: red;
+                div { opacity: 1; }
+                span {
+                    opacity: 1;
+                    transform: scale(1, 1);
+                }
+            }
+        }
+    }
+
+    .slideshow {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+
+        @keyframes enter-detail {
+            from { background-color: transparent; }
+            to   { background-color: black; }
+        }
+
+        @keyframes leave-detail {
+            from { background-color: black; }
+            to   { background-color: transparent; }
+        }
+
+        &.slideshow-appear, &.slideshow-enter {
+            animation: enter-detail 1s forwards;
+            .left-side { animation: enter-left 1s forwards; }
+            .right-side { animation: enter-right 1s forwards; }
+        }
+
+        &.slideshow-leave {
+            animation: leave-detail 1s forwards;
+            .left-side { animation: leave-left 1s forwards; }
+            .right-side { animation: leave-right 1s forwards; }
+        }
+
+        .slideshow-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+
+            .do-detail {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            }
+
+            @keyframes enter-right {
+                from { transform: translateX(100%); }
+                to   { transform: translateX(0); }
+            }
+            @keyframes enter-left {
+                from { transform: translateX(-100%); }
+                to   { transform: translateX(0); }
+            }
+            @keyframes leave-left {
+                from { transform: translateX(0); }
+                to   { transform: translateX(-100%); }
+            }
+            @keyframes leave-right {
+                from { transform: translateX(0); }
+                to   { transform: translateX(100%); }
+            }
+            @keyframes leave-fade {
+                from { opacity: 1; }
+                to   { opacity: 0; }
+            }
+
+            &.swipe-left-enter  { animation: none; }
+            &.swipe-left-leave  { animation: none; }
+            &.swipe-right-enter { animation: none; }
+            &.swipe-right-leave { animation: none; }
+
+            &.swipe-left-enter .img  { animation: enter-left 500ms forwards; }
+            &.swipe-left-leave .img  { animation: leave-fade 500ms forwards; }
+            &.swipe-right-enter .img { animation: enter-right 500ms forwards; }
+            &.swipe-right-leave .img { animation: leave-fade 500ms forwards; }
+
+            &.swipe-left-enter .content  { animation: enter-left 500ms forwards; }
+            &.swipe-left-leave .content  { animation: leave-fade 500ms forwards; }
+            &.swipe-right-enter .content { animation: enter-right 500ms forwards; }
+            &.swipe-right-leave .content { animation: leave-fade 500ms forwards; }
+
+            .left-side {
+                overflow: hidden;
+                position: fixed;
+                left: 0;
+                width: 50%;
+                height: 100%;
+
+                @include respond-to(portrait) {
+                    position: absolute;
+                    width: 100vw;
+                    height: 61.80vw;
+                }
+            }
+
+            .right-side {
+                position: absolute;
+                right: 0;
+                width: 50%;
+                height: 100%;
+
+                @include respond-to(portrait) {
+                    top: 0;
+                    left: 0;
+                    width: 100vw;
+                    height: 100%;
+                }
+            }
+
+            .img {
+                position: absolute;
+                display: block;
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                background-position: center center;
+                background-color: #333;
+            }
+
+            .content {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                padding: 16%;
+                box-sizing: border-box;
+                background-color: black;
+
+                @include respond-to(mobile) {
+                    padding: 12%;
+                    @include respond-to(landscape) {
+                        font-size: 0.9em;
+                    }
+                }
+                @include respond-to(portrait) {
+                    background-color: transparent;
+                }
+            }
+
+            .header {
+                float: right;
+                display: inline-block;
+                background: white;
+                margin: -2% -2% 0 0;
+                padding: 0.31em 0.62em;
+                text-transform: uppercase;
+                text-align: right;
+                font-size: 2em;
+                font-weight: bold;
+
+                @include respond-to(portrait) {
+                    position: absolute;
+                    right: 0;
+                    bottom: calc(100vh - 61.80vw);
+                    margin-bottom: 1em;
+                }
+            }
+
+            .desc {
+                @extend .linksinv;
+                color: #aaa;
+                font-size: 1.4em;
+                line-height: 1.5em;
+                float: right;
+                padding: 1.25rem 0 0 0;
+                box-sizing: border-box;
+
+                @include respond-to(portrait) {
+                    position: absolute;
+                    top: 61.80vw;
+                    left: 0;
+                    padding: 16%;
+                    padding-top: 1em;
+                    padding-bottom: 2em;
+                    margin-top: 0;
+                    background-color: black;
+                    opacity: 1;
+
+                    @include respond-to(mobile) {
+                        padding: 12%;
+                        padding-top: 0.5em;
+                        padding-bottom: 2em;
+                    }
+                }
+            }
+
+            a.link {
+                @extend .noselect;
+                color: white;
+                border: 2px solid white;
+                font-size: 1rem;
+                margin-right: 0.7em;
+                margin-bottom: 0.7em;
+                display: block;
+                float: left;
+                padding: 0.625em 0.875em;
+                font-weight: bold;
+                transition: border 0.2s ease-in-out,
+                /**/        background 0.2s ease-in-out,
+                /**/        color 0.2s ease-in-out;
+                @include hover-or-active {
+                    color: black;
+                    border: 2px solid red;
+                    background: red;
+                }
+            }
+        }
+    }
+
 }

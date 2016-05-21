@@ -20,10 +20,14 @@
   (:require-macros [sinusoides.util]
                    [cljs.core.async.macros :refer [go]])
   (:require [cljs.core.async :as async :refer [>!]]
-            [cljsjs.showdown]
-            [clojure.string :refer [lower-case replace]]
+            [clojure.string :as str]
             [goog.events :as events]
-            [fontfaceobserver :as fonts]))
+            [showdown]
+            [fontfaceobserver]))
+
+(defn has-touch? []
+  (or (js/window.hasOwnProperty "ontouchstart")
+      (pos? js/navigator.maxTouchPoints)))
 
 (defn load-all [fn things]
   (async/into [] (async/merge (map fn things))))
@@ -58,9 +62,9 @@
      port)))
 
 (defn md->html [str]
-  (let [Converter (.-converter js/Showdown)
-        converter (Converter.)]
-    (.makeHtml converter str)))
+  (let [converter (js/showdown.Converter.
+                    #js{"simplifiedAutoLink" true})]
+    (.makeHtml converter (str/replace str "--" "—"))))
 
 (defn trace [obj & more]
   (apply prn (if more more ["TRACE:"]))
@@ -77,13 +81,24 @@
   (js/eval "debugger")
   obj)
 
+(defn replace-special [str]
+  (let [in  "àáäâèéëêìíïîòóöôùúüûñç·/_,:;"
+        out "aaaaeeeeiiiioooouuuunc------"]
+    (reduce
+      (fn [str [in out]]
+        (str/replace str in out))
+      str
+      (map vector in out))))
+
 (defn to-slug [str]
   (-> str
-    (lower-case)
-    (replace #"-+" "")
-    (replace #"\.+" "-")
-    (replace #"\s+" "-")
-    (replace #"[^a-z0-9-]" "")))
+      (str/trim)
+      (str/lower-case)
+      (replace-special)
+      (str/replace #"-+" "")
+      (str/replace #"\.+" "-")
+      (str/replace #"\s+" "-")
+      (str/replace #"[^a-z0-9-]" "")))
 
 (defn togglej [set thing]
   (if (contains? set thing)

@@ -1,17 +1,79 @@
 @import 'global';
 
-body {
+html {
     font-size: 16px;
-    margin: 0px;
+    @include respond-to(mobile) {
+        font-size: 13.6px;
+    }
+}
+
+body {
+    margin: 0;
     background: black;
     width: 100%;
     height: 100%;
     overflow: hidden;
+
+    &.respond-to-tester::after {
+        content: "";
+        position: fixed;
+        z-index: 20;
+        margin: 1em;
+        width: 1em;
+        height: 1em;
+        background-color: #444;
+        font-size: 3em;
+        @include respond-to(landscape) {
+            content: "";
+            width: 1.681em;
+            height: 1em;
+            background-color: white;
+        }
+        @include respond-to(portrait) {
+            content: "";
+            width: 1em;
+            height: 1.681em;
+            background-color: black;
+        }
+    }
+
+    &.respond-to-tester::before {
+        content: "";
+        color: black;
+        z-index: 10;
+        position: fixed;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        background-color: grey;
+        color: white;
+        font-weight: bold;
+        font-family: $mono-font;
+        font-size: 2em;
+        @include respond-to(mobile) {
+            background-color: red;
+            content: "mobile";
+        }
+        @include respond-to(laptop) {
+            background-color: blue;
+            content: "laptop";
+        }
+        @include respond-to(desktop) {
+            background-color: green;
+            content: "desktop";
+        }
+    }
 }
 
 $loading-size: 31px;
 $loading-border: 16px;
 $loading-color: red;
+
+tt {
+    font-family: $mono-font;
+}
 
 #loading {
     transition: opacity 0.5s ease-in-out;
@@ -29,14 +91,14 @@ $loading-color: red;
         width: $loading-size;
         height: $loading-size;
         border-radius: $loading-border;
-        border: 0px solid $loading-color;
+        border: 0 solid $loading-color;
         animation: loading 1.2s infinite reverse linear;
 
         @keyframes loading {
             0% {
                 background-color: black;
                 border-color: $loading-color;
-                border-width: 0px;
+                border-width: 0;
                 opacity: 0;
             }
             50% {
@@ -48,7 +110,7 @@ $loading-color: red;
             50.001% {
                 background-color: $loading-color;
                 border-color: black;
-                border-width: 0px;
+                border-width: 0;
                 opacity: 1;
             }
             100% {
@@ -100,11 +162,45 @@ a:focus {
     color: #444444;
     text-decoration: none;
     transition: color 0.2s ease-in-out;
-    &:hover { color: red; }
+    @include hover-or-active {
+        color: red;
+    }
+}
+
+.linksinv a {
+    color: white;
+    @include hover-or-active {
+        color: red;
+    }
+}
+
+.control {
+    @extend .noselect;
+    fill: white;
+    transition: fill 300ms ease-in-out;
+    @include hover-or-active { fill: red; }
+    &.disabled {
+        opacity: 0.25;
+        @include hover-or-active { fill: white; }
+    }
 }
 
 .clear {
     width: 100%;
     clear: both !important;
     display: block;
+}
+
+::-mox-selection {
+    background-color: transparent;
+    color: red;
+}
+
+::selection {
+    background-color: rgba(48, 48, 48, 0.5);
+    color: red;
+}
+
+.title {
+    @extend .noselect;
 }

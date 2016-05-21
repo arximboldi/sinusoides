@@ -2,6 +2,8 @@
 @import '../global';
 
 .sinusoid-container {
+    @extend .noselect;
+
     position: absolute;
     width: 100%;
     height: 100%;
@@ -12,12 +14,14 @@
 
 #sinusoid-h {
     position: absolute;
+    font-size: 9.3em;
     width: 1000%;
-    height: 150px;
+    height: 1em;
     transform-origin: 0% 50%;
     transition: top $page-anim-full ease-in-out,
     /**/        margin-top $page-anim-full ease-in-out,
     /**/        transform $page-anim-full ease-in-out,
+    /**/        height $page-anim-full ease-in-out,
     /**/;
 
     &::before {
@@ -31,14 +35,14 @@
         background-color: white;
         transition: background-color 500ms ease-in-out;
     }
-    &:hover::before, &.hovered::before { background-color: red; }
+    &.hovered::before { background-color: red; }
 
     &::after {
         content: "";
         position: absolute;
         top: -1px;
         width: 100%;
-        height: 152px;
+        height: calc(100% + 2px);
         pointer-events: none;
         background-image: url(/static/pic/sinusoid-i.svg);
         background-size: contain;
@@ -73,38 +77,47 @@
     &.main-sin {
         &::after { background-position: 0 0; }
         top: 50vh;
-        margin-top: -75px;
+        margin-top: -0.5em;
         animation: main-sin $page-anim-full ease-in-out;
+        @include respond-to(mobile) {
+            font-size: 5.2em;
+        }
     }
     &.do-sin {
         &::after { background-position: -70% 0; }
         top: 0vh;
-        margin-top: 72px;
+        margin-top: 2.62rem;
         animation: do-sin $page-anim-full ease-in-out;
     }
     &.am-sin {
         &::after { background-position: 80% 0; }
         top: 100vh;
-        margin-top: -194px;
+        margin-top: calc(-1em - 0.3em);
         animation: am-sin $page-anim-full ease-in-out;
+        @include respond-to(mobile) {
+            font-size: 4.88em;
+        }
     }
     &.think-sin {
         &::after { background-position: 100% 0; }
         top: -100vh;
-        margin-top: -75px;
+        margin-top: -0.5em;
         animation: think-sin $page-anim-full ease-in-out;
     }
     &.todo-sin {
         &::after { background-position: 100% 0; }
         top: -100vh;
-        margin-top: -75px;
+        margin-top: -0.5em;
     }
     &.not-found-sin {
         &::after { background-position: 20% 0; }
         animation: not-found-sin $page-anim-full ease-in-out;
         transition-duration: $page-anim-half;
         top: 50vh;
-        margin-top: -75px;
+        margin-top: -0.5em;
+        @include respond-to(mobile) {
+            font-size: 5.2em;
+        }
     }
     &.init-sin-last {
         animation: init-sin $page-anim-full ease-in-out;
@@ -114,12 +127,15 @@
 
 #sinusoid-v {
     position: fixed;
-    margin: 0 0 0 -75px;
-    width: 150px;
+    font-size: 9.3em;
+    margin: 0 0 0 -0.5em;
+    width: 1em;
     height: 1000%;
     top: 0;
     transform-origin: 50% 0;
     transform: translateX(-100vw);
+    transition: width $page-anim-full ease-in-out,
+    /**/;
 
     &::before {
         content: "";
@@ -130,7 +146,7 @@
         background-color: white;
         transition: background-color 500ms ease-in-out;
     }
-    &:hover::before, &.hovered::before { background-color: red; }
+    &.hovered::before { background-color: red; }
 
     &::after {
         content: "";
@@ -138,7 +154,7 @@
         pointer-events: none;
         left: -1px;
         height: 100%;
-        width: 152px;
+        width: calc(100% + 2px);
         background-image: url(/static/pic/sinusoid-i-v.svg);
         background-size: contain;
         transition: background-position $page-anim-full ease-in-out;
@@ -146,7 +162,7 @@
 
     @keyframes think-sin-v {
         40%  { transform: translateX(-10vw) scale(0.1); }
-        to   { transform: translateX(115px) scale(1); }
+        to   { transform: translateX(calc(0.5em + 2.62rem)) scale(1); }
     }
     @keyframes think-sin-vb {
         from { background-position: 0 80%; }
@@ -154,9 +170,14 @@
         to   { background-position: 0 0; }
     }
     @keyframes think-sin-last-v {
-        from { transform: translateX(115px) scale(1); }
+        from { transform: translateX(calc(0.5em + 2.62rem)) scale(1); }
         80%  { transform: translateX(-20vw) scale(2.5); }
         to   { transform: translateX(-20vw); }
+    }
+    @keyframes think-sin-last-portrait-v {
+        from { transform: translateX(calc(0.5em + 2.62rem)) scale(1); }
+        80%  { transform: translateX(-50vw) scale(2.5); }
+        to   { transform: translateX(-50vw) scale(2.5); }
     }
     @keyframes think-sin-last-vb {
         from { background-position: 0 0; }
@@ -178,6 +199,11 @@
         80%  { transform: translateX(130vw) scale(4); }
         to   { transform: translateX(130vw); }
     }
+    @keyframes todo-sin-last-portrait-v {
+        from { transform: translateX(50vw) scale(1); }
+        80%  { transform: translateX(170vw) scale(4); }
+        to   { transform: translateX(170vw); }
+    }
     @keyframes todo-sin-last-vb {
         from { background-position: 0 0; }
         80%  { background-position: 0 -30%; }
@@ -187,13 +213,22 @@
     &.think-sin-last {
         animation: think-sin-last-v $page-anim-full forwards;
         &::after { animation: think-sin-last-vb $page-anim-full forwards; }
+        @include respond-to(portrait) {
+            animation: think-sin-last-portrait-v $page-anim-full forwards;
+        }
     }
     &.think-sin {
         animation: think-sin-v $page-anim-full forwards;
         &::after { animation: think-sin-vb $page-anim-full forwards; }
+        @include respond-to(mobile) {
+            font-size: 4.9em;
+        }
     }
     &.todo-sin-last {
         animation: todo-sin-last-v $page-anim-full forwards;
+        @include respond-to(portrait) {
+            animation: todo-sin-last-portrait-v $page-anim-full forwards;
+        }
         &::after { animation: todo-sin-last-vb $page-anim-full forwards; }
     }
     &.todo-sin {

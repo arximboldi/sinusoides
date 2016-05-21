@@ -18,7 +18,84 @@ $mono-font-stack:
 /**/  Monaco, ‘Courier New’, Courier,
 /**/  monospace;
 
+$serif-font: "Linux Libertine";
+$serif-font-stack: Georgia, Times, serif;
+
 $page-anim-full: 3000ms;
 $page-anim-half: 1500ms;
 $page-anim-third: 1000ms;
 $page-anim-two-third: 1000ms;
+
+@mixin filter($thefilter) {
+    filter: $thefilter;
+    -o-filter: $thefilter;
+    -ms-filter: $thefilter;
+    -moz-filter: $thefilter;
+    -webkit-filter: $thefilter;
+}
+
+.clearfix::after {
+    content:"";
+    display:block;
+    clear:both;
+}
+
+.noselect {
+    &, * {
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+
+$break-mobile: 780px;
+$break-laptop: 1370px;
+
+@mixin respond-to($media) {
+    @if $media == mobile {
+        @media only screen and (max-width: $break-mobile) {
+            @content;
+        }
+    }
+    @else if $media == laptop {
+        @media only screen and (min-width: $break-mobile + 1)
+        /**/               and (max-width: $break-laptop - 1) {
+            @content;
+        }
+    }
+    @else if $media == desktop {
+        @media only screen and (min-width: $break-laptop) {
+            @content;
+        }
+    }
+    @else if $media == landscape {
+        @media only screen and (orientation: landscape) {
+            @content;
+        }
+    }
+    @else if $media == portrait {
+        @media only screen and (orientation: portrait) {
+            @content;
+        }
+    }
+    @else if $media == touch {
+        @at-root .has-touch & {
+            @content;
+        }
+    }
+    @else if $media == mouse {
+        @at-root .no-touch & {
+            @content;
+        }
+    }
+}
+
+@mixin hover-or-active {
+    @include respond-to(mouse) { &:hover  { @content; } }
+    @include respond-to(touch) { &:active { @content; } }
+}

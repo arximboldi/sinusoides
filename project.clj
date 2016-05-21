@@ -5,8 +5,7 @@
   :dependencies [[clj-tagsoup "0.3.0"]
                  [cljs-http "0.1.40"]
                  [cljsjs/react-with-addons "0.14.3-0"]
-                 [cljsjs/showdown "0.4.0-1"]
-                 [com.andrewmcveigh/cljs-time "0.3.0"]
+                 [com.andrewmcveigh/cljs-time "0.4.0"]
                  [com.cemerick/piggieback "0.2.1"]
                  [kibu/pushy "0.3.6"]
                  [org.clojure/clojure "1.8.0"]
@@ -34,7 +33,8 @@
                   :output-dir "resources/js/debug/out"
                   :main sinusoides.core
                   :optimizations :none
-                  :source-map-timestamp true}}
+                  :source-map-timestamp true
+                  :parallel-build true}}
       {:id "release"
        :source-paths ["src"]
        :compiler {:asset-path "js/release/out"
@@ -42,7 +42,8 @@
                   :output-dir "resources/js/release/out"
                   :main sinusoides.core
                   :optimizations :advanced
-                  :pretty-print false}}]}
+                  :pretty-print false
+                  :parallel-build true}}]}
 
   :figwheel {:http-server-root ""
              :css-dirs ["resources/css"]

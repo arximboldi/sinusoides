@@ -18,25 +18,34 @@
 
 (ns sinusoides.views.sinusoid
   (:require [sinusoides.routes :as routes]
+            [sinusoides.util :as util]
             [cljs.core.match :refer-macros [match]]
             [cljs.core.match]
             [reagent.core :as r]))
+
+(def state {:hover #{}})
 
 (defn hover-clear [sin tag]
   (swap! sin #(update-in % [:hover] disj tag)))
 
 (defn hover-view [sin tag & keyvals]
-  (r/with-let []
+  (r/with-let
+    [add-hover (fn [] (println "add") (swap! sin #(update-in % [:hover] conj tag)))
+     del-hover (fn [] (println "remove")(swap! sin #(update-in % [:hover] disj tag)))]
     [:div
-     {:style {:width "100%"
-              :height "100%"
-              :position "absolute"
-              :cursor "pointer"}
-      :on-mouse-over
-      (fn [] (swap! sin #(update-in % [:hover] conj tag)))
-      :on-mouse-out
-      (fn [] (swap! sin #(update-in % [:hover] disj tag)))}]
-    (finally (swap! sin #(update-in % [:hover] disj tag)))))
+     (merge {:style {:width "100%"
+                     :height "100%"
+                     :position "absolute"
+                     :cursor "pointer"}}
+            (if (util/has-touch?)
+              {:on-touch-start add-hover
+               :on-touch-end   del-hover}
+              {:on-mouse-down  add-hover
+               :on-mouse-up    del-hover
+               :on-mouse-over  add-hover
+               :on-mouse-out   del-hover}))]
+    (finally
+      (del-hover))))
 
 (defn hover? [sin]
   (-> @sin :hover empty? not))
@@ -44,13 +53,13 @@
 (defn hovered [sin]
   {:class (when (hover? sin) "hovered")})
 
-(defn sinusoid-view [tag app sin]
+(defn view [tag app sin]
   (let [expand #(match %
                   [:am]     ["am-sin" (routes/main)]
-                  [:do]     ["do-sin" (routes/main)]
+                  [:do _]   ["do-sin" (routes/main)]
                   [:init]   ["init-sin" (routes/not-found)]
                   [:main]   ["main-sin" (routes/not-found)]
-                  [:think]  ["think-sin" (routes/main)]
+                  [:think _]  ["think-sin" (routes/main)]
                   [:todo]   ["todo-sin" (routes/main)]
                   :else     ["not-found-sin" (routes/main)])
         [class1 _]    (expand (:last @app))
