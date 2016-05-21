@@ -93,7 +93,7 @@
         margin-top: calc(-1em - 0.3em);
         animation: am-sin $page-anim-full ease-in-out;
         @include respond-to(mobile) {
-            font-size: 5.31em;
+            font-size: 4.88em;
         }
     }
     &.think-sin {
@@ -174,8 +174,8 @@
     }
     @keyframes think-sin-last-portrait-v {
         from { transform: translateX(calc(0.5em + 2.62rem)) scale(1); }
-        80%  { transform: translateX(-40vw) scale(2.5); }
-        to   { transform: translateX(-40vw) scale(2.5); }
+        80%  { transform: translateX(-50vw) scale(2.5); }
+        to   { transform: translateX(-50vw) scale(2.5); }
     }
     @keyframes think-sin-last-vb {
         from { background-position: 0 0; }

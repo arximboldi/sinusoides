@@ -42,7 +42,7 @@
         &.hovered { border-color: red; }
 
         @include respond-to(mobile) {
-            font-size: 6.7rem;
+            font-size: 5.6rem;
         }
 
         &::after {

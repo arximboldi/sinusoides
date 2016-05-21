@@ -68,7 +68,7 @@
         font-size: 8.75rem;
 
         @include respond-to(mobile) {
-            font-size: 5rem;
+            font-size: 4.6rem;
         }
 
         div {
@@ -128,7 +128,7 @@
             margin: 0;
 
             @include respond-to(mobile) {
-                font-size: 4em;
+                font-size: 3.8em;
             }
 
             span {

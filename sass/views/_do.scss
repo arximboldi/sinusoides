@@ -80,7 +80,8 @@
             text-transform: lowercase;
             transition: border-color 0.2s ease-in-out, background 0.2s ease-in-out, color 0.2s ease-in-out;
             &.header {
-                margin-left: -1.7em;
+                position: absolute;
+                margin-left: -1.8em;
                 color: white;
                 font-weight: bold;
             }
@@ -341,7 +342,7 @@
                 }
                 color: #aaa;
                 font-size: 1.4em;
-                line-height: 1.4em;
+                line-height: 1.5em;
                 float: right;
                 padding: 1.25rem 0 0 0;
                 box-sizing: border-box;
@@ -349,13 +350,18 @@
                 @include respond-to(portrait) {
                     position: absolute;
                     top: 61.80vw;
-                    bottom: 0;
                     left: 0;
                     padding: 16%;
+                    padding-top: 1em;
+                    padding-bottom: 2em;
+                    margin-top: 0;
                     background-color: black;
                     opacity: 1;
+
                     @include respond-to(mobile) {
                         padding: 12%;
+                        padding-top: 0.5em;
+                        padding-bottom: 2em;
                     }
                 }
             }
