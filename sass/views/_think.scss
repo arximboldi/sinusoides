@@ -269,9 +269,6 @@
                     line-height: 1.2;
                     font-family: $mono-font;
                     text-transform: lowercase;
-                    @include respond-to(landscape) {
-                        margin-left: -0.5em;
-                    }
                     &::after {
                         position: absolute;
                         display: block;
