@@ -22,8 +22,7 @@
   (:require [cljs.core.async :as async :refer [>!]]
             [clojure.string :as str]
             [goog.events :as events]
-            [showdown]
-            [fontfaceobserver]))
+            [bundle]))
 
 (defn has-touch? []
   (or (js/window.hasOwnProperty "ontouchstart")
@@ -49,7 +48,8 @@
    (load-font desc (async/chan)))
 
   ([desc port]
-   (let [font     (js/FontFaceObserver. (:family desc) (clj->js desc))
+   (let [_        (js/require "fontfaceobserver")
+         font     (js/FontFaceObserver. (:family desc) (clj->js desc))
          on-load  (fn []
                     (go (>! port font)
                         (async/close! port)))
@@ -61,10 +61,14 @@
          (.then on-load on-error))
      port)))
 
-(defn md->html [str]
-  (let [converter (js/showdown.Converter.
-                    #js{"simplifiedAutoLink" true})]
-    (.makeHtml converter (str/replace str "--" "—"))))
+(defn md->html [markdown]
+  (-> (js/require "markdown-it")
+      (.call nil #js {"html" true
+                      "typographer" true})
+      (.use (js/require "markdown-it-footnote"))
+      (.render markdown)
+      (str/replace "href=\"#"
+                   (str "href=\"" (-> js/window .-location .-pathname) "#"))))
 
 (defn trace [obj & more]
   (apply prn (if more more ["TRACE:"]))

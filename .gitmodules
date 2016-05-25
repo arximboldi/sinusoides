@@ -1,6 +1,0 @@
-[submodule "src/libs/fontfaceobserver"]
-	path = src/libs/fontfaceobserver
-	url = git@github.com:bramstein/fontfaceobserver.git
-[submodule "src/libs/showdown"]
-	path = src/libs/showdown
-	url = git@github.com:showdownjs/showdown.git

@@ -7,6 +7,16 @@ all: data sass cljs
 # ===========
 #
 
+deps:
+	git submodule update --recursive --init
+	npm install
+prepare: deps
+	node_modules/browserify/bin/cmd.js \
+		-r fontfaceobserver \
+		-r markdown-it \
+		-r markdown-it-footnote \
+		> src/bundle.js
+
 DATA =  resources/data/do.json \
 	resources/data/am.json \
 	resources/data/think.json

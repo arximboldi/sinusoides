@@ -1,12 +1,18 @@
 {
-    "name": "sinusoides",
-    "version": "0.0.1",
-    "dependencies": {
-        "express": "*",
-        "html": "*",
-        "underscore": "*",
-        "less": "*",
-        "coffee-script": "*",
-        "ejs": "*"},
-    "engines": {
-        "node":"*" }}
+  "name": "sinusoides",
+  "version": "0.0.1",
+  "dependencies": {
+    "coffee-script": "*",
+    "ejs": "*",
+    "express": "*",
+    "fontfaceobserver": "^1.7.1",
+    "html": "*",
+    "less": "*",
+    "markdown-it": "^6.0.2",
+    "markdown-it-footnote": "^2.0.0",
+    "underscore": "*"
+  },
+  "engines": {
+    "node": "*"
+  }
+}
