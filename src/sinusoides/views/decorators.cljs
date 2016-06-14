@@ -72,8 +72,8 @@
         cols        (max 1 (js/Math.round (/ width grid-size)))
         ratio       (/ grid-margin grid-size)
         size        (/ width (+ cols (* ratio (- cols 1))))
-        margin-px   (str (* ratio size) "px")
-        size-px     (str size "px")
+        margin-px   (str (js/Math.floor (* ratio size)) "px")
+        size-px     (str (js/Math.floor size) "px")
         font-size   (str (/ size grid-size) "em")
         grid-item
         (fn [idx child]
