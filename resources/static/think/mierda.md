@@ -6,8 +6,8 @@ Sobre mierdas y perros
 
 En la Roca no me tratan bien. Si a uno un día le roban allí la
 chaqueta al día siguiente tendrá que acompañar el frío con ardores de
-garrafón. “Echale bien” --le dije a la muchacha esperando que el
-güisqui sobrepasase el nivel del yelo-- “así me desquito por lo de la
+garrafón. “Echale bien”---le dije a la muchacha esperando que el
+güisqui sobrepasase el nivel del yelo---“así me desquito por lo de la
 chaqueta”. Casi ofendida por mi petición guarda la botella y me
 reprende “Si es que sois muy despistados...” Y cuando intento
 despistarme con un canuto ahí está el segurata para invitarme a pasar

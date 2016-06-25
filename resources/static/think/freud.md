@@ -6,7 +6,7 @@ De Freud y otras mariconadas
 > Una amiga andaba el otro día a zapatiestas con los conceptos
 > freudianos de _metapsicología_ y _recorrido Histórico_. Decidí
 > explicarlos con el tono arcaico, artificioso y afrentoso de mi amo,
-> cuya pedagogía lo hace todo comprensible--incluso para los lectores
+> cuya pedagogía lo hace todo comprensible---incluso para los lectores
 > de ABC.
 
 El mundo está lleno de grandes hijos de puta. Pero no todos ellos son

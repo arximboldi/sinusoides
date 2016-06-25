@@ -1,3 +1,13 @@
+- title: Tabú
+  type: text
+  text: /static/think/tabu.md
+  date: 17-08-2015
+
+- title: El baile
+  type: text
+  text: /static/think/baile.md
+  date: 19-03-2015
+
 - title: La condición de la rata
   type: text
   text: /static/think/rata.md
@@ -7,6 +17,11 @@
   type: sound
   track: 174272069
   date: 28-10-2014
+
+- title: Momento lineal
+  type: text
+  text: /static/think/momento.md
+  date: 15-07-2015
 
 - title: The Interview II
   type: text
@@ -67,6 +82,11 @@
   type: sound
   track: 65211929
   date: 29-10-2012
+
+- title: Los pedócratas
+  type: text
+  text: /static/think/pedocratas.md
+  date: 00-09-2012
 
 - title: Viva Aurora
   type: sound
