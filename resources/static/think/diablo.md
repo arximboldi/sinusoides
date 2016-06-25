@@ -12,7 +12,7 @@ sociedad y su valor, o más precisamente su arbitrariedad en torno a la
 cuestión irresoluble del valor, es la base del éxito y el fracaso, de
 la sumisión y la dominación, del amor y de la muerte. Tanto unos como
 otros lo idolatran, por razones diferentes pero idénticos motivos. El
-diablo es así la medida de todo lo justificable--y todo lo es.  Su
+diablo es así la medida de todo lo justificable---y todo lo es.  Su
 veneración es abierta y positiva y sus símbolos aparecen hasta en los
 rincones más escondidos (especialmente en estos) del imaginario
 contemporáneo.

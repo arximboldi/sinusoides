@@ -1,3 +1,13 @@
+- title: Tabú
+  type: text
+  text: /static/think/tabu.md
+  date: 17-08-2015
+
+- title: El baile
+  type: text
+  text: /static/think/baile.md
+  date: 19-03-2015
+
 - title: La condición de la rata
   type: text
   text: /static/think/rata.md
@@ -7,6 +17,11 @@
   type: sound
   track: 174272069
   date: 28-10-2014
+
+- title: Momento lineal
+  type: text
+  text: /static/think/momento.md
+  date: 15-07-2015
 
 - title: The Interview II
   type: text
@@ -27,6 +42,11 @@
   type: sound
   track: 95776615
   date: 06-06-2013
+
+- title: Paja mental
+  type: text
+  text: /static/think/solitarios.md
+  date: 00-05-2013
 
 - title: Esplendor Geométrico - Moscú está helado (Bootleg)
   type: sound
@@ -68,6 +88,11 @@
   track: 65211929
   date: 29-10-2012
 
+- title: Los pedócratas
+  type: text
+  text: /static/think/pedocratas.md
+  date: 00-09-2012
+
 - title: Viva Aurora
   type: sound
   track: 60357604
@@ -78,10 +103,20 @@
   track: 54404625
   date: 28-07-2012
 
+- title: Aeropuertos
+  type: text
+  text: /static/think/aeropuertos.md
+  date: 00-05-2012
+
 - title: De Freud y otras mariconadas
   type: text
   text: /static/think/freud.md
   date: 11-10-2011
+
+- title: Función singular
+  type: text
+  text: /static/think/funcion-singular.md
+  date: 02-08-2009
 
 - title: Sobre mierdas y perros
   type: text
