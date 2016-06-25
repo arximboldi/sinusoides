@@ -9,12 +9,12 @@ aún entonces, el movimiento pedócrata sufría de una insalvable
 condición.  Y es que allá donde sus militantes se congregaran, ya sea
 en una protesta, debate ideológico o declamación de manifiestos, al
 poco de reunirse, a alguien siempre se le escapaba una inocente
-autoreferencia.  Y entonces otra se levantaba y acusando con el dedo
+autoreferencia.  Entonces otra se levantaba y acusando con el dedo
 proclamaba:
 
 ---¡Ha dicho pedo! *¡Ji ji ji!*
 
-Y aquello desataba una carcajada rabiosa, atropellada y cacofónica que
+Aquello desataba una carcajada rabiosa, atropellada y cacofónica que
 se propagaba violenta y radialmente como la onda expansiva de una
 reacción en cadena.  Y en el cráter de esta explosión lúdica quedaba
 un tumulto caótico dominado por un regocijo anárquico.  De inmediato,
@@ -33,7 +33,7 @@ frontera moral en constante movimiento calibrada a base de reprimendas
 mutuas y arbitrarias.  Quien tuviera tiza o rotulador tenía el
 privilegio y el deber de dejar testimonio de lo ocurrido, convirtiendo
 las paredes en un colorido mural expresionista de inspiración
-pollockiana, o en un glosario escatológico interrumpido por
+_pollockiana_, o en un glosario escatológico interrumpido por
 caricaturas exageradas de sus camaradas, o en un estudio del retrato
 por el método del seis y el cuatro o, si el artista se acercaba a la
 pubertad, en un atlas de anatomía genital.  Aquello era una guerra sin
