@@ -47,7 +47,7 @@
 
      api-get
      (fn [& command]
-       (http/jsonp (add-client-id (str "http://api.soundcloud.com"
+       (http/jsonp (add-client-id (str "https://api.soundcloud.com"
                                        (apply str command)
                                        ".json"))))
 
