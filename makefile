@@ -62,25 +62,11 @@ dev:
 	$(MAKE) serve & \
 	$(MAKE) figwheel
 
-
 #
 # Deployment
 # ==========
 #
 
-upload: upload-root upload-js upload-css upload-data upload-views upload-static
-
-upload-root:
-	ncftpput -z -R -f host.ncftpput / resources/.htaccess resources/favicon.ico
-upload-js:
-	ncftpput -z -m -R -f host.ncftpput /js resources/js/*
-upload-css:
-	ncftpput -z -m -R -f host.ncftpput /css resources/css/*
-upload-data:
-	ncftpput -z -m -R -f host.ncftpput /data resources/data/*
-upload-views:
-	ncftpput -z -m -R -f host.ncftpput /views resources/views/*
-upload-pic:
-	ncftpput -z -m -R -f host.ncftpput /static/pic resources/static/pic/*
-upload-static:
-	ncftpput -z -m -R -f host.ncftpput /static resources/static/*
+DEST = ~/public/
+copy:
+	rsync -av resources/* $(DEST)
