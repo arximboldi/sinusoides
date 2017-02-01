@@ -1,4 +1,4 @@
-;; Copyright (c) 2011-2016 Juan Pedro Bolivar Puente <raskolnikov@gnu.org>
+;; Copyright (c) 2011-2017 Juan Pedro Bolivar Puente <raskolnikov@gnu.org>
 ;;
 ;; This file is part of Sinusoid.es.
 ;;
@@ -85,7 +85,7 @@
 
      [:div.fingerprint.links
       [:a {:href (str "mailto:"
-                      (s/reverse "gro.ung@vokinloksar"))}
+                      (s/reverse "se.diosunis@epnauj"))}
        "CE3E CB30 6F40 3D98 DB2E" [:br]
        "B65C 529B A962 690A 70B1"]]]
 
