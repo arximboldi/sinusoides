@@ -63,7 +63,7 @@
 
     [:div#main-page.fixed-page
      [:div.barcode]
-     [:a.barcode2 {:href (routes/todo)}]
+     [:a.barcode2 {:href "https://sinusoid.al"}]
 
      [:div.main-text (sinusoid/hovered sin)
       [:div.parts
