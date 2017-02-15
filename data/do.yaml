@@ -1,6 +1,25 @@
 # Recent
 # ------
 
+- name: Immer
+  lang: C++
+  tags: [ Library, Talk ]
+  link:
+    - name: Website
+      href: https://sinusoid.es/immer
+    - name: Code (Github)
+      href: https://github.com/arximboldi/immer
+    - name: Talk (Youtube)
+      href: https://www.youtube.com/watch?v=9nupb1SNo3Q
+  imgs: [ terracota-small.jpg, terracota.jpg ]
+  desc: |
+    A library of persistent and immutable data structures in C++ that
+    are fast, customizable and easy to embed in higher languages.  It
+    implements modern cache-efficient data structures like
+    [RRB-Trees](https://infoscience.epfl.ch/record/213452/files/rrbvector.pdf),
+    with some improvements of its own---there is a paper about these
+    in the kitchen.
+
 - name: Mittagessen
   lang: Clojure
   tags: [ Web ]
