@@ -25,7 +25,7 @@
   tags: [ Web ]
   link:
     - name: Website
-      href: http://sinusoid.es/mittagessen
+      href: https://sinusoid.es/mittagessen
     - name: Code (Github)
       href: https://github.com/arximboldi/mittagessen
   imgs: [ mittagessen-small.png, mittagessen.png ]
@@ -150,7 +150,7 @@
   lang: [CoffeeScript, JavaScript]
   link:
     - name: Website
-      href: http://sinusoid.es/mixco
+      href: https://sinusoid.es/mixco
     - name: Code (Github)
       href: https://github.com/arximboldi/mixco
   imgs: [ mixco-small.png, mixco.png ]
@@ -166,7 +166,7 @@
   lang: [CoffeeScript, JavaScript]
   link:
     - name: Website
-      href: http://sinusoid.es/heterarchy
+      href: https://sinusoid.es/heterarchy
     - name: Code (Github)
       href: https://github.com/arximboldi/heterarchy
   imgs: [ heterarchy-small.png, heterarchy.png ]
@@ -287,7 +287,7 @@
   tags: [Talk, Work]
   link:
     - name: Website
-      href: http://sinusoid.es/python-avanzado
+      href: https://sinusoid.es/python-avanzado
   imgs: [ gfits-small.png, gfits.png ]
   desc: |
     A course in advanced Python targeted at astrophysics programmers
@@ -545,7 +545,7 @@
   lang: PHP
   link:
     - name: Website
-      href: http://sinusoid.es/rae
+      href: https://sinusoid.es/rae
     - name: Source (tar.gz)
       href: /static/soft/rae-07.01.2011.tar.gz
   imgs: [ dicc-small.png, dicc.jpg ]
