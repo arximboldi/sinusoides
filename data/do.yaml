@@ -297,12 +297,14 @@
 
 - name: CVG Moodle plug-ins
   lang: PHP
-  tags: [Work, Uni, Web]
+  tags: [Work, Uni, Web, Talk]
   link:
     - name: Website
       href: http://www.nongnu.org/cvg-moodle
     - name: Code (Savannah)
       href: https://savannah.nongnu.org/projects/cvg-moodle
+    - name: Talk (Spanish)
+      href: http://tv.uvigo.es/video/23778
   imgs: [ jsxaal-small.png, jsxaal.png ]
   desc: |
     Collection of Moodle plug-ins that were developed as a couple of
