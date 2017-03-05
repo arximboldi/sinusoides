@@ -317,7 +317,7 @@
   tags: [Uni, Library, Music, Graphics]
   link:
     - name: Website
-      href: http://www.psychosynth.com
+      href: https://psychosynth.com
     - name: Code (Savannah)
       href: https://savannah.gnu.org/projects/psychosynth/
   imgs: [ psynth-small.png, psynth.png ]
@@ -681,7 +681,7 @@
   tags: [Game, Graphics]
   link:
     - name: Website
-      href: http://gnujump.es.gnu.org
+      href: https://jump.gnu.sinusoid.es
     - name: Code (Savannah)
       href: https://savannah.gnu.org/projects/gnujump
   imgs: [ gnujump-small.png, gnujump.png ]
