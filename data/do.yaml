@@ -30,6 +30,20 @@
     western civilization.  I try to advance the conversation on what
     _modern_ C++ is, and make a guess on whatever comes next.
 
+- name: zenAud.io
+  lang: [C++, Scheme]
+  tags: []
+  link:
+    - name: Website
+      href: https://zenaud.io
+  imgs: [ zenaudio-small.png, zenaudio.png ]
+  desc: |
+    During 2017 I collaborated with [zenAud.io](https://zenaud.io), an
+    exciting company building software for live peformance.  I built
+    an OpenGL backend for its flagship product and consulted to
+    improve the overall UI architecture and audio engine in order to
+    achieve better performance and maintaineability.
+
 - name: Schmutz
   lang: [C++, Scheme]
   tags: []
