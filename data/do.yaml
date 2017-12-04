@@ -1,6 +1,70 @@
 # Recent
 # ------
 
+- name: Lager
+  lang: C++
+  tags: [ Work ]
+  link:
+    - name: Code (Github)
+      href: https://github.com/arximboldi/lager
+  imgs: [ lager-small.svg, lager.jpeg ]
+  desc: |
+    This is a work-in progress
+    [Redux](https://github.com/reactjs/redux)-like library bringing the
+    simplicity and power of the uni-directional data-flow
+    architecture---like the [Elm
+    architecture](https://guide.elm-lang.org/architecture)---to C++.
+
+- name: "Programming: the last 4000 years"
+  lang: C++
+  tags: [ Talk ]
+  link:
+    - name: Video (Youtube)
+      href: https://www.youtube.com/watch?v=y2___qaG_9Q
+    - name: Slides
+      href: https://sinusoid.es/talks/cppcon17-lt
+  imgs: [ cppcon17-lt-small.png, cppcon17-lt.jpeg ]
+  desc: |
+    At [CppCon'17](https://cppcon.org/) I did a personal commentary on
+    the history of programming, making an analogy to the eras of
+    western civilization.  I try to advance the conversation on what
+    _modern_ C++ is, and make a guess on whatever comes next.
+
+- name: Schmutz
+  lang: [C++, Scheme]
+  tags: []
+  link:
+    - name: Website
+      href: https://sinusoid.es/schmutz/
+    - name: Code (Github)
+      href: https://github.com/arximboldi/schmutz
+  imgs: [ schmutz-small.svg, schmutz.png ]
+  desc: |
+    As a spin-off for [Immer](immer) I have been working on a library
+    to declare Scheme bindings for C++ code using a simple embedded
+    DSL. Think of it as [Boost.Python](http://www.boost.org/libs/python)
+    or [LuaBind](https://github.com/luabind/luabind) but for Scheme.
+
+- name: Postmodern immutable data-structures
+  lang: C++
+  tags: [ Talk ]
+  link:
+    - name: Video CppCon'17 (Youtube)
+      href: https://www.youtube.com/watch?v=sPhpelUfu8Q
+    - name: Video ICFP17 (Youtube)
+      href: https://www.youtube.com/watch?v=56dA2kHHJnM
+    - name: Video CppNow'17 (Youtube)
+      href: https://www.youtube.com/watch?v=ZsryQp0UAC8
+    - name: Video MeetingCpp'16 (Youtube)
+      href: https://www.youtube.com/watch?v=9nupb1SNo3Q&t=18s
+    - name: Slides (CppCon'17 version)
+      href: https://public.sinusoid.es/talks/immer-cppcon17
+  imgs: [ immer-talk-small.png, immer-talk.jpeg ]
+  desc: |
+    During 2017 I have been talking at multiple conferences about
+    immutable data-structures and [my efforts](immer) in bringing them
+    to C++ developers and systems programmers in general.
+
 - name: Sinusoidal Engineering
   lang: C++
   tags: [ Work ]
@@ -36,14 +100,18 @@
 
 - name: Immer
   lang: C++
-  tags: [ Library, Talk ]
+  tags: [ Library, Talk, Research ]
   link:
     - name: Website
       href: https://sinusoid.es/immer
     - name: Code (Github)
       href: https://github.com/arximboldi/immer
-    - name: Talk (Youtube)
-      href: https://www.youtube.com/watch?v=9nupb1SNo3Q
+    - name: Talk CppCon'17 (Youtube)
+      href: https://www.youtube.com/watch?v=sPhpelUfu8Q
+    - name: Talk ICFP'17 (Youtube)
+      href: https://www.youtube.com/watch?v=56dA2kHHJnM
+    - name: Paper ICFP'17 (PDF)
+      href: https://public.sinusoid.es/misc/immer/immer-icfp17.pdf
   imgs: [ immer-small.svg, immer.svg ]
   desc: |
     A library of persistent and immutable data structures in C++ that
@@ -330,7 +398,7 @@
 
 - name: CVG Moodle plug-ins
   lang: PHP
-  tags: [Work, Uni, Web, Talk]
+  tags: [Work, Uni, Web, Talk, Research]
   link:
     - name: Website
       href: http://www.nongnu.org/cvg-moodle
@@ -347,7 +415,7 @@
 
 - name: GNU Psychosynth
   lang: C++
-  tags: [Uni, Library, Music, Graphics]
+  tags: [Uni, Library, Music, Graphics, Research]
   link:
     - name: Website
       href: https://psychosynth.com
@@ -432,7 +500,7 @@
 
 - name: Noxim 3D
   lang: C++
-  tags: Uni
+  tags: [Uni, Research]
   link:
     - name: Code (Launchpad)
       href: https://launchpad.net/noxim-utu
