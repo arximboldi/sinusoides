@@ -1,6 +1,39 @@
 # Recent
 # ------
 
+- name: Sinusoidal Engineering
+  lang: C++
+  tags: [ Work ]
+  link:
+    - name: Website
+      href: https://sinusoid.al
+    - name: Email
+      href: mailto:juanpe@sinusoid.al
+  imgs: [ sinusoidal-small.png, sinusoidal.png ]
+  desc: |
+    Since 2017 I am working as a consultant software engineer with a
+    focus on interactive software, framework design, performance,
+    modern C++ and open source/libre software.  Always looking for new
+    challenging projects: [drop me a line](mailto:juanpe@sinusoid.al)
+    and let's work together!
+
+- name: Ewig
+  lang: C++
+  tags: [ Library ]
+  link:
+    - name: Code (Github)
+      href: https://github.com/arximboldi/immer
+    - name: Video (Asciinema)
+      href: https://asciinema.org/a/3i7smcgv5g52314lklmksqdxt
+  imgs: [ ewig-small.png, ewig.png ]
+  desc: |
+    [Maria Carrasco](http://carrasco.in) helped me write this text
+    editor to show-case [Immer](immer), my library of immutable
+    data-structures.  It's code is extremely simple yet it performs
+    better than most serious editors.  The *undo/redo* feature is just
+    10 lines of code, yet it can copy-paste a gigabite worth of text
+    with no problem!
+
 - name: Immer
   lang: C++
   tags: [ Library, Talk ]
@@ -11,7 +44,7 @@
       href: https://github.com/arximboldi/immer
     - name: Talk (Youtube)
       href: https://www.youtube.com/watch?v=9nupb1SNo3Q
-  imgs: [ terracota-small.jpg, terracota.jpg ]
+  imgs: [ immer-small.svg, immer.svg ]
   desc: |
     A library of persistent and immutable data structures in C++ that
     are fast, customizable and easy to embed in higher languages.  It
