@@ -1,3 +1,6 @@
+
+COFFEE=./node_modules/coffee-script/bin/coffee
+
 .PHONY: all data sass serve
 
 all: data sass cljs
@@ -40,7 +43,7 @@ figwheel:
 	rlwrap lein figwheel
 
 serve:
-	coffee server.coffee
+	$(COFFEE) server.coffee
 
 # pip install watchdog
 watch-data:
