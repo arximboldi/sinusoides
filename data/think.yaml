@@ -1,3 +1,8 @@
+- title: logismo/si
+  type: text
+  text: /static/think/logismo-si.md
+  date: 03-05-2018
+
 - title: Tabú
   type: text
   text: /static/think/tabu.md
@@ -37,6 +42,11 @@
   type: sound
   track: 83707893
   date: 17-03-2013
+
+- title: I have the feel (old sketch)
+  type: sound
+  track: 99682616
+  date: 03-07-2013
 
 - title: El Muerto - Mundo Cobarde (Remix)
   type: sound
