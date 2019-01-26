@@ -282,8 +282,20 @@
                         height: 0.4em;
                     }
                 }
+                h2 {
+                    font-family: $serif-font;
+                    font-weight: normal;
+                    padding-top: 1em;
+                    text-align: center;
+                }
                 p {
                     color: #ccc;
+                }
+
+                p.poem-line {
+                    margin: 0;
+                    text-indent:-2em;
+                    margin-left:4em;
                 }
             }
         }

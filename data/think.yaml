@@ -1,3 +1,8 @@
+- title: Epistemologías
+  type: text
+  text: /static/think/epistemologias.md
+  date: 26-01-2019
+
 - title: logismo/si
   type: text
   text: /static/think/logismo-si.md
