@@ -15,7 +15,8 @@ with import nixpkgs {};
     sass
     rlwrap
     gnumake
-    python
+    (python.withPackages (ps: with ps; [watchdog]))
+    compass
   ];
   shellHook = ''
     export REPO_ROOT=`dirname ${toString ./shell.nix}`
