@@ -50,7 +50,9 @@
 
 (defn- no-prefix [uri]
   (let [prefix (secretary/get-config :prefix)]
-    (string/replace uri (re-pattern (str "^" prefix)) "")))
+    (-> uri
+       (string/replace (re-pattern (str "^" prefix)) "")
+       (string/replace (re-pattern #"\?.*$") ""))))
 
 (defn init-history! []
   (when (aget js/window "SINUSOIDES_DEBUG_MODE")
