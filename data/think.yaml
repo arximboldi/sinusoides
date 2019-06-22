@@ -38,10 +38,10 @@
   text: /static/think/momento.md
   date: 15-07-2015
 
-- title: The Interview II
-  type: text
-  text: /static/think/interview2.md
-  date: 02-01-2015
+# - title: The Interview II
+#   type: text
+#   text: /static/think/interview2.md
+#   date: 02-01-2015
 
 - title: Daisy, Daisy
   type: text
@@ -118,10 +118,10 @@
   track: 54404625
   date: 28-07-2012
 
-- title: De Freud y otras mariconadas
-  type: text
-  text: /static/think/freud.md
-  date: 11-10-2011
+# - title: De Freud y otras mariconadas
+#   type: text
+#   text: /static/think/freud.md
+#   date: 11-10-2011
 
 - title: Sobre mierdas y perros
   type: text
