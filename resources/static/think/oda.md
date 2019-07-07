@@ -12,7 +12,7 @@ esta dialéctica del gusto, es decir, de comer coños. Si alguna pega
 tiene la anatomía humana, que como decía tiene ventajas importantes,
 es no tener más bocas. Así podríamos comer coños y a la vez comer
 pechos, comer codos, comer pies, comer cuellos y comer rodillas, todo
-a la vez. Figurense tentáculos fractales que salen de los dedos y de
+a la vez. Figúrense tentáculos fractales que salen de los dedos y de
 los que salen bocas, bocas por todas partes, bocas jugosas llenas de
 lenguas musculosas y precisas. Desmembrarse uno en infinitas
 extremidades de goce oral, ser un hombre orgía, un monstruo del placer
