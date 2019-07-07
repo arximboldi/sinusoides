@@ -1,3 +1,8 @@
+- title: Oda
+  type: text
+  text: /static/think/oda.md
+  date: 07-07-2019
+
 - title: Terror, amor y muerte
   type: text
   text: /static/think/terror-amor-y-muerte.md
