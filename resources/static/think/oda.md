@@ -1,5 +1,5 @@
-Oda
-===
+Materialismo dialéctico
+=======================
 
 Existe una práctica casi universal, válida igualmente para flojos y
 fuertes, viejos y jóvenes, guapos y feos, que se situa en la
