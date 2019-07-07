@@ -36,14 +36,14 @@ III
 <p class="poem-line">viejos sobervios,</p>
 <p class="poem-line">elegímos no elegir.</p>
 <p class="poem-line">Y no fué el cambio nuestra tumba,</p>
-<p class="poem-line">y nuestra tumba sera el cambio;</p>
+<p class="poem-line">y nuestra tumba será el cambio;</p>
 <p class="poem-line">el tiempo elige por los que no eligen.</p>
 <p class="poem-line">Hay una diferencia entre una cascada y un precicipio.</p>
 <p class="poem-line">Ya no sabremos nunca.</p>
 <p class="poem-line">Hay una diferencia, entre un cobarde y un valiente.</p>
 <p class="poem-line">Ya no sabremos nunca—</p>
 <p class="poem-line">y así es perenne</p>
-<p class="poem-line">y así es pefecto</p>
+<p class="poem-line">y así es perfecto</p>
 <p class="poem-line">este inescrutable,</p>
 <p class="poem-line">también inocuo,</p>
 <p class="poem-line">dolor de ser.</p>
