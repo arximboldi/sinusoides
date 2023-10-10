@@ -1,19 +1,156 @@
 # Recent
 # ------
 
+- name: Bronze
+  lang: [C++, QML]
+  tags: [Work, Music]
+  link:
+    - name: Website
+      href: https://bronze.ai
+  imgs: [bronze-small.png, bronze.jpg]
+  desc: |
+    Since 2020 I am collaborating with [Bronze](https://bronze.ai),
+    architecting and building the next generation of their AI powered
+    composition and arrangement software, enabling artists to make non
+    linear, generative and augmented music.
+
+- name: Squaring the circle
+  lang: [C++]
+  tags: [Talk]
+  link:
+    - name: Video C++ Russia Piter'19 (Youtube)
+      href: https://www.youtube.com/watch?v=e2-FRFEx8CA
+    - name: Video C++ on Sea'20 (Youtube)
+      href: https://www.youtube.com/watch?v=SAMR5GJ_GqA
+    - name: Slides (C++ Russia)
+      href: https://sinusoid.es/talks/cpprussia19-piter
+    - name: Slides (C++ on Sea)
+      href: https://sinusoid.es/talks/cpponsea20
+  imgs: [squaring.svg, squaring-large.jpg]
+  desc: |
+    The talk _Squaring the circle: value-oriented design in an
+    object-oriented system_ teaches how using innovative concepts in
+    [Lager](lager) one can also use value-oriented design and
+    immutable data-structures in legacy systems or user interfaces
+    written with traditional object-oriented toolkits, providing a
+    path for modernization and improvement of all codebases.
+
+- name: Audulus
+  lang: [C++]
+  tags: [Work]
+  link:
+    - name: Website
+      href: https://audulus.com
+  imgs: [audulus-logo.jpg, audulus.png]
+  desc: |
+    In 2019 I consulted [Audulus](https://audulus.com), an
+    advanced modular synthesis app for iOS, helping them use
+    value-oriented design principles in their next gen document model
+    and audio engine.
+
+- name: Zug
+  lang: [C++]
+  tags: [Library, Research]
+  link:
+    - name: Website
+      href: https://sinusoid.es/zug/
+    - name: Code (Github)
+      href: https://github.com/arximboldi/zug
+    - name: Video CppCon'15 (Youtube)
+      href: https://www.youtube.com/watch?v=vohGJjGxtJQ
+  imgs: [zug.svg, zug-large.png]
+  desc: |
+    Zug is a C++ library providing
+    [transducers](https://clojure.org/reference/transducers). Transducers
+    are composable sequential transformations independent of the
+    source. They are extremely lightweight, and can be used to express
+    algorithms over pull-based sequences (iterators, files) but also
+    push based sequences (signals, events, asynchronous streams) in a
+    generic way.
+
+- name: Prenav
+  lang: [C++]
+  tags: [Work, Graphics]
+  link:
+    - name: Website
+      href: https://prenav.com
+  imgs: [prenav.png, prenav-large.png]
+  desc: |
+    In 2019 and 20 I collaborated with [Prenav](https://prenav.com),
+    rearchitecting their structural inspection software using
+    unidirection-dataflow with [Lager](lager), mentoring their team on
+    value-oriented design and modern C++, and building new core
+    features.
+
+- name: The most valuable values
+  lang: [C++]
+  tags: [Talk]
+  link:
+    - name: Video CppCon'18 (Youtube)
+      href: https://www.youtube.com/watch?v=_oBx_NbLghY
+    - name: Video Meeting C++'18 (Youtube)
+      href: https://www.youtube.com/watch?v=NMol_5-2owo
+    - name: Video StdCpp'19 (Youtube, Spanish)
+      href: https://www.youtube.com/watch?v=cFivdQDidb8
+    - name: Slides (CppCon'18 Version)
+      href: https://sinusoid.es/talks/cppcon18
+  imgs: [values.png, values.jpeg]
+  desc: |
+    This is one of my most philosophical and important talks,
+    explaining what "value oriented design" is and how to use it to
+    build a UI with a unidirectional data-flow architecture using
+    [Lager](lager).
+
+- name: OMICRON Energy
+  lang: [C++, QML]
+  tags: [Work]
+  link:
+    - name: Website
+      href: https://www.omicronenergy.com/en/products/mpd-800/
+  imgs: [omicron.png, omicron-large.png]
+  desc: |
+    In 2019 I collaborated with [OMICRON
+    Energy](https://www.omicronenergy.com/) to bring their C++ team up
+    to date with modern development practices.  I also directly worked
+    on their Partial Discharge measurement software, introducing
+    application-wide refactorings and developing new features like
+    "user profiles", allowing users to completely reconfigure their
+    intricate UI to adapt to different use-cases and experience
+    levels.
+
 - name: Lager
   lang: C++
-  tags: [ Work ]
+  tags: [ Library, Talk, Research ]
   link:
+    - name: Website
+      href: https://sinusoid.es/lager
     - name: Code (Github)
       href: https://github.com/arximboldi/lager
+    - name: Video C++Russia Piter'19 (Youtube)
+      href: https://www.youtube.com/watch?v=e2-FRFEx8CA
+    - name: Video CppCon'18 (Youtube)
+      href: https://www.youtube.com/watch?v=_oBx_NbLghY
   imgs: [ lager-small.svg, lager.jpeg ]
   desc: |
-    This is a work-in progress
-    [Redux](https://github.com/reactjs/redux)-like library bringing the
-    simplicity and power of the uni-directional data-flow
+    This is a [Redux](https://github.com/reactjs/redux)-like library
+    bringing the simplicity and power of the uni-directional data-flow
     architecture---like the [Elm
     architecture](https://guide.elm-lang.org/architecture)---to C++.
+    It also brings concepts from Clojure like _cursors_, that help
+    bridging the gap with OO-style components.
+
+- name: Kapela
+  lang: [C++, Rust, QML, Clojure]
+  tags: [Work, Music]
+  link:
+    - name: Website
+      href: https://kapela.live/
+  imgs: [kapela.svg, kapela.jpg]
+  desc: |
+    In 2018 and 19, I've lead the development team, architected and
+    written a lot of the code behind [Kapela](https://kapela.live/), a
+    system for doing connected performances, in a new way of
+    experiencing live electronic music.
 
 - name: "Programming: the last 4000 years"
   lang: C++
@@ -32,7 +169,7 @@
 
 - name: zenAud.io
   lang: [C++, Scheme]
-  tags: []
+  tags: [Work]
   link:
     - name: Website
       href: https://zenaud.io
@@ -46,7 +183,7 @@
 
 - name: Schmutz
   lang: [C++, Scheme]
-  tags: []
+  tags: [Library]
   link:
     - name: Website
       href: https://sinusoid.es/schmutz/
@@ -208,6 +345,8 @@
   link:
     - name: Code (Github)
       href: http://www.github.com/ableton/atria
+    - name: Video CppCon'15 (Youtube)
+      href: https://www.youtube.com/watch?v=vohGJjGxtJQ
   imgs: [ atria-small.png, atria.jpg ]
   desc: |
     Developed at Ableton from 2014, this is a collection of core C++
