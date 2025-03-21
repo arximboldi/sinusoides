@@ -1,8 +1,97 @@
 # Recent
 # ------
 
-- name: Bronze
+- name: Olivia Nava Igual
+  lang: [Rust, WASM]
+  tags: [Web]
+  link:
+    - name: Website
+      href: https://www.olivia-ni.com/
+    - name: Code
+      href: https://github.com/arximboldi/obj-site
+    - name: PDF
+      href: https://olivia-ni.com/pdf/out/portfolio-small.pdf
+  imgs: [olivia1.jpg, olivia2.jpg]
+  desc: |
+    In 2025 I helped [Olivia Nava Igual](https://www.olivia-ni.com/)
+    design, implement and host her artist's portfolio, including a few
+    easter eggs and a responsive design that works well on mobile,
+    desktop, and print.
+
+- name: Dusty
+  lang: [Rust, WASM]
+  tags: [Work, Robotics, Graphics, Web]
+  link:
+    - name: Website
+      href: https://www.dustyrobotics.com/
+  imgs: [dusty1-crop.webp, dusty2.png]
+  desc: |
+    In 2024 I collaborated with Dusty Robotics, a company making
+    robots that print building plans and layout on the floor of
+    construction sites.  I rewrote their plan viewer in Rust and
+    WebGL, achieving much better performance, and mentored their team
+    in graphics programming, API design, and software optimization.
+
+- name: Meta
+  lang: [C++]
+  tags: [Work, Library, Research]
+  link:
+    - name: Website
+      href: https://engineering.fb.com/2020/08/24/production-engineering/scaling-services-with-shard-manager/
+    - name: Paper
+      href: https://research.facebook.com/publications/shard-manager-a-generic-shard-management-framework-for-geo-distributed-applications/
+  imgs: [meta1.jpg, meta2.webp]
+  desc: |
+    In 2023 I collaborated with the [Shard
+    Manager](https://engineering.fb.com/2020/08/24/production-engineering/scaling-services-with-shard-manager)
+    team at Meta, that was exploring using
+    [Immer](https://github.com/arximboldi/immer) to improve
+    performance. As part of this collaboration, I added support for
+    _transients_ for maps and sets in Immer, and mentored their team
+    in best using immutable data-structures. The project was deployed
+    at scale, this is critical infrastructure serving millions of
+    machines. We lowered the average latency by an order of magnitude,
+    and memory usage was halved.
+
+- name: Cubasis
   lang: [C++, QML]
+  tags: [Work, Music]
+  link:
+    - name: Website
+      href: https://www.steinberg.net/cubasis/
+  imgs: [cubasis-crop.webp, cubasis2.png]
+  desc: |
+    In 2021 I consulted with the
+    [Cubasis](https://www.steinberg.net/cubasis/) team to help them
+    rewrite their whole data-model using a [Value-Oriented
+    Architecture](https://sinusoid.es/do/squaring-the-circle). This
+    allowed them to improve the whole responsiveness of the app by
+    decoupling the UI and data-model threads, fix long-standing bugs,
+    and improve the overall maintainability and performance of their
+    code.
+
+- name: Automaton
+  lang: [C++]
+  tags: [Work, Robotics, Graphics]
+  link:
+    - name: Website
+      href: https://www.automaton.build/
+  imgs: [automaton1-crop.jpg, automaton3.jpg]
+  desc: |
+    In 2021 I collaborated with
+    [Automaton](https://www.automaton.build/) and
+    [Magnopus](https://www.magnopus.com/) to build a novel approach
+    for film recording using robotics robotics and on set real-time
+    3D-graphics. I built designed the whole system's data-flow and
+    communication architecture for real-time and low-latency, using
+    value-oriented actors built with
+    [Lager](https://github.com/arximboldi/lager) and
+    [Immer](https://github.com/arximboldi/immer) at their core; and
+    built the scene visualization and control software on top of
+    [USD](https://openusd.org/).
+
+- name: Bronze
+  lang: [C++, QML, WASM]
   tags: [Work, Music]
   link:
     - name: Website
@@ -12,7 +101,8 @@
     Since 2020 I am collaborating with [Bronze](https://bronze.ai),
     architecting and building the next generation of their AI powered
     composition and arrangement software, enabling artists to make non
-    linear, generative and augmented music.
+    linear, generative and augmented music. Since 2022 I am also CTO
+    of the company.
 
 - name: Squaring the circle
   lang: [C++]

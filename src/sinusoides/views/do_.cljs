@@ -99,7 +99,8 @@
               :grid-margin-em  0.375}
    (for [p @entries]
      (let [background-style
-           {:background-image
+           {:background-size "cover"
+            :background-image
             (str "url(\"/static/screens/" ((:imgs p) 0) "\")")}]
        ^{:key (:slug p)}
        [:a {:href (routes/do- {:id (:slug p)})
