@@ -2,8 +2,8 @@
 
 #do-page {
     @keyframes enter-presentation {
-        from { transform: translateX(-120%); }
-        40%  { transform: scale(2) translateX(-120%); }
+        from { transform: translateX(-140%); }
+        60%  { transform: scale(2.5) translateX(-140%); }
         to   { transform: scale(1) translateX(0); }
     }
     @keyframes enter-stuff {
@@ -14,8 +14,8 @@
 
     @keyframes leave-presentation {
         from { transform: translateX(0); }
-        50%  { transform: translateX(-130%); }
-        to   { transform: translateX(-130%); }
+        40%  { transform: scale(1.5) translateX(-140%); }
+        to   { transform: scale(1.5) translateX(-140%); }
     }
     @keyframes leave-stuff {
         from { transform: translateX(0); }
