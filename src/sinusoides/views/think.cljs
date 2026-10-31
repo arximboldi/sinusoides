@@ -19,6 +19,7 @@
 (ns sinusoides.views.think
   (:require-macros [cljs.core.async.macros :refer [go go-loop]])
   (:require [sinusoides.views.audio-player :as audio-player]
+            [sinusoides.views.soundcloud :as soundcloud]
             [sinusoides.views.sinusoid :as sinusoid]
             [sinusoides.views.slideshow :as slideshow]
             [sinusoides.views.decorators :as deco]
@@ -42,31 +43,20 @@
 
 (defn soundcloud-player-view [thing data player & children]
   (r/with-let
-    [client-id     "485230fd2a6e151244a57a584f904070"
-     add-client-id #(str % "?client_id=" client-id)
+    [_ (when-not @data
+         (go (swap! data merge (<! (soundcloud/info (:track thing))))))]
 
-     api-get
-     (fn [& command]
-       (http/jsonp (add-client-id (str "https://api.soundcloud.com"
-                                       (apply str command)
-                                       ".json"))))
-
-     _
-     (go (let [response (<! (api-get "/tracks/" (:track thing)))]
-           (reset! data (:body response))))]
-
-    (if @data
-      (let [background (string/replace (:artwork_url @data)
-                                       #"-large.jpg"
-                                       "-t500x500.jpg")
-            audio-src  (add-client-id (:stream_url @data))]
-        (into
-          [audio-player/view
-           {:style {:background-image (str "url(" background ")")}}
-           audio-src
-           player]
-          children))
-      [:span])))
+    ;; The artwork is the only thing here that needs SoundCloud to
+    ;; answer, and the tile has a flat colour to sit on until it does.
+    ;; Playing needs nothing but the track number, so the player goes
+    ;; up straight away and never hangs on a metadata fetch.
+    (into
+      [audio-player/view
+       (when-let [artwork (:artwork @data)]
+         {:style {:background-image (str "url(" artwork ")")}})
+       (soundcloud/track-url (:track thing))
+       player]
+      children)))
 
 (defn sound-thumbnail-view [thing data player]
   [:div.thingy.sound
@@ -79,8 +69,17 @@
    (:title thing)])
 
 (defn sound-detail-view [thing data player]
-  (r/with-let [input-date-formatter  (time/formatter "yyyy/MM/dd hh:mm:ss Z")
-               output-date-formatter (time/formatter "MMMM YYYY")]
+  (r/with-let
+    [input-date-formatter  (time/formatter "dd-MM-yyyy")
+     output-date-formatter (time/formatter "MMMM YYYY")
+
+     ;; The thumbnail only asked oEmbed, which knows the title and the
+     ;; artwork and nothing else.  The rest of the page -- the blurb,
+     ;; the tags, the link back -- costs a widget, so it is only
+     ;; fetched once someone actually opens the track.
+     _ (when-not (:permalink @data)
+         (go (swap! data merge (<! (soundcloud/sound (:track thing))))))]
+
     [:div.detail.sound
      [:div.left-side
       [soundcloud-player-view thing data player]]
@@ -88,19 +87,19 @@
      (when @data
        [:div.right-side
         [:div.name (:title @data)]
-        [:div.desc {:dangerouslySetInnerHTML
-                    {:__html (util/md->html (:description @data))}}]
+        (when-not (string/blank? (:description @data))
+          [:div.desc {:dangerouslySetInnerHTML
+                      {:__html (util/md->html (:description @data))}}])
         [:div.date (time/unparse output-date-formatter
                                  (time/parse input-date-formatter
-                                             (:created_at @data)))]
+                                             (:date thing)))]
         [:div.footer
          [:div.tags
-          (string/join
-            " "
-            (map #(str "#" (string/lower-case %))
-                 (string/split (:tag_list @data) #" ")))]
-         [:a.to-soundcloud {:href (:permalink_url @data)}
-          "Go to SoundCloud"]]])]))
+          (string/join " " (map #(str "#" (string/lower-case %))
+                                (:tags @data)))]
+         (when-let [permalink (:permalink @data)]
+           [:a.to-soundcloud {:href permalink}
+            "Go to SoundCloud"])]])]))
 
 (defn text-detail-view [thing data]
   (r/with-let [_ (go (reset! data (:body (<! (http/get (:text thing))))))]

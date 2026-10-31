@@ -19,11 +19,23 @@
 (ns sinusoides.views.audio-player
   (:require-macros [cljs.core.async.macros :refer [go go-loop]])
   (:require [sinusoides.util :as util]
+            [sinusoides.views.soundcloud :as soundcloud]
             [clojure.string :as string]
             [cljs.core.match :refer-macros [match]]
             [cljs.core.async :as async :refer [<! >!]]
+            [goog.object :as gobj]
             [reagent.core :as r]
             [goog.events :as events]))
+
+(def ^:private load-timeout-ms 20000)
+
+(defn- settled?
+  "Waits for `ch`, giving up after a while.  A widget that never reports
+   back would otherwise leave the command loop parked forever, and with
+   it every player on the page."
+  [ch]
+  (go (let [[_ port] (async/alts! [ch (async/timeout load-timeout-ms)])]
+        (= port ch))))
 
 (defn state [command]
   {:command command
@@ -34,74 +46,170 @@
    :status nil})
 
 (defn object [st]
-  (let [events (atom)]
+  ;; One hidden SoundCloud widget, shared by every player on the page,
+  ;; exactly as the single <audio> element it replaces was.  `src` is a
+  ;; track URL now instead of a media URL, but nothing above here cares:
+  ;; the view only ever compares it for identity, and every time and
+  ;; duration below is still in seconds.
+  (let [widget   (atom nil)
+        commands (atom nil)
+        ;; Kept apart from st: the widget reports how much it has
+        ;; buffered as a fraction, so we cannot turn it into the
+        ;; seconds the seek bar wants until we know the duration, and
+        ;; the two do not arrive in a fixed order.
+        loaded   (atom 0)
+        ;; True from asking for a track until that track is in the
+        ;; frame.  The widget posts its progress across from an iframe,
+        ;; so the last word on the outgoing track lands after we have
+        ;; already switched -- without this the new seek bar wears the
+        ;; old track's position until its own first report.
+        loading? (atom false)]
     (r/create-class
       {:component-did-mount
        (fn [this]
-         (let [audio (r/dom-node this)
+         (let [frame (r/dom-node this)
+               chan  (async/chan 16)
 
-               ensure-src
-               #(when (not= % (.-src audio))
-                  (set! (.-src audio) %)
-                  (.load audio)
-                  (swap! st assoc-in [:src] (.-src audio))
-                  (swap! st assoc-in [:progress] 0))
-
-               update-time
-               (fn []
-                 (swap! st assoc-in [:duration] (.-duration audio))
-                 (swap! st assoc-in [:current-time] (.-currentTime audio)))
-
-               update-progress
-               (fn []
-                 (when (-> audio .-buffered .-length pos?)
-                   (swap! st assoc-in [:progress] (-> audio
-                                                      .-buffered
-                                                      (.end 0)))))
+               sync!
+               (fn [k v] (swap! st assoc-in [k] v))
 
                update-status
                (fn [status]
                  (prn "audio player: status changed")
                  (prn "   - source: " (:src @st))
                  (prn "   - status: " status)
-                 (swap! st assoc-in [:status] status))
+                 (sync! :status status))
 
-               command-handler
-               (fn [command]
-                 (match [command]
-                    [:pause]         (do (.pause audio))
-                    [[:play src]]    (do (ensure-src src)
-                                         (when (let [st (:status @st)]
-                                                 (or (= st :error)
-                                                     (= st :aborted)))
-                                           (.load audio))
-                                         (.play audio))
-                    [[:preload src]] (do (ensure-src src)
-                                         (set! (.-preload audio) true))
-                    [[:seek time]]   (do (set! (.-currentTime audio) time))
-                    [bad-command]    (do (prn "audio player: bad command, "
-                                              bad-command))))]
+               update-progress
+               (fn [] (sync! :progress (* @loaded (:duration @st))))
 
-           (reset! st (state command-handler))
-           (reset!
-             events
-             [(events/listen audio "durationchange" update-time)
-              (events/listen audio "timeupdate" update-time)
-              (events/listen audio "progress" update-progress)
-              (events/listen audio "play" #(update-status :play))
-              (events/listen audio "playing" #(update-status :playing))
-              (events/listen audio "pause" #(update-status :paused))
-              (events/listen audio "ended" #(update-status :ended))
-              (events/listen audio "error" #(update-status :error))
-              (events/listen audio "abort" #(update-status :aborted))])))
+               update-duration
+               (fn []
+                 (when-let [w @widget]
+                   (.getDuration w (fn [ms]
+                                     (sync! :duration (/ ms 1000))
+                                     (update-progress)))))
+
+               bind!
+               (fn [w]
+                 (let [ev (soundcloud/events)]
+                   (.bind w (.-PLAY ev)   #(update-status :playing))
+                   (.bind w (.-PAUSE ev)  #(update-status :paused))
+                   (.bind w (.-FINISH ev) #(update-status :ended))
+                   (.bind w (.-ERROR ev)  #(update-status :error))
+                   (.bind w (.-PLAY_PROGRESS ev)
+                          (fn [e]
+                            (when-not @loading?
+                              (sync! :current-time
+                                     (/ (gobj/get e "currentPosition")
+                                        1000)))))
+                   (.bind w (.-LOAD_PROGRESS ev)
+                          (fn [e]
+                            (when-not @loading?
+                              (reset! loaded (gobj/get e "loadProgress"))
+                              (update-progress))))))
+
+               ;; Returns a channel that closes once the widget holds
+               ;; `src`, so that the command loop below never has two
+               ;; loads in flight.
+               load!
+               (fn [src auto-play]
+                 (reset! loading? true)
+                 (reset! loaded 0)
+                 (swap! st merge {:src src
+                                  :duration 0
+                                  :current-time 0
+                                  :progress 0
+                                  :status nil})
+                 (go
+                   (let [ok
+                         (if-let [w @widget]
+                           ;; The frame already holds a player, so this
+                           ;; takes the track URL itself -- handing it a
+                           ;; player address would get that wrapped in a
+                           ;; second one.
+                           (let [done (async/promise-chan)]
+                             ;; js-obj, not #js: the go macro cannot see
+                             ;; into a reader literal, so a closure
+                             ;; written there loses the locals around it.
+                             (.load w src
+                                    (js-obj "auto_play" auto-play
+                                            "callback" #(async/close! done)))
+                             (<! (settled? done)))
+                           ;; Nothing has been played yet, so the iframe
+                           ;; is still blank -- the equivalent of
+                           ;; preload="none".
+                           (if-let [sc (<! (soundcloud/api-ready))]
+                             (let [ready (async/promise-chan)]
+                               ;; auto-play has to ride in on the URL:
+                               ;; the frame takes a moment to boot and by
+                               ;; then the click that asked for it no
+                               ;; longer counts as the gesture a browser
+                               ;; wants to see.
+                               (set! (.-src frame)
+                                     (soundcloud/player-url
+                                       src {:auto-play auto-play}))
+                               (let [w (.Widget sc frame)]
+                                 (reset! widget w)
+                                 (bind! w)
+                                 (.bind w (.-READY (soundcloud/events))
+                                        #(async/close! ready)))
+                               (if (<! (settled? ready))
+                                 ;; If the browser refused the frame
+                                 ;; anyway, ask again now that there is
+                                 ;; a player to ask.
+                                 (do (when auto-play (.play @widget))
+                                     true)
+                                 false))
+                             false))]
+                     ;; Whatever the track turned out to be, it is the
+                     ;; one in the frame from here on, so its own
+                     ;; reports are the ones worth listening to.
+                     (reset! loading? false)
+                     (if ok
+                       (update-duration)
+                       (update-status :error)))))]
+
+           ;; React 0.14 drops attributes it does not know, and `allow`
+           ;; is one of them -- without it the browser refuses the
+           ;; iframe permission to make a sound.  It has to be in place
+           ;; before the frame is ever navigated, which is why the src
+           ;; is set lazily above and not in the render below.
+           (.setAttribute frame "allow" "autoplay; encrypted-media")
+
+           (reset! commands chan)
+           (reset! st (state #(async/put! chan %)))
+
+           (go-loop []
+             (when-some [command (<! chan)]
+               (match [command]
+                  [:pause]         (when-let [w @widget] (.pause w))
+                  [[:play src]]    (if (and @widget (= src (:src @st)))
+                                     (.play @widget)
+                                     (<! (load! src true)))
+                  [[:preload src]] (when-not (= src (:src @st))
+                                     (<! (load! src false)))
+                  [[:seek time]]   (when-let [w @widget]
+                                     (.seekTo w (js/Math.round (* time 1000))))
+                  [bad-command]    (prn "audio player: bad command, "
+                                        bad-command))
+               (recur)))))
 
        :component-will-unmount
        (fn [this]
-         (dorun (map events/unlistenByKey @events)))
+         (when-let [chan @commands] (async/close! chan))
+         (when-let [w @widget]
+           (.pause w)
+           (let [ev (soundcloud/events)]
+             (doseq [e [(.-READY ev) (.-PLAY ev) (.-PAUSE ev) (.-FINISH ev)
+                        (.-ERROR ev) (.-PLAY_PROGRESS ev)
+                        (.-LOAD_PROGRESS ev)]]
+               (.unbind w e)))))
 
        :reagent-render
        (fn []
-         [:audio {:preload "none"}])})))
+         [:iframe.audio-player-object
+          {:scrolling "no" :title "SoundCloud player"}])})))
 
 (defn view [props src st & children]
   (r/with-let

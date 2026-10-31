@@ -109,3 +109,20 @@
     &.is-started .seek-bar:hover .seek-bar-range { height: 1.25em; } // 20px
     &.is-started .seek-bar:hover .seek-bar-tooltip { opacity: 1; }
 }
+
+// The widget that actually makes the sound.  It has to be a laid out
+// iframe for the browser to let it play -- display:none and
+// visibility:hidden both get it suspended -- so it is parked
+// off-screen at a pixel instead.  Nothing of it is ever seen; the
+// player above is the whole interface.
+.audio-player-object {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    border: 0;
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+}
