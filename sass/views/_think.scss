@@ -1,5 +1,9 @@
 @import '../global';
 
+// How much of the blurb the fade covers, and how much empty room is
+// kept under it so that the fade never lands on the last line.
+$desc-fade: 2.5em;
+
 #think-page {
     @keyframes enter-title {
         from { transform: scale(1.5) translateX(-100%) translateY(130%); }
@@ -185,6 +189,12 @@
                 position: absolute;
                 overflow: hidden;
                 box-sizing: border-box;
+
+                // The blurb is the only part that can run long, so it
+                // takes whatever height is left over and scrolls
+                // inside it.  Everything else keeps its place.
+                display: flex;
+                flex-direction: column;
                 width: 40vw;
                 height: 40vw;
                 left: 50%;
@@ -208,6 +218,7 @@
                 }
 
                 .name {
+                    flex: 0 0 auto;
                     font-size: 2em;
                     margin: 0 -2% 1em 0;
                     text-transform: uppercase;
@@ -223,10 +234,50 @@
                     font-family: $serif-font;
                 }
 
+                .date { flex: 0 0 auto; }
+
+                .desc {
+                    flex: 0 1 auto;
+                    min-height: 0;
+                    overflow-y: auto;
+
+                    // The fade marks a blurb that carries on past the
+                    // bottom edge.  The padding under it is what keeps
+                    // it honest: scrolled to the end, the fade falls on
+                    // that empty strip instead of on the last line, so
+                    // no words are ever left half dissolved.
+                    padding-bottom: $desc-fade;
+                    -webkit-mask-image: linear-gradient(
+                        to bottom, black calc(100% - #{$desc-fade}), transparent);
+                    mask-image: linear-gradient(
+                        to bottom, black calc(100% - #{$desc-fade}), transparent);
+
+                    scrollbar-width: thin;
+                    scrollbar-color: #333 transparent;
+                    &::-webkit-scrollbar { width: 0.4em; }
+                    &::-webkit-scrollbar-track { background: transparent; }
+                    &::-webkit-scrollbar-thumb { background: #333; }
+
+                    // Scrolling makes this a block formatting context,
+                    // so the markdown's own first and last margins stop
+                    // collapsing away and would show up as a gap.
+                    > :first-child { margin-top: 0; }
+                    > :last-child { margin-bottom: 0; }
+
+                    @include respond-to(portrait) {
+                        // The column grows with its content here, so
+                        // there is nothing to scroll and nothing to
+                        // fade.
+                        overflow: visible;
+                        padding-bottom: 0;
+                        -webkit-mask-image: none;
+                        mask-image: none;
+                    }
+                }
+
                 .footer {
-                    position: absolute;
-                    bottom: 0;
-                    background-color: black;
+                    flex: 0 0 auto;
+                    margin-top: auto;
 
                     @include respond-to(portrait) {
                         position: static;
