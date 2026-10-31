@@ -4,7 +4,7 @@
 - name: soundcloud
   url: https://soundcloud.com/magnicida
 
-  - name: soundcloud
+- name: soundcloud
   url: https://soundcloud.com/internet_mp3
 
 - name: lastfm
