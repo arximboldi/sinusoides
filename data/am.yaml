@@ -1,11 +1,14 @@
 - name: linkedin
   url: http://www.linkedin.com/pub/juan-pedro-bol%C3%ADvar-puente/38/774/291
 
-- name: soundcloud
+- name: soundcloud1
   url: https://soundcloud.com/magnicida
 
-- name: soundcloud
+- name: soundcloud2
   url: https://soundcloud.com/internet_mp3
+
+- name: instagram
+  url: https://instagram.com/internet_mp3
 
 - name: lastfm
   url: http://www.last.fm/user/magnicida
@@ -13,10 +16,10 @@
 - name: anobii
   url: http://www.anobii.com/01009a0dfc6d4e6125/books
 
-- name: twitter
+- name: twitter1
   url: https://twitter.com/sinusoidalen
 
-- name: twitter
+- name: twitter2
   url: https://twitter.com/drzurullo
 
 - name: vimeo
