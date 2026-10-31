@@ -1,8 +1,56 @@
 # Recent
 # ------
 
+- name: nixmac
+  lang: [Rust, TypeScript, Nix]
+  tags: [Work, Web]
+  link:
+    - name: Website
+      href: https://nixmac.com/
+    - name: Code
+      href: https://github.com/darkmatter/nixmac/
+  imgs: [nixmac-logo.png, nixmac-hero.png]
+  desc: |
+    In 2026 I helped build [Nixmac](https://nixmac.com/), a desktop
+    application and AI agent that allows you declaratively configure
+    your Mac, levaring the power of [Nix](https://nixos.org/) and
+    Git. It includes a custom built harness interfacing with various
+    LLM's, including our own deployments.
+
+- name: darkmatter
+  lang: [Rust, TypeScript, Nix]
+  tags: [Work, Web, Crypto]
+  link:
+    - name: Website
+      href: https://dm.sh/
+    - name: Code
+      href: https://github.com/darkmatter/
+  imgs: [darkmatter1.png, darkmatter2.png]
+  desc: |
+    In 2026 I was part of Darkmatter, an experimental lab working on
+    software, protocols, and trading infrastructure at the
+    intersection of AI and crypto.  I helped build
+    [Nixmac](https://sinusoid.es/do/nixmac),
+    [Stackpanel](https://dm.sh/products/stackpanel), and worked on
+    crypto trading systems, including analysis tools for Liquidity
+    Providing.
+
+- name: mpd-sima-gui
+  lang: [Python]
+  tags: [Music]
+  link:
+    - name: Code
+      href: https://github.com/arximboldi/mpd-sima-gui
+  imgs: [mpd-sima1.png, mpd-sima2.png]
+  desc: |
+    In 2026 I made this little tool, built with GTK and Python, to
+    control the lovely [MPD_sima](https://kaliko.me/mpd-sima/) tool
+    from the system tray. `MPD_sima` brings
+    [last.fm](https://www.last.fm/) vibes to listening to your music
+    library.
+
 - name: Olivia Nava Igual
-  lang: [Rust, WASM]
+  lang: [JavaScript]
   tags: [Web]
   link:
     - name: Website
@@ -17,6 +65,42 @@
     design, implement and host her artist's portfolio, including a few
     easter eggs and a responsive design that works well on mobile,
     desktop, and print.
+
+- name: Persistence Squared
+  lang: [C++]
+  tags: [Talk]
+  link:
+    - name: Video (MeetingC++ 2025)
+      href: https://www.youtube.com/watch?v=pQhHx0h-904
+    - name: Video (CppCon 2025)
+      href: https://www.youtube.com/watch?v=HmmRVdYMP-g
+    - name: Slides
+      href: https://sinusoid.es/talks/cppcon25/
+  imgs: [persistence1.png, persistence2.png]
+  desc: |
+    In 2025 I presented `immer::persist`, a new library that allows
+    [Immer](https://sinusoid.es/do/immer) data-structured to be
+    serialized, or transformed, while perserving the internal
+    structure including structural sharing acrosss values.  This
+    enables radically new architectures and expands the use-cases for
+    these novel data structures.
+
+- name: plum.build
+  lang: [Rust, WASM]
+  tags: [Work, Robotics, Graphics]
+  link:
+    - name: Website
+      href: https://plum.build/
+  imgs: [plum1.png, plum2.png]
+  desc: |
+    In 2025 I helped [Plum](https://plum.build/) build the monitoring
+    and control system for their robotics stack, bringing cutting edge
+    automation workflows to construction sites. Among other things, I
+    built a C++ library for [Behavior
+    Trees](https://en.wikipedia.org/wiki/Behavior_tree) that
+    integrated with [Lager](https://github.com/arximboldi/lager) and
+    allowed for both static (compile time) and runtime introspection
+    and had excellent performance.
 
 - name: Dusty
   lang: [Rust, WASM]
@@ -53,6 +137,35 @@
     machines. We lowered the average latency by an order of magnitude,
     and memory usage was halved.
 
+- name: SoundX
+  lang: [C++]
+  tags: [Work, Music]
+  link:
+    - name: Website
+      href: https://www.soundx.fr/
+  imgs: [soundx1.jpg, soundx2.jpg]
+  desc: |
+    In 2022 I helped [SoundX](https://www.soundx.fr/) optimize their
+    sound engine. I addressed real-time programming issues, audio
+    interfacing problems, removing sound glitches and other
+    performance issues in their first prototypes.
+
+- name: Ipolog
+  lang: [C++]
+  tags: [Work, Music]
+  link:
+    - name: Website
+      href: https://www.ipolog.ai/
+  imgs: [ipolog1.jpg, ipolog2.png]
+  desc: |
+    In 2022 I consulted with [Ipolog](https://www.ipolog.ai/),
+    reviewing their strategy to use a [Value-Oriented
+    Architecture](https://sinusoid.es/do/squaring-the-circle) for
+    their application data-model, using
+    [Lager](https://github.com/arximboldi/lager) and
+    [Immer](https://github.com/arximboldi/immer) their powerful Qt
+    application for designing complex industrial automation workflows.
+
 - name: Cubasis
   lang: [C++, QML]
   tags: [Work, Music]
@@ -81,7 +194,7 @@
     In 2021 I collaborated with
     [Automaton](https://www.automaton.build/) and
     [Magnopus](https://www.magnopus.com/) to build a novel approach
-    for film recording using robotics robotics and on set real-time
+    for film recording using robotics and on set real-time
     3D-graphics. I built designed the whole system's data-flow and
     communication architecture for real-time and low-latency, using
     value-oriented actors built with
@@ -91,7 +204,7 @@
     [USD](https://openusd.org/).
 
 - name: Bronze
-  lang: [C++, QML, WASM]
+  lang: [C++, QML, WASM, Nix]
   tags: [Work, Music]
   link:
     - name: Website
@@ -230,7 +343,7 @@
     bridging the gap with OO-style components.
 
 - name: Kapela
-  lang: [C++, Rust, QML, Clojure]
+  lang: [C++, Rust, QML, Clojure, Nix]
   tags: [Work, Music]
   link:
     - name: Website
@@ -534,7 +647,7 @@
     [Reagent](https://github.com/reagent-project/reagent)
 
 - name: dotfiles
-  lang: Bash
+  lang: [Bash, Nix]
   link:
     - name: Code (Github)
       href: https://github.com/arximboldi/dotfiles
