@@ -37,16 +37,31 @@
     }
     &.hovered::before { background-color: red; }
 
+    // The wave slides with a transform rather than with
+    // background-position.  This bar is ten viewports wide, so an
+    // offset given in percent works out to some forty tile widths, and
+    // the tile is a fractional number of pixels across.  Chromium
+    // rounds background tiles to whole device pixels, so that fraction,
+    // multiplied by forty, lands differently depending on how wide the
+    // window is and on whether the bar is mid-animation -- which is
+    // what made the pattern step sideways at the end of a page
+    // transition.  A transform carries no tiling arithmetic, so the
+    // offset is exact at every width.
+    //
+    // Translating moves the box instead of the pattern inside it, so
+    // the box is widened and started off to the left to be sure it
+    // still covers the screen at either end of the slide.
     &::after {
         content: "";
         position: absolute;
         top: -1px;
-        width: 100%;
+        left: -150%;
+        width: 400%;
         height: calc(100% + 2px);
         pointer-events: none;
         background-image: url(/static/pic/sinusoid-i.svg);
         background-size: contain;
-        transition: background-position $page-anim-full ease-in-out;
+        transition: transform $page-anim-full ease-in-out;
     }
 
     @keyframes main-sin {
@@ -75,7 +90,7 @@
     @keyframes not-found-sin {}
 
     &.main-sin {
-        &::after { background-position: 0 0; }
+        &::after { transform: translateX(0); }
         top: 50vh;
         margin-top: -0.5em;
         animation: main-sin $page-anim-full ease-in-out;
@@ -84,13 +99,13 @@
         }
     }
     &.do-sin {
-        &::after { background-position: -70% 0; }
+        &::after { transform: translateX(-17.5%); }
         top: 0vh;
         margin-top: 2.62rem;
         animation: do-sin $page-anim-full ease-in-out;
     }
     &.am-sin {
-        &::after { background-position: 80% 0; }
+        &::after { transform: translateX(20%); }
         top: 100vh;
         margin-top: calc(-1em - 0.3em);
         animation: am-sin $page-anim-full ease-in-out;
@@ -99,18 +114,18 @@
         }
     }
     &.think-sin {
-        &::after { background-position: 100% 0; }
+        &::after { transform: translateX(25%); }
         top: -100vh;
         margin-top: -0.5em;
         animation: think-sin $page-anim-full ease-in-out;
     }
     &.todo-sin {
-        &::after { background-position: 100% 0; }
+        &::after { transform: translateX(25%); }
         top: -100vh;
         margin-top: -0.5em;
     }
     &.not-found-sin {
-        &::after { background-position: 20% 0; }
+        &::after { transform: translateX(5%); }
         animation: not-found-sin $page-anim-full ease-in-out;
         transition-duration: $page-anim-half;
         top: 50vh;
