@@ -17,6 +17,19 @@
     Git. It includes a custom built harness interfacing with various
     LLM's, including our own deployments.
 
+- name: WAVY
+  lang: [C++, Nix]
+  tags: [Work, Web]
+  link:
+    - name: App Store
+      href: https://apps.apple.com/us/app/wavy-deep-listening/id6749898891
+  imgs: [wavy0.webp, wavy4.webp]
+  desc: |
+    In 2026 I helped WAVY set up their streaming infrastructure using
+    the [Bronze](https://sinusoid.es/do/bronze) Engine, supporting
+    scaling to thousands of concurrent multi-channel streams and ease
+    integration in the Swift app.
+
 - name: darkmatter
   lang: [Rust, TypeScript, Nix]
   tags: [Work, Web, Crypto]
