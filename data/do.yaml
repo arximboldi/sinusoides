@@ -99,7 +99,7 @@
     these novel data structures.
 
 - name: plum.build
-  lang: [Rust, WASM]
+  lang: [C++]
   tags: [Work, Robotics, Graphics]
   link:
     - name: Website
