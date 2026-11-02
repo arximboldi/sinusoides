@@ -79,19 +79,39 @@
             margin: 0;
             &.not {
                 font-size: 1.14em;
+
+                // Makes this line the containing block for the bar
+                // below, so the bar is exactly as tall as the line.
+                // Without it the bar's height resolves against
+                // .am-block instead, which is several lines tall: the
+                // bar then hangs a block-height below the foot of the
+                // page and gives /am a screenful of empty scroll.  The
+                // page animations also put a transform on this line,
+                // and a transformed element becomes the containing
+                // block for what is inside it, so the height would
+                // otherwise change the moment an animation ended.
+                position: relative;
+
+                // Hides the wave where it would otherwise carry on
+                // past the end of the line, out to the right edge of
+                // the page.  It lives inside the line so that it
+                // travels with it: the lines are what the entering and
+                // leaving animations move.
+                &::after {
+                    content: "";
+                    background-color: black;
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    width: 1em;
+                    pointer-events: none;
+                }
             }
             p {
                 color: black;
                 background: white;
                 display: inline;
                 transition: box-shadow 0.5s ease-in-out;
-            }
-            &::after {
-                content: "";
-                background-color: black;
-                position: absolute;
-                height: 100%;
-                width: 1em;
             }
         }
         &.hovered {
