@@ -76,7 +76,9 @@
     [:div.filters
      [:div.filter-group
       [:div.header "//"]
-      [:a.cv {:href "/static/files/resume-en.pdf"} "Résumé"]
+      [:a.cv {:href "/static/files/resume.pdf"} "Résumé"]
+      [:a.cv {:href "/static/files/resume-short.pdf"} "Short"]
+      [:a.cv {:href "/static/files/cv.pdf"} "CV"]
       (when-not (= (get-in @do [:filter]) {:languages #{}
                                            :tags #{}})
         [:div.filter.clearf {:on-click clear-filters} "Clear"])]
