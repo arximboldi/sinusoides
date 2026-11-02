@@ -332,7 +332,18 @@
                 @include respond-to(portrait) {
                     position: absolute;
                     right: 0;
-                    bottom: calc(100vh - 61.80vw);
+
+                    // Sits on the lower edge of the picture, which ends
+                    // 61.80vw down from the top of this box, the same
+                    // place .desc below starts from.  The height
+                    // subtracted from has to be the box's own, not
+                    // 100vh: on a phone Chrome measures a vh against
+                    // the window it would have with the address bar
+                    // out of the way, and the box only gets the height
+                    // that is on screen, so a vh here left the header
+                    // floating an address bar's worth up inside the
+                    // picture instead of resting under it.
+                    bottom: calc(100% - 61.80vw);
                     margin-bottom: 1em;
                 }
             }
