@@ -95,9 +95,23 @@
     }
     @keyframes not-found-sin {}
 
+    // Heights are given twice, in vh and then in dvh.  Everything
+    // this bar has to line up with -- the box on the front page, the
+    // "not" line on /am -- is laid out in percentages of the page,
+    // and on a phone a percentage and a vh are not the same thing:
+    // Chrome counts a vh against the viewport it would have with the
+    // address bar out of the way, while the page itself only gets the
+    // height that is actually on screen.  On a Pixel 8 that is some
+    // forty-six pixels of disagreement, enough to drop the wave below
+    // the middle of the front page and to carry it clean off the
+    // bottom of the window on the way into /am.  A dvh is the height
+    // the page really has, so it agrees with the percentages; the vh
+    // above it is there for browsers that predate dvh, where being
+    // off by an address bar still beats having no top at all.
     &.main-sin {
         &::after { transform: translateX(0); }
         top: 50vh;
+        top: 50dvh;
         margin-top: -0.5em;
         animation: main-sin $page-anim-full ease-in-out;
         @include respond-to(mobile) {
@@ -106,13 +120,14 @@
     }
     &.do-sin {
         &::after { transform: translateX(-17.5%); }
-        top: 0vh;
+        top: 0;
         margin-top: 2.62rem;
         animation: do-sin $page-anim-full ease-in-out;
     }
     &.am-sin {
         &::after { transform: translateX(20%); }
         top: 100vh;
+        top: 100dvh;
         margin-top: calc(-1em - 0.3em);
         animation: am-sin $page-anim-full ease-in-out;
         @include respond-to(mobile) {
@@ -122,12 +137,14 @@
     &.think-sin {
         &::after { transform: translateX(25%); }
         top: -100vh;
+        top: -100dvh;
         margin-top: -0.5em;
         animation: think-sin $page-anim-full ease-in-out;
     }
     &.todo-sin {
         &::after { transform: translateX(25%); }
         top: -100vh;
+        top: -100dvh;
         margin-top: -0.5em;
     }
     &.not-found-sin {
@@ -135,6 +152,7 @@
         animation: not-found-sin $page-anim-full ease-in-out;
         transition-duration: $page-anim-half;
         top: 50vh;
+        top: 50dvh;
         margin-top: -0.5em;
         @include respond-to(mobile) {
             font-size: 5.2em;
