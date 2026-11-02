@@ -18,11 +18,17 @@
     width: 1000%;
     height: 1em;
     transform-origin: 0% 50%;
+
+    // transform is deliberately absent from this list.  Nothing here
+    // ever assigns it -- it comes only from the page animations below
+    // -- so there is nothing for a transition to interpolate, and
+    // declaring both a transition and an animation for the same
+    // property left the bar stranded at the animation's peak scale for
+    // about a second after the animation had finished, until some
+    // later repaint corrected it.
     transition: top $page-anim-full ease-in-out,
     /**/        margin-top $page-anim-full ease-in-out,
-    /**/        transform $page-anim-full ease-in-out,
-    /**/        height $page-anim-full ease-in-out,
-    /**/;
+    /**/        height $page-anim-full ease-in-out;
 
     &::before {
         content: "";
