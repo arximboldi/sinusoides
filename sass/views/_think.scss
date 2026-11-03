@@ -16,6 +16,16 @@ $desc-fade: 2.5em;
     overflow-y: scroll;
     overflow-x: hidden;
 
+    // Without a bar of its own.  #sinusoides keeps one reserved on every
+    // page whether it scrolls or not, so that the width does not change
+    // from page to page and nothing shifts sideways mid-transition; it
+    // only ever has anything to scroll on /do.  A second bar here showed
+    // up stacked against that one, and took another fifteen pixels off
+    // the list besides.  Hiding it leaves /think with the same single
+    // reserved bar as every other page, and the list as wide as they are.
+    scrollbar-width: none;
+    &::-webkit-scrollbar { width: 0; height: 0; }
+
     @keyframes enter-title {
         from { transform: scale(1.5) translateX(-100%) translateY(130%); }
         60%  { transform: scale(1.5) translateX(-100%) translateY(130%); }
