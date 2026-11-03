@@ -50,17 +50,34 @@
 ;; there yet, but a route can be left and taken again within the three
 ;; seconds, and React hands the same element back: it would otherwise
 ;; still be wearing the offset it was given on the way out.
+;;
+;; The waveform is given the offset back as well, and then, once the
+;; browser has taken that as where it stands, asked for it again.  It is
+;; the one thing here that is meant to move, so it travels the distance
+;; over the length of the transition rather than crossing it in a frame:
+;; .sinusoid-container carries the transition that does it.
 (defn- unscroll! [coming]
   (when-let [box (js/document.getElementById "sinusoides")]
     (let [offset (.-scrollTop box)
-          pages  (.querySelectorAll box ".page, .fixed-page")]
+          pages  (.querySelectorAll box ".page, .fixed-page")
+          waves  (.querySelectorAll box ".sinusoid-container")
+          lift   (fn [nodes top]
+                   (dotimes [i (.-length nodes)]
+                     (set! (.. (.item nodes i) -style -top) top)))]
       (when (pos? offset)
         (dotimes [i (.-length pages)]
           (let [page (.item pages i)]
             (when-not (identical? page coming)
               (set! (.. page -style -top)
                     (str (- (.-offsetTop page) offset) "px")))))
-        (set! (.-scrollTop box) 0)))
+        (lift waves (str (- offset) "px"))
+        (set! (.-scrollTop box) 0)
+        ;; Asking for a measurement settles everything above into the
+        ;; place the waveform is to start from.  Left out, the browser
+        ;; only ever sees where it ends up, and there is nothing to
+        ;; transition from.
+        (.getBoundingClientRect box)
+        (lift waves "0px")))
     (when coming
       (set! (.. coming -style -top) ""))))
 

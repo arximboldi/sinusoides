@@ -10,6 +10,15 @@
     overflow: hidden;
     pointer-events: none;
     * { pointer-events: auto; }
+
+    // Nothing here sets top.  It is set from the outside, for the length
+    // of a page transition, to give back the scroll offset the box drops
+    // when the route changes -- see routes/unscroll!.  Without the
+    // transition the waveform would arrive at its new line in one frame,
+    // from wherever the scrolling had left it; with it, the giving back
+    // is spread over the same three seconds, in the same curve, as the
+    // bar's own travel, and the two read as a single move.
+    transition: top $page-anim-full ease-in-out;
 }
 
 #sinusoid-h {
