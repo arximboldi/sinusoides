@@ -26,9 +26,52 @@
 
 (def history (atom))
 
+(defn- page-node [[kind]]
+  (js/document.getElementById (str (name kind) "-page")))
+
+;; Scrolling happens inside #sinusoides rather than in the window, the
+;; waveform scrolls along with the pages -- on /do it has to keep to the
+;; line of the title -- and the page being left stays mounted for as long
+;; as the transition lasts.  So the offset cannot simply be left where it
+;; was: the page coming in sits at the top of that box, a screenful or
+;; more above the window, and so does the waveform's resting place.  You
+;; would see neither of them arrive.  They would turn up all at once at
+;; the end, when the old page unmounts, the box shrinks back to one
+;; screen and the browser clamps the offset to zero.
+;;
+;; The offset goes back to zero the moment the route changes instead, and
+;; the pages left behind are pulled up by as much as they lose, so that
+;; they carry on fading from where they were rather than jumping to their
+;; own top.  They are moved with top and not with a transform, because the
+;; titles and the slideshows are positioned fixed and a transform on an
+;; ancestor would anchor them to the page instead of to the window.
+;;
+;; The page coming in is cleared rather than moved.  It is normally not
+;; there yet, but a route can be left and taken again within the three
+;; seconds, and React hands the same element back: it would otherwise
+;; still be wearing the offset it was given on the way out.
+(defn- unscroll! [coming]
+  (when-let [box (js/document.getElementById "sinusoides")]
+    (let [offset (.-scrollTop box)
+          pages  (.querySelectorAll box ".page, .fixed-page")]
+      (when (pos? offset)
+        (dotimes [i (.-length pages)]
+          (let [page (.item pages i)]
+            (when-not (identical? page coming)
+              (set! (.. page -style -top)
+                    (str (- (.-offsetTop page) offset) "px")))))
+        (set! (.-scrollTop box) 0)))
+    (when coming
+      (set! (.. coming -style -top) ""))))
+
 (defn goto! [app page]
-  (swap! app assoc-in [:last] (:view @app))
-  (swap! app assoc-in [:view] page))
+  (let [previous (:view @app)]
+    ;; /think and /think/:id, /do and /do/:id, are one page with a detail
+    ;; laid over it, and keep the place they were being read from.
+    (when-not (= (first previous) (first page))
+      (unscroll! (page-node page)))
+    (swap! app assoc-in [:last] previous)
+    (swap! app assoc-in [:view] page)))
 
 (defn make-routes! [app]
   (defroute am "/am" []
