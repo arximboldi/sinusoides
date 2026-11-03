@@ -1,6 +1,14 @@
 @import '../global';
 
 #do-page {
+    // A frame, like /think: the grid scrolls inside .stuff below, so
+    // nothing here is ever carried off the screen.  That keeps "Do."
+    // and the waveform on their shared line -- the waveform is not in
+    // the page and cannot follow the title down -- and it keeps the
+    // page coming in next from sitting below the window.
+    height: 100%;
+    overflow: hidden;
+
     @keyframes enter-presentation {
         from { transform: translateX(-140%); }
         60%  { transform: scale(2.5) translateX(-140%); }
@@ -56,6 +64,13 @@
         position: absolute;
         top: 13.75em;
         width: 100%;
+
+        // Everything that scrolls on this page is in here -- the
+        // filters and the grid -- so it takes the scrolling, and the
+        // title above it stays put.
+        bottom: 0;
+        overflow-y: scroll;
+        overflow-x: hidden;
     }
 
     .filters {
