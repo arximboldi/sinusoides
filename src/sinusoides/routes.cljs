@@ -56,28 +56,41 @@
 ;; the one thing here that is meant to move, so it travels the distance
 ;; over the length of the transition rather than crossing it in a frame:
 ;; .sinusoid-container carries the transition that does it.
+;;
+;; Which is why the giving back turns that transition off while it
+;; happens.  It has to land in the frame it is asked for -- the box loses
+;; the offset in that same frame, and anything the waveform has not been
+;; told by then it jumps.  The transition would spread it over three
+;; seconds instead, which is the whole of the jump and none of the
+;; travel.  First time through it went unnoticed: top was still auto, and
+;; auto cannot be interpolated, so it arrived at once of its own accord.
+(defn- shift! [node offset]
+  (set! (.. node -style -top) (str (- (.-offsetTop node) offset) "px")))
+
 (defn- unscroll! [coming]
   (when-let [box (js/document.getElementById "sinusoides")]
     (let [offset (.-scrollTop box)
           pages  (.querySelectorAll box ".page, .fixed-page")
-          waves  (.querySelectorAll box ".sinusoid-container")
-          lift   (fn [nodes top]
-                   (dotimes [i (.-length nodes)]
-                     (set! (.. (.item nodes i) -style -top) top)))]
+          waves  (.querySelectorAll box ".sinusoid-container")]
       (when (pos? offset)
         (dotimes [i (.-length pages)]
           (let [page (.item pages i)]
             (when-not (identical? page coming)
-              (set! (.. page -style -top)
-                    (str (- (.-offsetTop page) offset) "px")))))
-        (lift waves (str (- offset) "px"))
+              (shift! page offset))))
+        (dotimes [i (.-length waves)]
+          (let [wave (.item waves i)]
+            (.setProperty (.-style wave) "transition" "none")
+            (shift! wave offset)))
         (set! (.-scrollTop box) 0)
         ;; Asking for a measurement settles everything above into the
         ;; place the waveform is to start from.  Left out, the browser
         ;; only ever sees where it ends up, and there is nothing to
         ;; transition from.
         (.getBoundingClientRect box)
-        (lift waves "0px")))
+        (dotimes [i (.-length waves)]
+          (let [wave (.item waves i)]
+            (.removeProperty (.-style wave) "transition")
+            (set! (.. wave -style -top) "0px")))))
     (when coming
       (set! (.. coming -style -top) ""))))
 
