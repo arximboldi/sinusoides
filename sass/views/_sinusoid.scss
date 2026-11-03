@@ -52,31 +52,37 @@
     }
     &.hovered::before { background-color: red; }
 
-    // The wave slides with a transform rather than with
-    // background-position.  This bar is ten viewports wide, so an
-    // offset given in percent works out to some forty tile widths, and
-    // the tile is a fractional number of pixels across.  Chromium
-    // rounds background tiles to whole device pixels, so that fraction,
-    // multiplied by forty, lands differently depending on how wide the
-    // window is and on whether the bar is mid-animation -- which is
-    // what made the pattern step sideways at the end of a page
-    // transition.  A transform carries no tiling arithmetic, so the
-    // offset is exact at every width.
+    // The wave slides by moving the pattern inside this box, with
+    // background-position, and not by translating the box itself.
     //
-    // Translating moves the box instead of the pattern inside it, so
-    // the box is widened and started off to the left to be sure it
-    // still covers the screen at either end of the slide.
+    // Translating was tried instead, to be rid of the rounding that
+    // background tiles are subject to -- Chromium snaps them to whole
+    // device pixels, and across the forty-odd tiles that fit in this bar
+    // that used to make the pattern step sideways at the end of a
+    // transition.  It cured that and brought its own trouble: a box
+    // widened to four hundred per cent so it could be slid about is
+    // forty viewports across, and the offsets, being percentages of it,
+    // run to ten thousand pixels.  The pulse scales the bar as well, and
+    // scaling multiplies an offset that large, so the slide came out
+    // uneven in a way each engine made its own mess of -- juddering in
+    // Chromium, arriving all at once at the end in Chrome, absent
+    // altogether in Firefox.
+    //
+    // Moving the pattern rather than the box keeps the box the width of
+    // the bar, and keeps the offsets to a quarter of what they were.
+    // The percentages below are four times the translations they
+    // replace, because a shift of the pattern within a box is worth four
+    // of a shift of a box four times as wide.
     &::after {
         content: "";
         position: absolute;
         top: -1px;
-        left: -150%;
-        width: 400%;
+        width: 100%;
         height: calc(100% + 2px);
         pointer-events: none;
         background-image: url(/static/pic/sinusoid-i.svg);
         background-size: contain;
-        transition: transform $page-anim-full ease-in-out;
+        transition: background-position $page-anim-full ease-in-out;
     }
 
     @keyframes main-sin {
@@ -118,7 +124,7 @@
     // above it is there for browsers that predate dvh, where being
     // off by an address bar still beats having no top at all.
     &.main-sin {
-        &::after { transform: translateX(0); }
+        &::after { background-position: 0 0; }
         top: 50vh;
         top: 50dvh;
         margin-top: -0.5em;
@@ -128,23 +134,22 @@
         }
     }
     &.do-sin {
-        // Shorter than the other pages'.  These are percentages of a box
-        // forty viewports across, so -17.5%, the figure the rest are
-        // tuned to, is ten thousand pixels: forty-eight wavelengths of
-        // the pattern in three seconds, and at its worst 1.26 of them
-        // between one frame and the next.  A repeating pattern cannot be
-        // seen to move faster than half a wavelength a frame, so past
-        // that it stops reading as travel and starts to judder.  /do is
-        // also the one page where the bar comes to rest in full view, so
-        // it is the one place it shows.  At -10% the worst frame crosses
-        // 0.72 and twenty-seven wavelengths of travel are left.
-        &::after { transform: translateX(-10%); }
+        // Shorter than the other pages'.  At -70%, where this used to
+        // sit, the wave crossed forty-eight of its own wavelengths in
+        // the three seconds, and at the worst moment more than one of
+        // them between a frame and the next; a repeating pattern cannot
+        // be seen to move faster than half a wavelength a frame, so past
+        // that it stops reading as travel.  /do is also the one page
+        // where the bar comes to rest in full view, so it is the one
+        // place it shows.  -70% is the figure to put back if the slide
+        // wants more distance now that it is the pattern moving.
+        &::after { background-position: -40% 0; }
         top: 0;
         margin-top: 2.62rem;
         animation: do-sin $page-anim-full ease-in-out;
     }
     &.am-sin {
-        &::after { transform: translateX(20%); }
+        &::after { background-position: 80% 0; }
         top: 100vh;
         top: 100dvh;
         margin-top: calc(-1em - 0.3em);
@@ -154,20 +159,20 @@
         }
     }
     &.think-sin {
-        &::after { transform: translateX(25%); }
+        &::after { background-position: 100% 0; }
         top: -100vh;
         top: -100dvh;
         margin-top: -0.5em;
         animation: think-sin $page-anim-full ease-in-out;
     }
     &.todo-sin {
-        &::after { transform: translateX(25%); }
+        &::after { background-position: 100% 0; }
         top: -100vh;
         top: -100dvh;
         margin-top: -0.5em;
     }
     &.not-found-sin {
-        &::after { transform: translateX(5%); }
+        &::after { background-position: 20% 0; }
         animation: not-found-sin $page-anim-full ease-in-out;
         transition-duration: $page-anim-half;
         top: 50vh;
