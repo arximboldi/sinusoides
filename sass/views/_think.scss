@@ -5,6 +5,17 @@
 $desc-fade: 2.5em;
 
 #think-page {
+    // The list scrolls inside the page rather than taking the whole
+    // page with it, so that the waveform and the title -- which are
+    // outside it, or fixed -- are never carried off the screen, and so
+    // that the page coming in next is never below the window.  The only
+    // children in flow are the filters and the list; the title, the
+    // slideshow and the player object are all positioned fixed, and
+    // stay where they are whatever this scrolls.
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
     @keyframes enter-title {
         from { transform: scale(1.5) translateX(-100%) translateY(130%); }
         60%  { transform: scale(1.5) translateX(-100%) translateY(130%); }
