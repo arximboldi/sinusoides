@@ -128,7 +128,17 @@
         }
     }
     &.do-sin {
-        &::after { transform: translateX(-17.5%); }
+        // Shorter than the other pages'.  These are percentages of a box
+        // forty viewports across, so -17.5%, the figure the rest are
+        // tuned to, is ten thousand pixels: forty-eight wavelengths of
+        // the pattern in three seconds, and at its worst 1.26 of them
+        // between one frame and the next.  A repeating pattern cannot be
+        // seen to move faster than half a wavelength a frame, so past
+        // that it stops reading as travel and starts to judder.  /do is
+        // also the one page where the bar comes to rest in full view, so
+        // it is the one place it shows.  At -10% the worst frame crosses
+        // 0.72 and twenty-seven wavelengths of travel are left.
+        &::after { transform: translateX(-10%); }
         top: 0;
         margin-top: 2.62rem;
         animation: do-sin $page-anim-full ease-in-out;
